@@ -21,22 +21,27 @@ const LoginPage = () => {
         <h2>Vendor Login</h2>
 
         <form onSubmit={handleSubmit}>
+            <label>Email Address</label>
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Enter Your Email Address"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <br />
           <br />
+          <label>Password</label>
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Enter Your Password"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
           <br />
           <br />
+          <Link to="/forgot-password" className="forgot-password-link">
+            Forgot password?
+          </Link>
           <button type="submit">Login</button>
         </form>
 

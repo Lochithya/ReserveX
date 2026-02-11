@@ -52,6 +52,31 @@
   transition: all 0.3s ease;
 }
 
+.login-card label {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #003B95;
+  font-size: 14px;
+}
+
+.forgot-password-link {
+  display: block;           
+  text-align: right;        
+  margin-top: 6px;         
+  margin-bottom: 15px;      
+  font-size: 14px;
+  color: #005999;
+  text-decoration: none;    
+  transition: all 0.3s ease;
+}
+
+.forgot-password-link:hover {
+  text-decoration: underline;
+  color: #003B95;
+}
+
 .login-card button:hover {
   background-color: #005999;
 }
