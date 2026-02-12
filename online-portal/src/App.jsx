@@ -6,6 +6,8 @@ import ReservationPage from "./pages/ReservationPage";
 import NavBar from "./components/NavBar";
 import StallMap from "./pages/StallMap";
 import Footer from "./components/Footer";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route path="/reserve" element={<ReservationPage />} />
         <Route path="/stallmap" element={<StallMap />} />
       </Routes>
