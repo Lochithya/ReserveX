@@ -11,3 +11,8 @@ public class BackendApplication {
 	}
 
 }
+
+
+// This is the main class for a Srping Boot application.
+// Loading of all beans , loading of embedded Tomcat server and starting the application happens in this class.
+// Exposes RESTAPI on port 8080 
