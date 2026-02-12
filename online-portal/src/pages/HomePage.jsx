@@ -2,6 +2,8 @@ import { useState } from "react";
 //import { saveGenres } from "../services/genre.service";
 import "./HomePage.css";
 
+
+
 const HomePage = () => {
   const [genreInput, setGenreInput] = useState("");
   const [genres, setGenres] = useState([]);
