@@ -6,20 +6,21 @@ import "./NavBar.css";
 const NavBar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false); 
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
-    navigate("/"); 
+    navigate("/");
     setIsOpen(false); 
   };
 
   return (
     <nav className="navbar">
-      
       <Link to="/" className="navbar-logo">
         ReserveX
       </Link>
+
       <div
         className={`hamburger ${isOpen ? "open" : ""}`}
         onClick={() => setIsOpen(!isOpen)}
@@ -30,19 +31,21 @@ const NavBar = () => {
       </div>
 
       <div className={`navbar-links ${isOpen ? "active" : ""}`}>
-    
-        <Link to="/home" onClick={() => setIsOpen(false)}>Home</Link>
-        <Link to="/reservation" onClick={() => setIsOpen(false)}>Reservation</Link>
-        <Link to="/stallmap" onClick={() => setIsOpen(false)}>Stall Map</Link>
-
-        {isAuthenticated ? (
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
-        ) : (
+        {!isAuthenticated ? (
           <>
             <Link to="/" onClick={() => setIsOpen(false)}>Login</Link>
             <Link to="/register" onClick={() => setIsOpen(false)}>Register</Link>
+            <Link to="/about" onClick={() => setIsOpen(false)}>About Us</Link>
+            <Link to="/contact" onClick={() => setIsOpen(false)}>Contact Us</Link>
+          </>
+        ) : (
+          <>
+            <Link to="/home" onClick={() => setIsOpen(false)}>Home</Link>
+            <Link to="/stalls" onClick={() => setIsOpen(false)}>Stalls</Link>
+            <Link to="/my-reservations" onClick={() => setIsOpen(false)}>My Reservations</Link>
+            <Link to="/about" onClick={() => setIsOpen(false)}>About Us</Link>
+            <Link to="/contact" onClick={() => setIsOpen(false)}>Contact Us</Link>
+            <button onClick={handleLogout}>Logout</button>
           </>
         )}
       </div>
