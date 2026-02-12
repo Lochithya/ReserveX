@@ -3,22 +3,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f5f7fa;
+    background: var(--bg-body);
 }
 
 .register-card {
-    background-color: #ffffff;
+    background-color: var(--bg-card);
     padding: 45px 40px;
     width: 380px;
-    border-radius: 10px;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
     text-align: center;
-    border-top: 5px solid #003B95;
+    border-top: 5px solid var(--primary-color);
 }
 
 .register-card h2 {
     margin-bottom: 30px;
-    color: #003B95;
+    color: var(--primary-color);
     font-weight: 700;
     font-size: 22px;
 }
@@ -27,24 +27,24 @@
     width: 100%;
     padding: 12px;
     margin-bottom: 18px;
-    border-radius: 6px;
-    border: 1px solid #d0d7de;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
     font-size: 14px;
     transition: all 0.3s ease;
 }
 
 .register-card input:focus {
-    border-color: #0071C2;
+    border-color: var(--accent-color);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 113, 194, 0.15);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); 
 }
 
 .register-card button {
     width: 100%;
     padding: 12px;
     border: none;
-    border-radius: 6px;
-    background-color: #0071C2;
+    border-radius: var(--radius-md);
+    background-color: var(--accent-color);
     color: white;
     font-size: 15px;
     font-weight: 600;
@@ -53,16 +53,16 @@
 }
 
 .register-card button:hover {
-    background-color: #005999;
+    background-color: var(--primary-hover);
 }
 
 .register-card label {
-  display: block;
-  text-align: left;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: #003B95;
-  font-size: 14px;
+    display: block;
+    text-align: left;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--primary-color);
+    font-size: 14px;
 }
 
 .login-link {
@@ -70,10 +70,11 @@
 }
 
 .login-link a {
-    color: #007bff;
+    color: var(--accent-color);
     text-decoration: none;
 }
 
 .login-link a:hover {
     text-decoration: underline;
+    color: var(--primary-color);
 }
