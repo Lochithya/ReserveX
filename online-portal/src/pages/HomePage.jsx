@@ -1,10 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 //import { saveGenres } from "../services/genre.service";
 import "./HomePage.css";
 
 
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();   // stop refresh
+
+    navigate("/reserve");   // go to ReservationPage
+  };
+
   return (
     <div className="home-wrapper">
 
@@ -12,7 +21,7 @@ const HomePage = () => {
       <section className="hero-section">
         <div className="hero-overlay">
           <h1>BOOK FAIR STALL RESERVATION</h1>
-          <p>Home / Stall Booking</p>
+          <p>Stall Booking</p>
         </div>
       </section>
 
@@ -23,7 +32,7 @@ const HomePage = () => {
           Reserve your exhibition stall for the upcoming Book Fair event.
         </p>
 
-        <form className="reservation-form">
+        <form className="reservation-form" onSubmit={handleSubmit}>
           <div className="form-grid">
 
             <input type="date" placeholder="Event Date" />
