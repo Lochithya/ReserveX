@@ -5,39 +5,6 @@ import "./HomePage.css";
 
 
 const HomePage = () => {
-  const [genreInput, setGenreInput] = useState("");
-  const [genres, setGenres] = useState([]);
-
-  const handleAddGenre = () => {
-    if (!genreInput.trim()) return;
-
-    if (genres.includes(genreInput)) {
-      alert("Genre already added.");
-      return;
-    }
-
-    setGenres([...genres, genreInput]);
-    setGenreInput("");
-  };
-
-  const handleRemoveGenre = (genre) => {
-    setGenres(genres.filter((g) => g !== genre));
-  };
-
-  const handleSubmit = async () => {
-    if (genres.length === 0) {
-      alert("Please add at least one genre.");
-      return;
-    }
-
-    try {
-      await saveGenres(genres);
-      alert("Genres saved successfully!");
-    } catch (error) {
-      alert("Failed to save genres.");
-    }
-  };
-
   return (
     <div className="home-container">
       <h2>Add Literary Genres</h2>
