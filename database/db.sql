@@ -16,6 +16,8 @@ Table stalls {
   stall_name varchar [unique]
   size enum('small','medium','large')
   price decimal
+  gridCol int 
+  gridRow int 
   is_Confirmed boolean  
 }
 
