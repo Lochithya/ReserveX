@@ -1,5 +1,5 @@
 export const mockStalls = [
-  // --- Large Stalls (4gridRow4) ---
+  // --- Large Stalls ---
   {
     id: "A1",
     size: "Large",
@@ -7,6 +7,8 @@ export const mockStalls = [
     gridCol: 1,
     isConfirmed: 0,
     price: 25000,
+    description:
+      "Prime corner stall near the main entrance. Highest visitor traffic.",
   },
   {
     id: "A2",
@@ -15,6 +17,8 @@ export const mockStalls = [
     gridCol: 1,
     isConfirmed: 0,
     price: 25000,
+    description:
+      "Large display area suitable for major publishers and book launches.",
   },
   {
     id: "A3",
@@ -23,9 +27,11 @@ export const mockStalls = [
     gridCol: 1,
     isConfirmed: 0,
     price: 25000,
+    description:
+      "Close to event stage. Ideal for promotional activities and signings.",
   },
 
-  // --- Medium Stalls (2gridRow2) ---
+  // --- Medium Stalls ---
   {
     id: "B1",
     size: "Medium",
@@ -33,6 +39,7 @@ export const mockStalls = [
     gridCol: 2,
     isConfirmed: 0,
     price: 15000,
+    description: "Good visibility beside the main walkway. Balanced exposure.",
   },
   {
     id: "B2",
@@ -41,6 +48,7 @@ export const mockStalls = [
     gridCol: 2,
     isConfirmed: 1,
     price: 15000,
+    description: "Near food court area. Continuous visitor movement.",
   },
   {
     id: "B3",
@@ -49,6 +57,8 @@ export const mockStalls = [
     gridCol: 2,
     isConfirmed: 0,
     price: 15000,
+    description:
+      "Quiet but accessible area. Suitable for educational publishers.",
   },
   {
     id: "B6",
@@ -57,9 +67,10 @@ export const mockStalls = [
     gridCol: 2,
     isConfirmed: 1,
     price: 15000,
+    description: "Middle of the hall. Consistent visitor engagement.",
   },
 
-  // --- Small Stalls (1gridRow1) ---
+  // --- Small Stalls ---
   {
     id: "C1",
     size: "Small",
@@ -67,6 +78,8 @@ export const mockStalls = [
     gridCol: 3,
     isConfirmed: 0,
     price: 5000,
+    description:
+      "Compact stall perfect for indie authors and small collections.",
   },
   {
     id: "C5",
@@ -75,6 +88,7 @@ export const mockStalls = [
     gridCol: 3,
     isConfirmed: 0,
     price: 5000,
+    description: "Budget friendly stall located near secondary entrance.",
   },
   {
     id: "C6",
@@ -83,11 +97,12 @@ export const mockStalls = [
     gridCol: 3,
     isConfirmed: 1,
     price: 5000,
+    description: "Near rest area. Good for niche book categories.",
   },
 ];
 
 export const mockStalls2 = [
-  // --- Large Stalls (4gridRow4) ---
+  // --- Large Stalls ---
   {
     id: "L1",
     size: "Large",
@@ -95,6 +110,7 @@ export const mockStalls2 = [
     gridCol: 2,
     isConfirmed: 0,
     price: 25000,
+    description: "Central premium location with heavy foot traffic.",
   },
   {
     id: "L2",
@@ -103,6 +119,7 @@ export const mockStalls2 = [
     gridCol: 14,
     isConfirmed: 0,
     price: 25000,
+    description: "Wide space ideal for large book displays and banners.",
   },
   {
     id: "L3",
@@ -111,9 +128,10 @@ export const mockStalls2 = [
     gridCol: 8,
     isConfirmed: 0,
     price: 25000,
+    description: "Spacious island stall in the middle of the exhibition.",
   },
 
-  // --- Medium Stalls (2gridRow2) ---
+  // --- Medium Stalls ---
   {
     id: "M1",
     size: "Medium",
@@ -121,6 +139,7 @@ export const mockStalls2 = [
     gridCol: 7,
     isConfirmed: 0,
     price: 15000,
+    description: "Near main corridor. Good exposure for mid-size publishers.",
   },
   {
     id: "M2",
@@ -129,6 +148,7 @@ export const mockStalls2 = [
     gridCol: 2,
     isConfirmed: 0,
     price: 15000,
+    description: "Located near seminar rooms attracting student audiences.",
   },
   {
     id: "M3",
@@ -137,6 +157,7 @@ export const mockStalls2 = [
     gridCol: 5,
     isConfirmed: 0,
     price: 15000,
+    description: "Balanced position with steady visitor flow.",
   },
   {
     id: "M6",
@@ -145,9 +166,10 @@ export const mockStalls2 = [
     gridCol: 13,
     isConfirmed: 0,
     price: 15000,
+    description: "Close to exit path — high end-of-visit purchases.",
   },
 
-  // --- Small Stalls (1gridRow1) ---
+  // --- Small Stalls ---
   {
     id: "S1",
     size: "Small",
@@ -155,6 +177,7 @@ export const mockStalls2 = [
     gridCol: 12,
     isConfirmed: 0,
     price: 5000,
+    description: "Small starter booth ideal for new sellers.",
   },
   {
     id: "S5",
@@ -163,6 +186,7 @@ export const mockStalls2 = [
     gridCol: 2,
     isConfirmed: 0,
     price: 5000,
+    description: "Quiet corner perfect for specialized collections.",
   },
   {
     id: "S6",
@@ -171,5 +195,6 @@ export const mockStalls2 = [
     gridCol: 2,
     isConfirmed: 0,
     price: 5000,
+    description: "Budget stall near waiting area and seating.",
   },
 ];

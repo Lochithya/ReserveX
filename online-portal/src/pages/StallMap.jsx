@@ -1,11 +1,17 @@
 import React, { useEffect, useState,useMemo } from "react";
 import { mockStalls ,mockStalls2} from "../common/mockData";
-
+import { getSizeSpans } from "../services/stall.logic";
+import BookingSummary from "../components/BookingSummary";
+import StallTooltip from "../components/StallToolTip";
 
 const StallMap = () => {
 
   const [stalls,setStalls]= useState([]);
   const [selectedStalls, setSelectedStalls] = useState([]);
+  const [hoveredStall, setHoveredStall] = useState(null);
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+
+  console.log(selectedStalls)
 
   const loadStalls = ()=>{
     setStalls(mockStalls2)
@@ -24,17 +30,57 @@ const StallMap = () => {
     return { total, available, reserved };
   }, [stalls]);
 
-  const getSizeSpans = (size) => {
-    switch (size) {
-      case "Large": return "col-span-4 row-span-4";  // spans 4 cells wide, 4 high
-      case "Medium": return "col-span-2 row-span-2"; // spans 2 cells wide, 2 high
-      case "Small": return "col-span-1 row-span-1";  // spans 1 cell
-      default: return "col-span-1 row-span-1";
-  }}
+  
 
   useEffect(()=>{
     loadStalls()
   },[])
+
+  //SELECTION LOGIC (TODO : Extend-how many stalls user already reserved )
+  const handleStallClick = (stall) => {
+   
+    if (stall.isConfirmed === 1) return;
+
+    const isSelected = selectedStalls.some((s) => s.id === stall.id);
+
+    if (isSelected) {
+      setSelectedStalls(selectedStalls.filter((s) => s.id !== stall.id));
+
+    } else {
+      if (selectedStalls.length >= 3) {
+        alert("You can only select up to 3 stalls");
+        return;
+      }
+      setSelectedStalls([...selectedStalls, stall]);
+    }
+  };
+
+
+  // Desktop Mouse Handlers-----------
+  const handleMouseEnter = (stall, e) => {
+    setHoveredStall(stall);
+    moveCursor(e);
+  };
+
+  const handleMouseMove = (e) => {
+    if (hoveredStall) moveCursor(e);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredStall(null);
+  };
+
+  const moveCursor = (e) => {
+    // Offset by 15px - the tooltip doesn't block the mouse
+    setCursorPos({ x: e.clientX + 15, y: e.clientY + 15 });
+  };
+  //-------------------------------------------
+
+
+  const handleReserve = () => {
+   // Logic to open confirmation modal
+   alert(`Reserving ${selectedStalls.length} stalls...`);
+  };
 
   return (
     <div className="flex flex-col item-center min-h-screen bg-gray-10 p-10 lg:py-5">
@@ -60,7 +106,6 @@ const StallMap = () => {
                 </span>
             </div>
         </div>
-
 
     
       {/* map */}
@@ -96,22 +141,30 @@ const StallMap = () => {
                 {/* //render stall cards */}
                  {
                     stalls.map((stall)=>{
-                      const sizeClass = getSizeSpans(stall.size)   //Not worked when stalls are shrink
+                      //const sizeClass = getSizeSpans(stall.size)   //Not worked when stalls are shrink
+                      
                       const isReserved = stall?.isConfirmed === 1
+                      const isSelected = selectedStalls.some((s) => s.id === stall.id);
 
                       return(
                         <div 
                           key={stall.id}
+                          onClick={()=>handleStallClick(stall)}
+                          onMouseEnter={(e) => handleMouseEnter(stall, e)}
+                          onMouseMove={handleMouseMove}
+                          onMouseLeave={handleMouseLeave}
+                          onTouchStart={() => setHoveredStall(stall)}  //for mobile
                           style={{
                             gridColumnStart: stall?.gridRow + 1,
                             gridRowStart: stall?.gridCol
                           }}
                           className={`
                             
-                            ${isReserved? "bg-slate-200 text-slate-400 border-slate-500 border ":
-                              "bg-green-100 text-green-800 border border-green-400 hover:bg-green-500 hover:text-white cursor-pointer hover:shadow-md hover:scale-105"}
+                            ${isReserved? "bg-slate-200 text-slate-400 border-slate-500 border "
+                              : isSelected ? "bg-blue-600 text-white border-blue-700 shadow-lg scale-105 z-10"
+                              :"bg-green-100 text-green-800 border border-green-400 hover:bg-green-500 hover:text-white cursor-pointer hover:shadow-md hover:scale-105"}
                             
-                            w-12 h-12 lg:w-15 lg:h-15 rounded-lg
+                            w-full h-full rounded-lg
                             
                             flex flex-col items-center justify-center text-xs font-bold transition-all shadow-sm`}
                         >
@@ -128,6 +181,7 @@ const StallMap = () => {
         </div>
       
       </div>
+
 
       {/* legend */}
       <div className="flex flex-wrap justify-center gap-6 mb-6 p-4 bg-gray-50 rounded-lg">
@@ -151,19 +205,34 @@ const StallMap = () => {
       </div>
 
 
-
-      {/* summery */}
-      <div>
-        
-                {/* selected stalls - add when clicked*/}
-                {/* Reserve Button */}
-        
-        
+      {/*Instructions*/}
+      <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-8 mb-6 text-sm text-slate-500">
+        <p className="flex items-center gap-2">
+          <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs">1</span>
+          Tap <span className="font-bold text-emerald-600">Green Stalls</span> to select
+        </p>
+        <p className="flex items-center gap-2">
+          <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs">2</span>
+          Select up to <span className="font-bold text-slate-700">3 Stalls</span>
+        </p>
+        <p className="flex items-center gap-2">
+          <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-xs">3</span>
+          Hover for price & details
+        </p>
       </div>
 
+      {/* summery */}
+      <BookingSummary 
+        selectedStalls={selectedStalls} 
+        onReserve={handleReserve} 
+      />
+
       {/* description- float when hover */}
+      <StallTooltip stall={hoveredStall} position={cursorPos} />
+      
 
       {/* {confirmation box when reserve} */}
+
 
       
       
