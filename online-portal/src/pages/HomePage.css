@@ -1,0 +1,56 @@
+.home-container {
+  padding: 30px;
+  max-width: 600px;
+  margin: auto;
+}
+
+.genre-input-section {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.genre-input-section input {
+  flex: 1;
+  padding: 8px;
+}
+
+.genre-input-section button {
+  padding: 8px 15px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.genre-list {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.genre-item {
+  background-color: #e5e7eb;
+  padding: 6px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.genre-item span {
+  cursor: pointer;
+  color: red;
+}
+
+.save-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.description h3 { color: #1e293b; margin-bottom: 12px; }
+.description p { color: #64748b; line-height: 1.6; }
