@@ -2,23 +2,41 @@ import { useContext, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/solid";
+import toast from "react-hot-toast";
+import { loginUser } from "../services/auth.service";
 
 const LoginPage = () => {
   const [activeTab, setActiveTab] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    login("token");
-    navigate("/home");
+    setIsLoading(true);
+    try{
+      const data = await loginUser(email, password);
+      login(data.token);
+      console.log(data.token)
+      toast.success("Login Successful Welcome back!");
+      navigate("/home");
+
+    }catch(errorMessage){
+      console.error("Login failed:", errorMessage);
+      toast.error(errorMessage);
+    }finally{
+      setIsLoading(false);
+    }
+    
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-6">
-      <div className="text-center mb-8">
+      <div className="text-center mb-8 lg:mt-8">
         <h1 className="text-3xl font-bold">Publisher Portal</h1>
         <p className="text-gray-500 mt-2 max-w-md">
           Secure your stall at Sri Lanka’s largest literary event. Log in to
@@ -27,7 +45,7 @@ const LoginPage = () => {
       </div>
 
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg">
-        <div className="flex border-b">
+        <div className="flex">
           <button
             onClick={() => setActiveTab("login")}
             className={`flex-1 py-3 text-sm font-medium transition ${
@@ -64,6 +82,7 @@ const LoginPage = () => {
                 <input
                   type="email"
                   placeholder="publisher@example.com"
+                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -74,12 +93,6 @@ const LoginPage = () => {
             <div className="relative">
               <div className="flex justify-between items-center text-sm mb-2">
                 <label>Password</label>
-                <Link
-                  to="/forgot-password"
-                  className="text-blue-500 hover:underline"
-                >
-                  Forgot password?
-                </Link>
               </div>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
@@ -88,6 +101,7 @@ const LoginPage = () => {
                 <input
                   type="password"
                   placeholder="Enter Your Password"
+                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -95,13 +109,9 @@ const LoginPage = () => {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <input type="checkbox" />
-              <span>Remember me for 30 days</span>
-            </div>
-
             <button
               type="submit"
+              disabled={isLoading}
               className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
             >
               Sign In
