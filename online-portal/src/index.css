@@ -1,61 +1,25 @@
 @import "tailwindcss";
 
+@theme {
+  /* Set Poppins as the default sans font */
+  --font-sans: "Poppins", system-ui, sans-serif;
 
-:root {
-  --primary-color: #0f172a;
-  --primary-hover: #1e293b;
-  --secondary-color: #f59e0b;
-  --accent-color: #3b82f6;
+  /* Define Custom Colors */
+  --color-primary: #0f172a;
+  --color-primary-hover: #1e293b;
+  --color-secondary: #f59e0b;
+  --color-accent: #3b82f6;
 
-  --status-available: #00D100;
-  --status-reserved: #9ca3af;
-  --status-selected: #008000;
-  --status-error: #ef4444;
+  /* Status Colors */
+  --color-status-available: #00D100;
+  --color-status-reserved: #9ca3af;
+  --color-status-selected: #008000;
+  --color-status-error: #ef4444;
 
-  --bg-body: #f8fafc;
-  --bg-card: #ffffff;
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --border-color: #e2e8f0;
+  /* UI Colors */
+  --color-body: #f8fafc;
+  --color-card: #ffffff;
+  --color-text-main: #1e293b;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
 }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Poppins', system-ui, sans-serif;
-  background-color: var(--bg-body);
-  color: var(--text-main);
-  margin: 0;
-}
-
-
-
-.container {
-  width: 100%;
-  max-width: var(--container-width);
-  margin: 0 auto;
-  padding: 0 20px; 
-}
-
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: var(--radius-md);
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.btn-primary {
-  background-color: var(--primary-color);
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: var(--primary-hover);
-} 
