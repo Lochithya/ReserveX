@@ -198,3 +198,5 @@ export const mockStalls2 = [
     description: "Budget stall near waiting area and seating.",
   },
 ];
+
+export const mockStallE = [];

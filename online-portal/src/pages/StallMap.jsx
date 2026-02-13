@@ -1,8 +1,10 @@
 import React, { useEffect, useState,useMemo } from "react";
-import { mockStalls ,mockStalls2} from "../common/mockData";
-import { getSizeSpans } from "../services/stall.logic";
+import { mockStalls ,mockStalls2,mockStallE} from "../common/mockData";
 import BookingSummary from "../components/BookingSummary";
 import StallTooltip from "../components/StallToolTip";
+import StallGrid from "../components/StallGrid";
+import { getAllStalls } from "../services/stall.service";
+import toast from "react-hot-toast";
 
 const StallMap = () => {
 
@@ -10,12 +12,34 @@ const StallMap = () => {
   const [selectedStalls, setSelectedStalls] = useState([]);
   const [hoveredStall, setHoveredStall] = useState(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [isLoading, setIsLoading] = useState(true);
 
-  console.log(selectedStalls)
+  // console.log(selectedStalls)
 
-  const loadStalls = ()=>{
-    setStalls(mockStalls2)
-  }
+  const fetchStalls = async () => {
+      try{
+          setIsLoading(true);
+          const data = await getAllStalls();
+          setStalls(data);
+
+      }catch(errorMessage){
+          toast.error(errorMessage);
+      }finally{
+          setIsLoading(false);
+      }
+  };
+
+  
+
+  // const loadData=()=>{
+  //   setStalls(mockStalls)
+  //   console.log(mockStalls)
+  //   setIsLoading(false);
+  // }
+
+  useEffect(()=>{
+    fetchStalls()
+  },[])
 
   const totalRows = useMemo(() => {
     if (stalls.length === 0) return 10; // Default minimum
@@ -31,10 +55,6 @@ const StallMap = () => {
   }, [stalls]);
 
   
-
-  useEffect(()=>{
-    loadStalls()
-  },[])
 
   //SELECTION LOGIC (TODO : Extend-how many stalls user already reserved )
   const handleStallClick = (stall) => {
@@ -62,13 +82,9 @@ const StallMap = () => {
     moveCursor(e);
   };
 
-  const handleMouseMove = (e) => {
-    if (hoveredStall) moveCursor(e);
-  };
+  const handleMouseMove = (e) => { if (hoveredStall) moveCursor(e);};
 
-  const handleMouseLeave = () => {
-    setHoveredStall(null);
-  };
+  const handleMouseLeave = () => {setHoveredStall(null);};
 
   const moveCursor = (e) => {
     // Offset by 15px - the tooltip doesn't block the mouse
@@ -78,7 +94,7 @@ const StallMap = () => {
 
 
   const handleReserve = () => {
-   // Logic to open confirmation modal
+   // Logic to open confirmation modal:TODO
    alert(`Reserving ${selectedStalls.length} stalls...`);
   };
 
@@ -110,76 +126,23 @@ const StallMap = () => {
     
       {/* map */}
 
-      <div className="lg:flex lg:flex-col lg:justify-center items-center  h-full">
+     <div className="lg:flex lg:flex-col lg:justify-center items-center h-full">
         <div className="overflow-auto mb-6 p-5 max-w-5xl w-full max-h-[70vh] h-full border border-slate-200 rounded-lg bg-white">
-              <div className="grid gap-2 min-w-max lg:gap-5" 
-                style={{
-                      gridAutoColumns: "50px",  // Width of 1 small block
-                      gridAutoRows: "50px",     // Height of 1 small block
-                      width: "max-content"      // Ensures the grid doesn't shrink
-                }}
-
-              >
-
-            {/* ROW LABELS (A, B, C...) */}
-            {Array.from({ length: totalRows }).map((_, index) => {
-              const rowLetter = String.fromCharCode(65 + index); // 65 = 'A'
-              return (
-                <div
-                  key={`row-label-${index}`}
-                  style={{
-                    gridColumnStart: 1, // Stick to Column 1
-                    gridRowStart: index +1,
-                  }}
-                  className="flex items-center justify-center font-bold text-slate-400 lg:text-lg"
-                >
-                  {rowLetter}
-                </div>
-              );
-             })}
-
-                {/* //render stall cards */}
-                 {
-                    stalls.map((stall)=>{
-                      //const sizeClass = getSizeSpans(stall.size)   //Not worked when stalls are shrink
-                      
-                      const isReserved = stall?.isConfirmed === 1
-                      const isSelected = selectedStalls.some((s) => s.id === stall.id);
-
-                      return(
-                        <div 
-                          key={stall.id}
-                          onClick={()=>handleStallClick(stall)}
-                          onMouseEnter={(e) => handleMouseEnter(stall, e)}
-                          onMouseMove={handleMouseMove}
-                          onMouseLeave={handleMouseLeave}
-                          onTouchStart={() => setHoveredStall(stall)}  //for mobile
-                          style={{
-                            gridColumnStart: stall?.gridRow + 1,
-                            gridRowStart: stall?.gridCol
-                          }}
-                          className={`
-                            
-                            ${isReserved? "bg-slate-200 text-slate-400 border-slate-500 border "
-                              : isSelected ? "bg-blue-600 text-white border-blue-700 shadow-lg scale-105 z-10"
-                              :"bg-green-100 text-green-800 border border-green-400 hover:bg-green-500 hover:text-white cursor-pointer hover:shadow-md hover:scale-105"}
-                            
-                            w-full h-full rounded-lg
-                            
-                            flex flex-col items-center justify-center text-xs font-bold transition-all shadow-sm`}
-                        >
-                              <span className="font-bold text-sm md:text-base leading-none mb-1">{stall.id}</span>
-                              <span className="opacity-80 uppercase font-normal">{stall.size}</span>
-                        </div>
-
-                      )
-
-                    })
-                 }
-              </div>
+              
+              {/* --- NEW COMPONENT: STALL GRID --- */}
+              <StallGrid 
+                stalls={stalls}
+                isLoading={isLoading}
+                totalRows={totalRows}
+                selectedStalls={selectedStalls}
+                handleStallClick={handleStallClick}
+                handleMouseEnter={handleMouseEnter}
+                handleMouseMove={handleMouseMove}
+                handleMouseLeave={handleMouseLeave}
+                setHoveredStall={setHoveredStall}
+              />
               
         </div>
-      
       </div>
 
 

@@ -1,11 +1,12 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com');
+@import "tailwindcss";
+
 
 @theme {
   --font-sans: 'Poppins', sans-serif;
 }
 
-:root {
+/* :root {
   --primary-color: #0f172a;       
   --primary-hover: #1e293b;
   --secondary-color: #f59e0b;     
@@ -68,4 +69,4 @@ body {
 
 .btn-primary:hover {
   background-color: var(--primary-hover);
-}
+} */

@@ -8,14 +8,15 @@ import StallMap from "./pages/StallMap";
 import Footer from "./components/Footer";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
-
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <>
       <NavBar />
-
+      <Toaster position="top-center" reverseOrder={false} />
       <Routes>
+        
         <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />
