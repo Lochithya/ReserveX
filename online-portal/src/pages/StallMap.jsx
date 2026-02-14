@@ -1,13 +1,15 @@
-import React, { useEffect, useState,useMemo } from "react";
+import React, { useEffect, useState,useMemo,useContext } from "react";
 import { mockStalls ,mockStalls2,mockStallE} from "../common/mockData";
 import BookingSummary from "../components/BookingSummary";
 import StallTooltip from "../components/StallToolTip";
 import StallGrid from "../components/StallGrid";
 import { getAllStalls } from "../services/stall.service";
 import toast from "react-hot-toast";
+import { AuthContext } from "../contexts/AuthContext";
 
 const StallMap = () => {
 
+  const { user } = useContext(AuthContext);
   const [stalls,setStalls]= useState([]);
   const [selectedStalls, setSelectedStalls] = useState([]);
   const [hoveredStall, setHoveredStall] = useState(null);
@@ -15,6 +17,9 @@ const StallMap = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   // console.log(selectedStalls)
+
+  const existingBookings = user?.no_of_current_bookings || 0;
+  const REMAINING_QUOTA = 3 - existingBookings;
 
   const fetchStalls = async () => {
       try{
@@ -67,8 +72,14 @@ const StallMap = () => {
       setSelectedStalls(selectedStalls.filter((s) => s.id !== stall.id));
 
     } else {
+     // Check stall limits (3 per one user)
       if (selectedStalls.length >= 3) {
-        alert("You can only select up to 3 stalls");
+        toast.error("You have already reached the limit of 3 reserved stalls.");
+        return;
+      }
+
+      if (selectedStalls.length >= REMAINING_QUOTA) {
+        toast.error(`You have ${existingBookings} active reservations. You can only select ${REMAINING_QUOTA} more.`);
         return;
       }
       setSelectedStalls([...selectedStalls, stall]);
@@ -188,6 +199,7 @@ const StallMap = () => {
       <BookingSummary 
         selectedStalls={selectedStalls} 
         onReserve={handleReserve} 
+        quota={REMAINING_QUOTA}
       />
 
       {/* description- float when hover */}

@@ -1,6 +1,6 @@
 import React from "react";
 
-const BookingSummary = ({ selectedStalls, onReserve }) => {
+const BookingSummary = ({ selectedStalls, onReserve,quota }) => {
   
   if (selectedStalls?.length === 0) return null;
 
@@ -18,9 +18,12 @@ const BookingSummary = ({ selectedStalls, onReserve }) => {
           
           <div className="w-full lg:w-3/5">
             <div className="flex justify-between items-center mb-3">
-              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+              <p className=" text-slate-600 uppercase tracking-wider">
                 Selected Stalls ({selectedStalls?.length})
               </p>
+              <div className="text-center mb-2 text-red-500">
+                  Your Limit: <span className="font-bold text-blue-600">{selectedStalls.length}</span> / {quota} available slots
+              </div>
               <span className="text-xs text-slate-400 lg:hidden">
                 Scroll right for more →
               </span>
