@@ -1,7 +1,17 @@
 import React from "react";
 import { Mail, MapPin, Facebook, Twitter, Instagram, Send } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const quickLinks = [
+    { label: "About Us", path: "/about" },
+    { label: "Stall Availability", path: "/stallmap" },
+    { label: "Exhibitor Guidelines", path: "/reserve" },
+    { label: "Privacy Policy", path: "/" },
+  ];
+
   return (
     <footer className="bg-[#0f172a] text-gray-400 mt-16 px-[10%] pt-20 pb-6 font-sans">
       
@@ -26,18 +36,13 @@ const Footer = () => {
             QUICK LINKS
           </h4>
           <ul className="text-sm space-y-3">
-            {[
-              "About Us",
-              "Stall Availability",
-              "Floor Map",
-              "Exhibitor Guidelines",
-              "Privacy Policy",
-            ].map((item) => (
+            {quickLinks.map((item, index) => (
               <li
-                key={item}
+                key={index}
+                onClick={() => navigate(item.path)}
                 className="cursor-pointer transition-all duration-300 hover:text-orange-500 hover:pl-1"
               >
-                {item}
+                {item.label}
               </li>
             ))}
           </ul>
@@ -50,21 +55,15 @@ const Footer = () => {
           </h4>
           <ul className="text-sm space-y-4">
             <li>
-              <span className="block font-bold">
-                Mon - Thursday:
-              </span>
+              <span className="block font-bold">Mon - Thursday:</span>
               08:00 am - 09:00 pm
             </li>
             <li>
-              <span className="block font-bold">
-                Friday:
-              </span>
+              <span className="block font-bold">Friday:</span>
               03:00 pm - 09:00 pm
             </li>
             <li>
-              <span className="block font-bold">
-                Sat - Sunday:
-              </span>
+              <span className="block font-bold">Sat - Sunday:</span>
               08:00 am - 10:00 pm
             </li>
           </ul>
