@@ -9,12 +9,16 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from "./routes/ProtectedRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
+      <ScrollToTop />
       <NavBar />
-      <Toaster position="top-center" reverseOrder={false} />
+      <Toaster position="top-center" reverseOrder={false} containerStyle={{
+          top: 90,
+        }} />
       <Routes>
         
         <Route path="/login" element={<LoginPage />} />
