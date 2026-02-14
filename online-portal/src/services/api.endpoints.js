@@ -3,5 +3,5 @@ export const ENDPOINTS = {
   GET_BY_ID: "/stalls/", // GET: /api/v1/stalls/:id
   RESERVE: "/stalls/reserve", // POST: /api/v1/stalls/reserve
   LOGIN: "/auth/login", //POST : /api/v1/auth/login
-  REGISTER: "/auth/register",
+  REGISTER: "/auth/register", //POST : api/v1/auth/register
 };

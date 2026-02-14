@@ -44,7 +44,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-6">
-      <div className="text-center mb-8 lg:mt-8">
+      <div className="text-center mb-8">
         <h1 className="text-3xl font-bold">Publisher Portal</h1>
         <p className="text-gray-500 mt-2 max-w-md">
           Secure your stall at Sri Lanka’s largest literary event. Log in to
@@ -62,14 +62,14 @@ const LoginPage = () => {
                 : "text-gray-500"
             }`}
           >
-            Login
+            Sign In
           </button>
 
           <button
             onClick={() => navigate("/register")}
             className="flex-1 py-3 text-sm font-medium text-gray-500 hover:text-blue-600 transition"
           >
-            Register
+            Sign Up
           </button>
         </div>
 
@@ -132,12 +132,6 @@ const LoginPage = () => {
             Secure JWT Authentication Enabled
           </div>
         </div>
-      </div>
-
-      <div className="flex gap-8 text-xs text-gray-400 mt-8">
-        <span>GLOBAL REACH</span>
-        <span>SECURE PAYMENTS</span>
-        <span>OFFICIAL PORTAL</span>
       </div>
     </div>
   );
