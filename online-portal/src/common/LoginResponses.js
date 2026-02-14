@@ -1,19 +1,18 @@
-//LOGIN SUCCESS
 export const MOCK_LOGIN_SUCCESS = {
   status: "success",
   message: "Login successful",
   data: {
-    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mock.token", // Fake JWT
+    token: "eyJhbGciOiJIUzI1Ni...", // Fake JWT
     user: {
-      id: 1,
-      name: "Pabodha Student",
-      email: "student@uni.com",
-      role: "USER",
+      user_id: 101,
+      business_name: "Saman Publishers", // Matches your DB
+      email: "saman@example.com",
+      roles: "VENDOR",
+      no_of_current_bookings: 1,
     },
   },
 };
 
-//LOGIN FAILURE (Wrong Password)
 export const MOCK_LOGIN_FAIL = {
   status: "error",
   message: "Invalid email or password",

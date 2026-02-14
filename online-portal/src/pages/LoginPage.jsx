@@ -19,9 +19,17 @@ const LoginPage = () => {
     e.preventDefault();
     setIsLoading(true);
     try{
-      const data = await loginUser(email, password);
-      login(data.token);
-      console.log(data.token)
+      const response = await loginUser(email, password);
+
+      //Check the vendor role
+      if (response.user?.roles?.toUpperCase() !== "VENDOR") {
+        throw "Access Denied: This portal is for Vendors only.";
+      }
+
+      login(response.user, response.token);
+
+      console.log(response.user)
+      console.log(response.token)
       toast.success("Login Successful Welcome back!");
       navigate("/home");
 
