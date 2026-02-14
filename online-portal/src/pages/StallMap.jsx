@@ -61,7 +61,7 @@ const StallMap = () => {
 
   
 
-  //SELECTION LOGIC (TODO : Extend-how many stalls user already reserved )
+  //SELECTION LOGIC
   const handleStallClick = (stall) => {
    
     if (stall.isConfirmed === 1) return;

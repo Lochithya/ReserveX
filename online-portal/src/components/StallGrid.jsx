@@ -22,6 +22,8 @@ const StallGrid = ({
     );
   }
 
+  
+
   //EMPTY STATE
   if (!stalls || stalls.length === 0) {
     return (
@@ -35,7 +37,12 @@ const StallGrid = ({
 
   // 3. YOUR EXACT GRID UI
   return (
-    <div className="grid gap-2 min-w-max lg:gap-5" 
+    <div className="grid gap-2 min-w-max lg:gap-5 
+        bg-slate-50 
+        bg-[image:linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] 
+        bg-[size:58px_58px] 
+        lg:bg-[size:70px_70px] 
+        border-t border-l border-slate-200" 
       style={{
         gridAutoColumns: "50px",  // Width of 1 small block
         gridAutoRows: "50px",     // Height of 1 small block

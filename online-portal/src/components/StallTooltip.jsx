@@ -5,7 +5,7 @@ const StallTooltip = ({ stall, position }) => {
 
   return (
     <div
-      className="fixed z-100 animate-fade-in pointer-events-none"
+      className="fixed z-50 animate-fade-in pointer-events-none"
       style={{
         // Desktop - Use cursor coordinates
         left: position.x,
