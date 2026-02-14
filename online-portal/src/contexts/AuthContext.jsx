@@ -14,8 +14,14 @@ export const AuthProvider = ({ children }) => {
     //   "no_of_current_bookings": 1      // Used for UI validation (Max 3)
     // }
 
-    const [user, setUser] = useState(null);    
-    const [isAuthenticated,setIsAuthenticated] = useState(false)
+    const [user, setUser] = useState(() => {          //This runs ONCE when the app loads prevent relaod
+        const savedUser = localStorage.getItem("user");
+        return savedUser ? JSON.parse(savedUser) : null;
+    });    
+    const [isAuthenticated,setIsAuthenticated] = useState(() => {
+        // If we have a token we are authenticated
+        return !!localStorage.getItem("token"); 
+    })
     const [loading, setLoading] = useState(true);   //TODO: prevent Login Page Flash when refresh
 
     const login = (userData, token) => {
