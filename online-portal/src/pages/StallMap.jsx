@@ -6,16 +6,21 @@ import StallGrid from "../components/StallGrid";
 import { getAllStalls } from "../services/stall.service";
 import toast from "react-hot-toast";
 import { AuthContext } from "../contexts/AuthContext";
+import ReservationModal from "../components/ReservationModal";
+import { createReservation } from "../services/reservation.service";
+import { useNavigate } from "react-router-dom";
 
 const StallMap = () => {
 
-  const { user } = useContext(AuthContext);
+  const { user,login } = useContext(AuthContext);
   const [stalls,setStalls]= useState([]);
   const [selectedStalls, setSelectedStalls] = useState([]);
   const [hoveredStall, setHoveredStall] = useState(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
   const [isLoading, setIsLoading] = useState(true);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReserving, setIsReserving] = useState(false);
+  const navigate = useNavigate()
   // console.log(selectedStalls)
 
   const existingBookings = user?.no_of_current_bookings || 0;
@@ -33,6 +38,35 @@ const StallMap = () => {
           setIsLoading(false);
       }
   };
+
+
+  const handleConfirmReservation = async()=>{
+    setIsReserving(true);
+    try{
+      
+      const response = await createReservation(selectedStalls);
+
+      toast.success(response.message || "Reservation Confirmed! QR Code sent to email.");
+
+      setSelectedStalls([]); 
+      setIsModalOpen(false);
+      fetchStalls();
+
+      //increment it manually in the frontend context to be fast
+      const updatedUser = { 
+        ...user, 
+        no_of_current_bookings: user.no_of_current_bookings + selectedStalls.length 
+      };
+      login(updatedUser, localStorage.getItem("token"));
+      navigate("/home")
+
+    }catch(error){
+      toast.error(error|| "Reservation Failed. Please try again.");
+    }finally{
+      setIsReserving(false);
+    }
+
+  }
 
   
 
@@ -105,9 +139,10 @@ const StallMap = () => {
 
 
   const handleReserve = () => {
-   // Logic to open confirmation modal:TODO
-   alert(`Reserving ${selectedStalls.length} stalls...`);
+    setIsModalOpen(true); //open pop up
   };
+
+  
 
   return (
     <div className="flex flex-col item-center min-h-screen bg-gray-10 p-10 lg:py-5">
@@ -207,7 +242,13 @@ const StallMap = () => {
       
 
       {/* {confirmation box when reserve} */}
-
+      <ReservationModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={handleConfirmReservation}
+        selectedStalls={selectedStalls}
+        isLoading={isReserving}
+      />
 
       
       

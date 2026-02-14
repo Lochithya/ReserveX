@@ -25,7 +25,7 @@ const BookingSummary = ({ selectedStalls, onReserve,quota }) => {
                   Your Limit: <span className="font-bold text-blue-600">{selectedStalls.length}</span> / {quota} available slots
               </div>
               <span className="text-xs text-slate-400 lg:hidden">
-                Scroll right for more →
+                Scroll right for more
               </span>
             </div>
             
