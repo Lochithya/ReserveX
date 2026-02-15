@@ -10,7 +10,7 @@ const NavBar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/about");
+    navigate("/");
     setIsOpen(false);
   };
 
@@ -20,7 +20,7 @@ const NavBar = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/about" className="text-2xl font-bold text-white">
+            <Link to="/" className="text-2xl font-bold text-white">
               ReserveX
             </Link>
           </div>
@@ -29,10 +29,10 @@ const NavBar = () => {
           <div className="hidden md:flex md:items-center md:space-x-8">
             {!isAuthenticated ? (
               <>
-                <Link to="/about" className="text-white font-semibold">
+                <Link to="/" className="text-white ">
                   About Us
                 </Link>
-                <Link to="/contact" className="text-white font-semibold">
+                <Link to="/contact" className="text-white">
                   Contact Us
                 </Link>
                 <Link
@@ -44,8 +44,15 @@ const NavBar = () => {
               </>
             ) : (
               <>
+                
                 <Link to="/home" className="text-white">
                   Home
+                </Link>
+                <Link to="/" className="text-white">
+                  About Us
+                </Link>
+                <Link to="/contact" className="text-white ">
+                  Contact Us
                 </Link>
                 <Link
                   to="/stallMap"
@@ -83,7 +90,7 @@ const NavBar = () => {
             {!isAuthenticated ? (
               <>
                 <Link
-                  to="/about"
+                  to="/"
                   onClick={() => setIsOpen(false)}
                   className="block px-3 py-2 rounded-md text-base font-medium text-white"
                 >
@@ -106,12 +113,27 @@ const NavBar = () => {
               </>
             ) : (
               <>
+                
                 <Link
                   to="/home"
                   onClick={() => setIsOpen(false)}
                   className="block px-3 py-2 rounded-md text-base font-medium text-white"
                 >
                   Home
+                </Link>
+                <Link
+                  to="/"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-white"
+                >
+                  About Us
+                </Link>
+                <Link
+                  to="/contact"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-white"
+                >
+                  Contact Us
                 </Link>
                 <Link
                   to="/stallMap"
