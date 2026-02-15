@@ -5,4 +5,5 @@ export const ENDPOINTS = {
   LOGIN: "/auth/login", //POST : /api/v1/auth/login
   REGISTER: "/auth/register", //POST : api/v1/auth/register
   RESERVE: "/reserve",
+  DASHBOARD: "/reservations/my-history",
 };

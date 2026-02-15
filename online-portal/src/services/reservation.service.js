@@ -4,8 +4,12 @@ import {
   MOCK_RESERVATION_SUCCESS,
   MOCK_RESERVATION_FAIL,
 } from "../common/ReservationResponses";
+import {
+  MOCK_MY_RESERVATIONS,
+  MOCK_NO_RESERVATIONS,
+} from "../common/mockReservationDetails";
 
-const USE_MOCK_DATA = false;
+const USE_MOCK_DATA = true;
 
 export const createReservation = async (selectedStalls) => {
   // 1. Prepare Payload (Convert objects to just IDs)
@@ -42,5 +46,29 @@ export const createReservation = async (selectedStalls) => {
   } catch (error) {
     console.error("Reservation Error:", error);
     throw error.response?.data?.message || "Server connection failed";
+  }
+};
+
+export const getMyReservations = async () => {
+  //MOCK
+  if (USE_MOCK_DATA) {
+    return new Promise(
+      (resolve) => setTimeout(() => resolve(MOCK_MY_RESERVATIONS.data), 800),
+      // (resolve) => setTimeout(() => resolve(MOCK_NO_RESERVATIONS.data), 800),
+    );
+  }
+
+  //BACKEND
+  try {
+    const response = await api.get(ENDPOINTS.DASHBOARD);
+
+    if (response.data?.status === "success") {
+      return response.data.data;
+    }
+
+    return [];
+  } catch (error) {
+    console.error("Fetch History Error[getMyReservations service]:", error);
+    throw error.response?.data?.message || "Server Connection failed";
   }
 };
