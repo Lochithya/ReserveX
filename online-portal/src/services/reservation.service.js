@@ -8,6 +8,11 @@ import {
   MOCK_MY_RESERVATIONS,
   MOCK_NO_RESERVATIONS,
 } from "../common/mockReservationDetails";
+import {
+  MOCK_ALL_GENRES,
+  MOCK_NO_GENRES,
+  MOCK_UPDATE_GENRES_SUCCESS,
+} from "../common/GenreResponses";
 
 const USE_MOCK_DATA = true;
 
@@ -70,5 +75,50 @@ export const getMyReservations = async () => {
   } catch (error) {
     console.error("Fetch History Error[getMyReservations service]:", error);
     throw error.response?.data?.message || "Server Connection failed";
+  }
+};
+
+export const getAllGenres = async () => {
+  if (USE_MOCK_DATA) {
+    return new Promise(
+      (resolve) => setTimeout(() => resolve(MOCK_ALL_GENRES.data), 500),
+      // setTimeout(() => resolve(MOCK_NO_GENRES.data), 500),
+    );
+  }
+
+  try {
+    const response = await api.get(ENDPOINTS.GET_ALL_GENRES);
+
+    if (response.data?.status === "success") {
+      return response.data.data; // Returns: [{id:1, name:"Fiction"}, ...]
+    }
+    throw response.data?.message || "Not available";
+    return [];
+  } catch (error) {
+    console.error("Error in getAllgenre Servie:", error);
+    throw error || "Failed to load genre list";
+  }
+};
+
+export const updateReservationGenres = async (reservationId, genreList) => {
+  if (USE_MOCK_DATA) {
+    return new Promise((resolve) =>
+      setTimeout(() => resolve(MOCK_UPDATE_GENRES_SUCCESS), 1000),
+    );
+  }
+
+  try {
+    // URL: /api/reservations/501/genres
+    const url = ENDPOINTS.UPDATE_GENRES(reservationId);
+
+    // Body: { genres: ["Fiction", "Science"] }
+    const response = await api.post(url, { genres: genreList });
+
+    if (response.data?.status === "success") {
+      return response.data;
+    }
+  } catch (error) {
+    console.error("Error in updateGenre Service:", error);
+    throw error.response?.data?.message || "Server connection failed";
   }
 };

@@ -6,4 +6,6 @@ export const ENDPOINTS = {
   REGISTER: "/auth/register", //POST : api/v1/auth/register
   RESERVE: "/reserve",
   DASHBOARD: "/reservations/my-history",
+  GET_ALL_GENRES: "/genres",
+  UPDATE_GENRES: (id) => `/reservations/${id}/genres`,
 };

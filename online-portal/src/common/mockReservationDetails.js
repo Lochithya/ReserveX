@@ -7,7 +7,7 @@ export const MOCK_MY_RESERVATIONS = {
 
       size: "medium",
       status: "Approved",
-      genres: ["Fiction", "Science Fiction"],
+      genres: ["Fiction", "Science & Tech"],
     },
     {
       reservation_id: 502,

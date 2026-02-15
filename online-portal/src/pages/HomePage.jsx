@@ -12,16 +12,21 @@ import {
   PencilSquareIcon
 } from "@heroicons/react/24/outline";
 import { AuthContext } from "../contexts/AuthContext";
-import {getMyReservations} from "../services/reservation.service"
+import {getMyReservations,updateReservationGenres} from "../services/reservation.service"
 import toast from "react-hot-toast";
+import GenreModal from "../components/GenreModal";
 
 const HomePage = () => {
   const navigate = useNavigate();
 
   const { user } = useContext(AuthContext);
-  const [selectedGenres, setSelectedGenres] = useState(["Fiction", "Science Fiction"]);
+  const [selectedGenres, setSelectedGenres] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [editingRes, setEditingRes] = useState(null); // Which reservation are we editing?
+  const [saving, setSaving] = useState(false);
   
   
   useEffect(()=>{
@@ -37,6 +42,36 @@ const HomePage = () => {
       toast.error(error||"Failed to load reservations");
     } finally {
       setLoadingData(false);
+    }
+  };
+
+  const handleEditClick = (reservation) => {
+    setEditingRes(reservation); // Store the whole object (id, current genres, stall name)
+    setModalOpen(true);
+  };
+
+  const handleSaveGenres = async (reservationId, newGenres) => {
+    setSaving(true);
+    try {
+      
+      const response = await updateReservationGenres(reservationId, newGenres);
+
+      //Optimistic Update (Update UI immediately without reloading)
+      const updatedList = reservations.map((res) => 
+        res.reservation_id === reservationId 
+          ? { ...res, genres: newGenres } // Update just this row
+          : res
+      );
+      
+      setReservations(updatedList);
+      toast.success(response.message || "Genres updated successfully!");
+      setModalOpen(false); // Close Modal
+
+    } catch (error) {
+      console.error(error);
+      toast.error(error || "Failed to save genres");
+    } finally {
+      setSaving(false);
     }
   };
   
@@ -209,10 +244,10 @@ const HomePage = () => {
                     <td className="px-6 py-4 text-right">
                       <button 
                         onClick={() => handleEditClick(res)}
-                        className="text-blue-600 hover:text-blue-800 font-medium  flex items-center justify-end gap-1 ml-auto"
+                        className="text-blue-600 hover:text-blue-800  flex items-center justify-end gap-1 ml-auto"
                       >
-                        <PencilSquareIcon className="w-4 h-4" />
-                        Manage Genres
+                        <PencilSquareIcon className="w-5 h-5" />
+                        Select Genres
                       </button>
                     </td>
                   </tr>
@@ -225,6 +260,14 @@ const HomePage = () => {
       </div>
       
       </div>
+
+      <GenreModal 
+        isOpen={isModalOpen} 
+        onClose={() => setModalOpen(false)}
+        onSave={handleSaveGenres}
+        reservation={editingRes}
+        isLoading={saving}
+      />
       
     </div>
   );
