@@ -53,6 +53,7 @@ export default function AdminDashboard() {
           <p>Update your profile settings</p>
         </Link>
       </div>
+      <h1 className="dashboard-title">Admin Dashboard</h1>
 
       {/* ===== STATS CARDS ===== */}
       <div className="stats-grid">
