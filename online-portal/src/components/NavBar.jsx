@@ -29,7 +29,7 @@ const NavBar = () => {
           <div className="hidden md:flex md:items-center md:space-x-8">
             {!isAuthenticated ? (
               <>
-                <Link to="/" className="text-white ">
+                <Link to="/about" className="text-white ">
                   About Us
                 </Link>
                 <Link to="/contact" className="text-white">
@@ -48,7 +48,7 @@ const NavBar = () => {
                 <Link to="/home" className="text-white">
                   Home
                 </Link>
-                <Link to="/" className="text-white">
+                <Link to="/about" className="text-white">
                   About Us
                 </Link>
                 <Link to="/contact" className="text-white ">
