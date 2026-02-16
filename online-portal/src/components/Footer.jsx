@@ -6,7 +6,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const quickLinks = [
-    { label: "About Us", path: "/about" },
+    { label: "About Us", path: "/" },
     { label: "Stall Availability", path: "/stallmap" },
     { label: "Exhibitor Guidelines", path: "/reserve" },
     { label: "Privacy Policy", path: "/" },
