@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./AdminDashboard.css";
 
 export default function AdminDashboard() {
@@ -30,6 +31,28 @@ export default function AdminDashboard() {
   return (
     <div className="dashboard-container">
 
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Admin Dashboard</h1>
+      </div>
+
+      {/* ===== QUICK ACTIONS ===== */}
+      <div className="action-cards">
+        <Link to="/manage-stalls" className="action-card">
+          <span className="action-icon">⚙️</span>
+          <h3>Manage Stalls</h3>
+          <p>Add, edit, or remove stalls</p>
+        </Link>
+        <Link to="/view-stalls" className="action-card">
+          <span className="action-icon">👁️</span>
+          <h3>View Stalls</h3>
+          <p>View stall availability and map</p>
+        </Link>
+        <Link to="/admin-profile" className="action-card">
+          <span className="action-icon">👤</span>
+          <h3>Admin Profile</h3>
+          <p>Update your profile settings</p>
+        </Link>
+      </div>
       <h1 className="dashboard-title">Admin Dashboard</h1>
 
       {/* ===== STATS CARDS ===== */}
