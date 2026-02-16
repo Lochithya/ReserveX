@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext'; // Fixed this line
-import Login from './pages/login'; // Ensure this matches your file name (Capital 'L')
+import Login from './pages/login';
 import Dashboard from "./pages/Dashboard";
+import AdminProfile from "./pages/AdminProfile";
 
 function App() {
   return (
@@ -12,8 +13,9 @@ function App() {
       {/* Wrap in Router to enable navigation (useNavigate) */}
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin-profile" element={<AdminProfile />} />
         </Routes>
       </Router>
 
