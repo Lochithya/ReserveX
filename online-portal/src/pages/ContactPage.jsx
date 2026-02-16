@@ -51,10 +51,11 @@ const ContactPage = () => {
 
             <button
               type="submit"
-              className="w-full py-3 rounded-lg text-white font-semibold transition bg-[var(--primary-color)] hover:bg-[var(--primary-hover)]"
-            >
-              Send Message
+                 className="w-full py-3 rounded-lg text-white font-semibold transition bg-blue-600 hover:bg-blue-700"
+             >
+                Send Message
             </button>
+
 
           </form>
 
