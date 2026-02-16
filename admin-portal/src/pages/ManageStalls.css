@@ -13,7 +13,7 @@
 
 .manage-stalls-header h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 36px;
   font-weight: 600;
   color: #2c3e50;
 }
@@ -51,7 +51,7 @@
 .btn-sm {
   padding: 6px 12px;
   font-size: 13px;
-  margin-right: 8px;
+  margin-right: 16px;
 }
 
 .btn-edit {
@@ -134,11 +134,45 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.table-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
 .stalls-table-container h2 {
-  margin: 0 0 16px 0;
+  margin: 0;
   font-size: 18px;
   font-weight: 600;
   color: #2c3e50;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.search-input {
+  padding: 8px 12px 8px 36px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  min-width: 250px;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
 }
 
 .stalls-table {

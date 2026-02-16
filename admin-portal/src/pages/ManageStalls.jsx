@@ -21,6 +21,7 @@ export default function ManageStalls() {
   const [showForm, setShowForm] = useState(false);
   const [removeConfirmId, setRemoveConfirmId] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -90,6 +91,10 @@ export default function ManageStalls() {
   };
 
   const handleCancel = () => resetForm();
+
+  const filteredStalls = stalls.filter((stall) =>
+    stall.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <div className="manage-stalls">
@@ -193,7 +198,31 @@ export default function ManageStalls() {
       )}
 
       <div className="stalls-table-container">
-        <h2>All Stalls</h2>
+        <div className="table-header-row">
+          <h2>All Stalls</h2>
+          <div className="search-input-wrapper">
+            <svg
+              className="search-icon"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.3333 10.3333H10.6267L10.3733 10.0867C11.1733 9.12667 11.6667 7.90667 11.6667 6.58333C11.6667 3.42667 9.07333 0.833333 5.91667 0.833333C2.76 0.833333 0.166667 3.42667 0.166667 6.58333C0.166667 9.74 2.76 12.3333 5.91667 12.3333C7.24 12.3333 8.46 11.84 9.42 11.04L9.66667 11.2933V12L14.1667 16.4867L15.5133 15.14L11.3333 10.3333ZM5.91667 10.3333C3.84 10.3333 2.16667 8.66 2.16667 6.58333C2.16667 4.50667 3.84 2.83333 5.91667 2.83333C7.99333 2.83333 9.66667 4.50667 9.66667 6.58333C9.66667 8.66 7.99333 10.3333 5.91667 10.3333Z"
+                fill="#666"
+              />
+            </svg>
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Search by stall name..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
         <table className="stalls-table">
           <thead>
             <tr>
@@ -204,14 +233,16 @@ export default function ManageStalls() {
             </tr>
           </thead>
           <tbody>
-            {stalls.length === 0 ? (
+            {filteredStalls.length === 0 ? (
               <tr>
                 <td colSpan="4" className="empty-message">
-                  No stalls yet. Click "Add Stall" to create one.
+                  {stalls.length === 0
+                    ? "No stalls yet. Click \"Add Stall\" to create one."
+                    : "No stalls found matching your search."}
                 </td>
               </tr>
             ) : (
-              stalls.map((stall) => (
+              filteredStalls.map((stall) => (
                 <tr key={stall.id}>
                   <td>{stall.name}</td>
                   <td>{stall.size}</td>
