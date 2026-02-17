@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import StallsPieChart from "../components/StallsPieChart";
 import "./AdminDashboard.css";
 
 export default function AdminDashboard() {
@@ -71,6 +72,11 @@ export default function AdminDashboard() {
           <h3>Available</h3>
           <p>{stats.available}</p>
         </div>
+      </div>
+
+      {/* ===== PIE CHART ===== */}
+      <div className="chart-container">
+        <StallsPieChart available={stats.available} reserved={stats.reserved} />
       </div>
 
       {/* ===== RECENT RESERVATIONS TABLE ===== */}
