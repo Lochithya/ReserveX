@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-public class AuthService {
-
-=======
 package com.reservex.backend.services;
 
 import com.reservex.backend.config.JwtUtil;
@@ -58,5 +54,4 @@ public class AuthService {
                 .role(principal.getRole())
                 .build();
     }
->>>>>>> Stashed changes
 }

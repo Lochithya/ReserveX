@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-public class StallController {
-
-=======
 package com.reservex.backend.controllers;
 
 import com.reservex.backend.dto.StallDto;
@@ -23,5 +19,4 @@ public class StallController {
     public ResponseEntity<List<StallDto>> getAllStalls() {
         return ResponseEntity.ok(stallService.getAllStallsWithAvailability());
     }
->>>>>>> Stashed changes
 }

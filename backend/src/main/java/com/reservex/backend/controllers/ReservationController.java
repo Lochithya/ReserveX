@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-public class ReservationController {
-
-=======
 package com.reservex.backend.controllers;
 
 import com.reservex.backend.config.UserPrincipal;
@@ -51,5 +47,4 @@ public class ReservationController {
     public ResponseEntity<List<ReservationDto>> getMyReservations(@AuthenticationPrincipal UserPrincipal principal) {
         return ResponseEntity.ok(reservationService.getMyReservations(principal.getId()));
     }
->>>>>>> Stashed changes
 }

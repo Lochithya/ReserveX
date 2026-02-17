@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-public class EmailService {
-
-=======
 package com.reservex.backend.services;
 
 import com.reservex.backend.entity.Reservation;
@@ -65,5 +61,4 @@ public class EmailService {
                 reservation.getQrCodeToken()
         );
     }
->>>>>>> Stashed changes
 }

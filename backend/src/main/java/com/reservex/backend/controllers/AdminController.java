@@ -1,4 +1,5 @@
-<<<<<<< Updated upstream
+package com.reservex.backend.controllers;
+
 public class AdminController {
 
 =======
@@ -31,5 +32,4 @@ public class AdminController {
     public ResponseEntity<List<ReservationDto>> getAllReservations() {
         return ResponseEntity.ok(reservationService.getAllReservations());
     }
->>>>>>> Stashed changes
 }

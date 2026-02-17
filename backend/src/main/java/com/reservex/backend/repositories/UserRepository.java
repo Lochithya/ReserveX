@@ -1,7 +1,3 @@
-<<<<<<< Updated upstream
-public class UserRepository {
-
-=======
 package com.reservex.backend.repositories;
 
 import com.reservex.backend.entity.User;
@@ -14,5 +10,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     boolean existsByEmail(String email);
->>>>>>> Stashed changes
 }
