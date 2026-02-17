@@ -54,29 +54,30 @@ export default function AdminDashboard() {
           <p>Update your profile settings</p>
         </Link>
       </div>
-      <h1 className="dashboard-title">Admin Dashboard</h1>
+      
 
-      {/* ===== STATS CARDS ===== */}
-      <div className="stats-grid">
-        <div className="card">
-          <h3>Total Stalls</h3>
-          <p>{stats.total}</p>
+      {/* ===== STALLS OVERVIEW (heading + chart + stats) ===== */}
+      <div className="stalls-overview-section">
+        <h2 className="stalls-overview-heading">Stalls Overview</h2>
+        <div className="chart-container">
+          <div className="chart-with-stats">
+            <StallsPieChart available={stats.available} reserved={stats.reserved} />
+            <div className="stats-stack">
+              <div className="card">
+                <h3>Total Stalls</h3>
+                <p>{stats.total}</p>
+              </div>
+              <div className="card reserved">
+                <h3>Reserved</h3>
+                <p>{stats.reserved}</p>
+              </div>
+              <div className="card available">
+                <h3>Available</h3>
+                <p>{stats.available}</p>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <div className="card reserved">
-          <h3>Reserved</h3>
-          <p>{stats.reserved}</p>
-        </div>
-
-        <div className="card available">
-          <h3>Available</h3>
-          <p>{stats.available}</p>
-        </div>
-      </div>
-
-      {/* ===== PIE CHART ===== */}
-      <div className="chart-container">
-        <StallsPieChart available={stats.available} reserved={stats.reserved} />
       </div>
 
       {/* ===== RECENT RESERVATIONS TABLE ===== */}
