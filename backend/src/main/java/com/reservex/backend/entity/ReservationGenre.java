@@ -26,7 +26,7 @@ public class ReservationGenre {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id", nullable = false)
     private Reservation reservation;
-
+ 
     @Column(name = "genre_name", nullable = false)
     private String genreName;
 

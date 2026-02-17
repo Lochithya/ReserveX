@@ -28,7 +28,7 @@ public class Stall {
 
     private int gridCol;
 
-    private int gridRow;
+    private int gridRow; 
 
     @Column(name = "is_Confirmed")
     private Boolean isConfirmed;
