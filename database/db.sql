@@ -36,9 +36,13 @@ Table reservation_stalls {
 }
 
 Table reservation_genres {
-  id int [pk, increment]
   reservation_id int
+  stall_id int
   genre_name varchar
+
+  indexes {
+    (reservation_id, stall_id, genre_name) [pk]
+  }
 }
 
 Ref: reservations.user_id > users.user_id
