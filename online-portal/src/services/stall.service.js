@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import api from "../services/api";
 import { ENDPOINTS } from "../services/api.endpoints";
 import { mockStalls2, mockStalls, mockStallE } from "../common/mockData";
@@ -57,4 +58,15 @@ export const getAllStalls = async () => {
       "Server connection failed"
     ); //What user see
   }
+=======
+import API from "./api";
+
+/**
+ * Fetch all stalls with availability (reserved or not).
+ * Used to display the exhibition map with available stalls.
+ */
+export const getAllStalls = async () => {
+  const { data } = await API.get("/stalls");
+  return data;
+>>>>>>> Stashed changes
 };

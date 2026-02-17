@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import api from "./api";
 import { ENDPOINTS } from "./api.endpoints";
 import { MOCK_LOGIN_SUCCESS, MOCK_LOGIN_FAIL } from "../common/LoginResponses";
@@ -75,4 +76,18 @@ export const registerUser = async (userData) => {
     console.error("Register Service Error: ", error);
     throw error.response?.data?.message || "Server Connection Failed";
   }
+=======
+import API from "./api";
+
+export const login = async (username, password) => {
+  return API.post("/auth/login", { username, password });
+};
+
+export const register = async (data) => {
+  return API.post("/auth/register", data);
+};
+
+export const logout = () => {
+  localStorage.removeItem("token");
+>>>>>>> Stashed changes
 };

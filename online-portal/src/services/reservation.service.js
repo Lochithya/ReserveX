@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import api from "./api";
 import { ENDPOINTS } from "./api.endpoints";
 import {
@@ -121,4 +122,32 @@ export const updateReservationGenres = async (reservationId, genreList) => {
     console.error("Error in updateGenre Service:", error);
     throw error.response?.data?.message || "Server connection failed";
   }
+=======
+import API from "./api";
+
+/**
+ * Create one reservation for a stall.
+ * @param {number} stallId - Stall ID to reserve
+ */
+export const createReservation = async (stallId) => {
+  const { data } = await API.post("/reservations", { stallId });
+  return data;
+};
+
+/**
+ * Create multiple reservations in one request (max 3 per business).
+ * @param {number[]} stallIds - Array of stall IDs to reserve
+ */
+export const createReservations = async (stallIds) => {
+  const { data } = await API.post("/reservations", { stallIds });
+  return data;
+};
+
+/**
+ * Get current user's reservations.
+ */
+export const getMyReservations = async () => {
+  const { data } = await API.get("/reservations/my");
+  return data;
+>>>>>>> Stashed changes
 };
