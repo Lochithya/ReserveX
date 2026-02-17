@@ -58,10 +58,29 @@
   font-weight: normal;
 }
 
-.stats-grid {
-  display: flex;
-  gap: 20px;
+.stalls-overview-section {
   margin-bottom: 40px;
+}
+
+.stalls-overview-heading {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  color: #2d3748;
+}
+
+.chart-with-stats {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.chart-with-stats .stats-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-shrink: 0;
+  min-width: 180px;
+  margin-left: auto;
 }
 
 .card {
@@ -115,20 +134,24 @@
 
 /* ===== CHART STYLES ===== */
 .chart-container {
+  flex: 1;
   background: white;
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 40px;
 }
 
-.pie-chart-container {
+.pie-chart-inner {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pie-chart-wrapper {
   width: 100%;
-}
-
-.pie-chart-container h3 {
-  margin-bottom: 20px;
-  font-size: 18px;
-  color: #2d3748;
+  max-width: 520px;
+  margin: 0 auto;
 }
 

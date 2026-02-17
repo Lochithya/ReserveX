@@ -10,9 +10,9 @@ export default function StallsPieChart({ available, reserved }) {
   const COLORS = ["#4CAF50", "#FF6B6B"];
 
   return (
-    <div className="pie-chart-container">
-      <h3>Stalls Overview</h3>
-      <ResponsiveContainer width="100%" height={300}>
+    <div className="pie-chart-inner">
+      <div className="pie-chart-wrapper">
+      <ResponsiveContainer width="100%" height={420}>
         <PieChart>
           <Pie
             data={data}
@@ -22,7 +22,7 @@ export default function StallsPieChart({ available, reserved }) {
             label={({ name, value, percent }) =>
               `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
             }
-            outerRadius={100}
+            outerRadius={160}
             fill="#8884d8"
             dataKey="value"
           >
@@ -34,6 +34,7 @@ export default function StallsPieChart({ available, reserved }) {
           <Legend />
         </PieChart>
       </ResponsiveContainer>
+      </div>
     </div>
   );
 }
