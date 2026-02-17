@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import api from "./api";
 import { ENDPOINTS } from "./api.endpoints";
 import { MOCK_LOGIN_SUCCESS, MOCK_LOGIN_FAIL } from "../common/LoginResponses";
@@ -77,6 +78,8 @@ export const registerUser = async (userData) => {
     throw error.response?.data?.message || "Server Connection Failed";
   }
 =======
+=======
+>>>>>>> Stashed changes
 import API from "./api";
 
 export const login = async (username, password) => {
@@ -89,5 +92,8 @@ export const register = async (data) => {
 
 export const logout = () => {
   localStorage.removeItem("token");
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 };

@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import api from "./api";
 import { ENDPOINTS } from "./api.endpoints";
 import {
@@ -123,6 +124,8 @@ export const updateReservationGenres = async (reservationId, genreList) => {
     throw error.response?.data?.message || "Server connection failed";
   }
 =======
+=======
+>>>>>>> Stashed changes
 import API from "./api";
 
 /**
@@ -149,5 +152,8 @@ export const createReservations = async (stallIds) => {
 export const getMyReservations = async () => {
   const { data } = await API.get("/reservations/my");
   return data;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 };
