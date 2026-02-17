@@ -63,7 +63,7 @@ export default function AdminProfile() {
         </div>
       )}
 
-      <div className="profile-section">
+      <div className="profile-section profile-picture-section">
         <h2>Profile Picture</h2>
         <div className="profile-picture-container">
           <div className="profile-picture-wrapper">
@@ -93,71 +93,74 @@ export default function AdminProfile() {
         </div>
       </div>
 
-      <div className="profile-section">
-        <h2>Update Profile</h2>
-        <form onSubmit={handleProfileSubmit} className="profile-form">
-          <div className="form-group">
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              value={profile.name}
-              onChange={handleProfileChange}
-            />
+      <div className="profile-section profile-update-section">
+        <div className="profile-forms-row">
+          <div className="profile-form-col">
+            <h2>Update Profile</h2>
+            <form id="profile-form" onSubmit={handleProfileSubmit} className="profile-form">
+              <div className="form-group">
+                <label htmlFor="name">Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={profile.name}
+                  onChange={handleProfileChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={profile.email}
+                  onChange={handleProfileChange}
+                />
+              </div>
+              <button type="submit" className="btn btn-primary">Update Profile</button>
+            </form>
           </div>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={profile.email}
-              onChange={handleProfileChange}
-            />
+          <div className="profile-form-col">
+            <h2>Change Password</h2>
+            <form id="password-form" onSubmit={handlePasswordSubmit} className="profile-form">
+              <div className="form-group">
+                <label htmlFor="current">Current Password</label>
+                <input
+                  type="password"
+                  id="current"
+                  name="current"
+                  value={password.current}
+                  onChange={handlePasswordChange}
+                  placeholder="Enter current password"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="new">New Password</label>
+                <input
+                  type="password"
+                  id="new"
+                  name="new"
+                  value={password.new}
+                  onChange={handlePasswordChange}
+                  placeholder="Enter new password"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="confirm">Confirm New Password</label>
+                <input
+                  type="password"
+                  id="confirm"
+                  name="confirm"
+                  value={password.confirm}
+                  onChange={handlePasswordChange}
+                  placeholder="Confirm new password"
+                />
+              </div>
+              <button type="submit" className="btn btn-primary">Change Password</button>
+            </form>
           </div>
-          <button type="submit" className="btn btn-primary">Update Profile</button>
-        </form>
-      </div>
-
-      <div className="profile-section">
-        <h2>Change Password</h2>
-        <form onSubmit={handlePasswordSubmit} className="profile-form">
-          <div className="form-group">
-            <label htmlFor="current">Current Password</label>
-            <input
-              type="password"
-              id="current"
-              name="current"
-              value={password.current}
-              onChange={handlePasswordChange}
-              placeholder="Enter current password"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="new">New Password</label>
-            <input
-              type="password"
-              id="new"
-              name="new"
-              value={password.new}
-              onChange={handlePasswordChange}
-              placeholder="Enter new password"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="confirm">Confirm New Password</label>
-            <input
-              type="password"
-              id="confirm"
-              name="confirm"
-              value={password.confirm}
-              onChange={handlePasswordChange}
-              placeholder="Confirm new password"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">Change Password</button>
-        </form>
+        </div>
       </div>
     </div>
   );
