@@ -1,105 +1,56 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 import api from "./api";
-import { ENDPOINTS } from "./api.endpoints";
-import { MOCK_LOGIN_SUCCESS, MOCK_LOGIN_FAIL } from "../common/LoginResponses";
-import {
-  MOCK_REGISTER_SUCCESS,
-  MOCK_REGISTER_FAIL,
-} from "../common/RegisterResponses";
 
-const USE_MOCK_DATA = true;
+// Simple mock-friendly auth helpers used by pages and AuthContext
+const USE_MOCK = true;
 
 export const loginUser = async (email, password) => {
-  //MOCK MODE
-  if (USE_MOCK_DATA) {
+  if (USE_MOCK) {
+    // Return shape expected by LoginPage: { user, token }
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         if (email === "saman@example.com" && password === "123") {
-          resolve(MOCK_LOGIN_SUCCESS.data); // Return { token, user }
+          resolve({
+            user: {
+              user_id: 101,
+              username: "saman_pub",
+              business_name: "Saman Publishers",
+              email: "saman@example.com",
+              roles: "vendor",
+              no_of_current_bookings: 0,
+            },
+            token: "mock-token-abc-123",
+          });
         } else {
-          reject(MOCK_LOGIN_FAIL.message); // Return "Invalid email..."
+          reject("Invalid email or password");
         }
-      }, 1000);
+      }, 700);
     });
   }
 
-  //BACKEND MODE
   try {
-    const response = await api.post(ENDPOINTS.LOGIN, { email, password });
-
-    if (response.data?.status === "success") {
-      return response.data?.data; //Returns { token, user{ data: } } with 200OK
-    }
-
-    if (response.data.status === "error") {
-      throw response.data?.message || "Login failed"; //in response it should send 400 code
-    }
-  } catch (error) {
-    console.error("Failed Send the request [loginUser Service]:", error);
-    throw (
-      error.response?.message ||
-      error.response?.data?.message ||
-      "Server connection failed"
-    ); //What user see
+    const res = await api.post("/auth/login", { email, password });
+    return res.data;
+  } catch (err) {
+    console.error("loginUser error:", err);
+    throw err?.response?.data?.message || "Login failed";
   }
 };
 
 export const registerUser = async (userData) => {
-  //MOCK MODE
-  if (USE_MOCK_DATA) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (userData.email === "exist@test.com") {
-          reject(MOCK_REGISTER_FAIL.message);
-        } else {
-          resolve(MOCK_REGISTER_SUCCESS);
-        }
-      }, 1000);
-    });
+  if (USE_MOCK) {
+    return new Promise((resolve) => setTimeout(() => resolve({ success: true }), 600));
   }
 
-  //BACKEND MODE
   try {
-    const payload = {
-      ...userData,
-      roles: "vendor", //force the role to 'vendor' here for security
-    };
-
-    const response = await api.post(ENDPOINTS.REGISTER, payload);
-
-    if (response.data?.status === "success") {
-      return response.data;
-    }
-
-    throw response.data?.message || "Registration Failed";
-  } catch (error) {
-    console.error("Register Service Error: ", error);
-    throw error.response?.data?.message || "Server Connection Failed";
+    const res = await api.post("/auth/register", userData);
+    return res.data;
+  } catch (err) {
+    console.error("registerUser error:", err);
+    throw err?.response?.data?.message || "Registration failed";
   }
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-import API from "./api";
-
-export const login = async (username, password) => {
-  return API.post("/auth/login", { username, password });
-};
-
-export const register = async (data) => {
-  return API.post("/auth/register", data);
 };
 
 export const logout = () => {
   localStorage.removeItem("token");
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 };
+    
