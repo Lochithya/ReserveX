@@ -1,5 +1,6 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import api from "./api";
 import { ENDPOINTS } from "./api.endpoints";
 import {
@@ -126,6 +127,8 @@ export const updateReservationGenres = async (reservationId, genreList) => {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 import API from "./api";
 
 /**
@@ -153,6 +156,9 @@ export const getMyReservations = async () => {
   const { data } = await API.get("/reservations/my");
   return data;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

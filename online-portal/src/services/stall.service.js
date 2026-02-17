@@ -1,5 +1,6 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import api from "../services/api";
 import { ENDPOINTS } from "../services/api.endpoints";
 import { mockStalls2, mockStalls, mockStallE } from "../common/mockData";
@@ -62,6 +63,8 @@ export const getAllStalls = async () => {
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 import API from "./api";
 
 /**
@@ -72,6 +75,9 @@ export const getAllStalls = async () => {
   const { data } = await API.get("/stalls");
   return data;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
