@@ -3,7 +3,7 @@ import API from "./api";
 /**
  * Get literary genres added by the current user for the exhibition.
  */
-export const getMyGenres = async () => {
+export const getAllGenres = async () => {
   const { data } = await API.get("/genres");
   return data;
 };

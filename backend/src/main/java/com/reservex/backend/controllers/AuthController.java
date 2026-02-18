@@ -1,7 +1,7 @@
 package com.reservex.backend.controllers;
 
-import com.reservex.backend.dto.JwtResponse;
 import com.reservex.backend.dto.LoginRequest;
+import com.reservex.backend.dto.LoginResponse;
 import com.reservex.backend.dto.RegisterRequest;
 import com.reservex.backend.entity.User;
 import com.reservex.backend.services.AuthService;
@@ -32,7 +32,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         try {
-            JwtResponse response = authService.login(request.getUsername(), request.getPassword());
+            LoginResponse response = authService.login(request.getUsername(), request.getPassword());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorMessage("Invalid credentials"));

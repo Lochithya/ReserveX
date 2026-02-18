@@ -35,7 +35,7 @@ public class EmailService {
             helper.setSubject("Colombo International Book Fair - Stall Reservation Confirmed");
             String body = buildConfirmationBody(user, reservation);
             helper.setText(body, true);
-            helper.addAttachment("reservation-qr.png", () -> new org.springframework.core.io.ByteArrayResource(qrBytes));
+            helper.addAttachment("reservation-qr.png", new org.springframework.core.io.ByteArrayResource(qrBytes));
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException("Failed to send confirmation email", e);
@@ -43,21 +43,26 @@ public class EmailService {
     }
 
     private String buildConfirmationBody(User user, Reservation reservation) {
+        String stallInfo = reservation.getStalls().isEmpty()
+                ? "Stall"
+                : reservation.getStalls().stream()
+                        .map(s -> s.getName() + " (" + s.getSize() + ")")
+                        .reduce((a, b) -> a + ", " + b)
+                        .orElse("Stall");
         return """
             <h2>Stall Reservation Confirmed</h2>
             <p>Dear %s,</p>
             <p>Your stall reservation for the Colombo International Book Fair has been confirmed.</p>
             <p><strong>Business:</strong> %s</p>
-            <p><strong>Stall:</strong> %s (%s)</p>
+            <p><strong>Stalls:</strong> %s</p>
             <p><strong>Reservation ID:</strong> %s</p>
             <p>Please find your unique QR code attached. This QR code acts as your pass to enter the exhibition premises. Keep it safe and present it at the venue.</p>
             <p>Thank you for participating in the Colombo International Book Fair.</p>
             <p>— Sri Lanka Book Publishers' Association</p>
             """.formatted(
-                user.getContactPerson() != null ? user.getContactPerson() : "Vendor",
                 user.getBusinessName(),
-                reservation.getStall().getName(),
-                reservation.getStall().getSize(),
+                user.getBusinessName(),
+                stallInfo,
                 reservation.getQrCodeToken()
         );
     }

@@ -26,7 +26,7 @@ public class ReservationDto {
         return ReservationDto.builder()
                 .id(r.getId())
                 .qrCodeToken(r.getQrCodeToken())
-                .createdAt(r.getCreatedAt())
+                .createdAt(r.getReservationDate())
                 .stalls(stallDtos)
                 .build();
     }

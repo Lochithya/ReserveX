@@ -1,9 +1,5 @@
 package com.reservex.backend.controllers;
 
-public class AdminController {
-
-=======
-package com.reservex.backend.controllers;
 
 import com.reservex.backend.dto.ReservationDto;
 import com.reservex.backend.dto.StallDto;

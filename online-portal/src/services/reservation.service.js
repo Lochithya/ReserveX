@@ -38,3 +38,7 @@ export const getMyReservations = async () => {
     throw err?.response?.data?.message || "Failed to fetch reservations";
   }
 };
+
+
+export const updateReservationGenres = async (reservationId, newGenres) => {
+}

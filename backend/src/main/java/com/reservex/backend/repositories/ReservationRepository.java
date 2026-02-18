@@ -13,9 +13,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
     int countByUser(User user);
 
-    Optional<Reservation> findTopByUserOrderByCreatedAtDesc(User user);
+    Optional<Reservation> findTopByUserOrderByReservationDateDesc(User user);
 
-    Optional<Reservation> findByQrCodeToken(String qrCodeToken);
+    Optional<Reservation> findByQrCodePath(String qrCodePath);
 
     /**
      * Used to check whether a given stall is already attached to any reservation.
