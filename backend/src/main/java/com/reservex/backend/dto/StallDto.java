@@ -11,7 +11,8 @@ public class StallDto {
     private Long id;
     private String name;
     private String size;
-    private String dimensions;
+    private int gridCol;
+    private int gridRow;
     private boolean reserved;
 
     public static StallDto fromEntity(Stall stall, boolean reserved) {
@@ -19,7 +20,8 @@ public class StallDto {
                 .id(stall.getId())
                 .name(stall.getName())
                 .size(stall.getSize().name())
-                .dimensions(stall.getDimensions())
+                .gridCol(stall.getGridCol())
+                .gridRow(stall.getGridRow())
                 .reserved(reserved)
                 .build();
     }
