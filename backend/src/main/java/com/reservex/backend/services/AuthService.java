@@ -39,9 +39,6 @@ public class AuthService {
                 .username(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .businessName(request.getBusinessName())
-                .contactPerson(request.getContactPerson())
-                .phone(request.getPhone())
-                .address(request.getAddress())
                 .role(User.Role.VENDOR)
                 .build();
         return userRepository.save(user);

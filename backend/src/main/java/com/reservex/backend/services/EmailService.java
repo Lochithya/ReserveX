@@ -27,7 +27,7 @@ public class EmailService {
             return; // skip if mail not configured
         }
         try {
-            byte[] qrBytes = qrCodeService.generateQrCodeForReservation(reservation.getQrCodeToken());
+            byte[] qrBytes = qrCodeService.generateQrCodeForReservation(reservation.getQrCodePath());
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setFrom(fromEmail);
@@ -35,7 +35,7 @@ public class EmailService {
             helper.setSubject("Colombo International Book Fair - Stall Reservation Confirmed");
             String body = buildConfirmationBody(user, reservation);
             helper.setText(body, true);
-            helper.addAttachment("reservation-qr.png", () -> new org.springframework.core.io.ByteArrayResource(qrBytes));
+            helper.addAttachment("reservation-qr.png", new org.springframework.core.io.ByteArrayResource(qrBytes));
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException("Failed to send confirmation email", e);
@@ -61,10 +61,10 @@ public class EmailService {
             <p>Thank you for participating in the Colombo International Book Fair.</p>
             <p>— Sri Lanka Book Publishers' Association</p>
             """.formatted(
-                user.getContactPerson() != null ? user.getContactPerson() : "Vendor",
+                user.getBusinessName() != null ? user.getBusinessName() : "Vendor",
                 user.getBusinessName(),
                 stallList.toString(),
-                reservation.getQrCodeToken()
+                reservation.getQrCodePath()
         );
     }
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllGenres } from "../services/reservation.service";
+import { getAllGenres } from "../services/genre.service";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
 
@@ -8,7 +8,7 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
   const [selected, setSelected] = useState([]);
   const [isLoadingGenres, setIsLoadingGenres] = useState(true);
 
-  
+
   useEffect(() => {
     if (isOpen && reservation) {
       loadGenres();
@@ -21,7 +21,7 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
     setIsLoadingGenres(true);
     try {
       const genres = await getAllGenres();
-      setAvailableGenres(genres); 
+      setAvailableGenres(genres);
     } catch (error) {
       toast.error(error || "Could not load genre list");
     } finally {
@@ -42,14 +42,14 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      
+
       {/* Backdrop */}
       <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={onClose}></div>
 
-      
+
       <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden animate-scale-up">
-        
-        
+
+
         <div className="bg-slate-50 px-6 py-4 border-b border-slate-100 flex justify-between items-center">
           <div>
             <h3 className="font-bold text-slate-800">Manage Genres</h3>
@@ -69,14 +69,14 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
           </p>
 
           {isLoadingGenres ? (
-            
+
             <div className="flex gap-2 flex-wrap animate-pulse">
-               <div className="h-8 w-20 bg-slate-200 rounded-full"></div>
-               <div className="h-8 w-24 bg-slate-200 rounded-full"></div>
-               <div className="h-8 w-16 bg-slate-200 rounded-full"></div>
+              <div className="h-8 w-20 bg-slate-200 rounded-full"></div>
+              <div className="h-8 w-24 bg-slate-200 rounded-full"></div>
+              <div className="h-8 w-16 bg-slate-200 rounded-full"></div>
             </div>
           ) : (
-            
+
             <div className="flex flex-wrap gap-2">
               {availableGenres.map((g) => {
                 const isSelected = selected.includes(g.name);
@@ -85,8 +85,8 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
                     key={g.id}
                     onClick={() => toggleGenre(g.name)}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all
-                      ${isSelected 
-                        ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-200" 
+                      ${isSelected
+                        ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-200"
                         : "bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-50"}
                     `}
                   >
@@ -103,7 +103,7 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
           <button onClick={onClose} className="text-sm font-medium text-slate-500 hover:text-slate-700 px-4">
             Cancel
           </button>
-          <button 
+          <button
             onClick={() => onSave(reservation.reservation_id, selected)}
             disabled={isSaving}
             className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-2 rounded-lg shadow-sm disabled:opacity-70 flex items-center gap-2"

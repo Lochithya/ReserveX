@@ -58,6 +58,10 @@
 		</dependency>
 
 		<dependency>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 72b72cb9ae323bb2f4643c66c6a6a419b32eccf6
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.12.6</version>
@@ -125,6 +129,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
 		</dependency>
 	</dependencies>
 

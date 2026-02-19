@@ -42,7 +42,12 @@ export const registerUser = async (userData) => {
   }
 
   try {
-    const res = await api.post("/auth/register", userData);
+    const res = await api.post("/auth/register", {
+      email: userData.email,
+      password: userData.password,
+      businessName: userData.business_name,  // map snake to camel
+      username: userData.username || userData.email
+    });
     return res.data;
   } catch (err) {
     console.error("registerUser error:", err);

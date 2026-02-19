@@ -26,7 +26,7 @@ public class ReservationGenreService {
      * This matches the {@code reservation_id} foreign key in the reservation_genres table.
      */
     private Reservation getLatestReservationForUser(User user) {
-        return reservationRepository.findTopByUserOrderByCreatedAtDesc(user)
+        return reservationRepository.findTopByUserOrderByReservationDateDesc(user)
                 .orElseThrow(() -> new IllegalStateException("No reservations found for user"));
     }
 
