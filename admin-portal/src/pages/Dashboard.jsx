@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import StallsPieChart from "../components/StallsPieChart";
 import NavBar from "../components/NavBar";
+import { AuthContext } from "../contexts/AuthContext";
 import "./AdminDashboard.css";
 
 export default function AdminDashboard() {
+  const { user } = useContext(AuthContext);
 
   const [stats, _setStats] = useState({
     total: 120,
@@ -29,7 +31,10 @@ export default function AdminDashboard() {
       <NavBar />
 
       <div className="dashboard-header">
-        <h1 className="dashboard-title">Admin Dashboard</h1>
+        <div className="header-left">
+          <p className="greeting">Hi {user?.username || "Admin"}!</p>
+          <h1 className="dashboard-title">Admin Dashboard</h1>
+        </div>
       </div>
 
       {/* ===== QUICK ACTIONS ===== */}
