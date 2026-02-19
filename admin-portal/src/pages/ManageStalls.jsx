@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavBar from "../components/NavBar";
 import "./ManageStalls.css";
 
 const STALL_SIZES = ["Small", "Medium", "Large"];
@@ -98,6 +99,8 @@ export default function ManageStalls() {
 
   return (
     <div className="manage-stalls">
+      <NavBar />
+
       {successMessage && (
         <div className="success-message">
           {successMessage}

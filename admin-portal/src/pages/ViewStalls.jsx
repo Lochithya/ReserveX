@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import axios from "axios";
+import NavBar from "../components/NavBar";
 import "./ViewStalls.css";
 
 const SIZE_OPTIONS = [
@@ -70,6 +71,8 @@ export default function ViewStalls() {
 
   return (
     <div className="view-stalls-page">
+      <NavBar />
+
       <h2 className="view-stalls-title">View Stalls</h2>
 
       <div className="view-stalls-controls">
