@@ -7,7 +7,7 @@ import lombok.Data;
 public class LoginRequest {
 
     @NotBlank
-    private String username; // email for vendors
+    private String email; // email for vendors
 
     @NotBlank
     private String password;

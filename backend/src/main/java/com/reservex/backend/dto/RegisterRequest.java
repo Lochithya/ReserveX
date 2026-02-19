@@ -22,7 +22,5 @@ public class RegisterRequest {
     @NotBlank(message = "Business name is required")
     private String businessName;
 
-    private String contactPerson;
-    private String phone;
-    private String address;
+
 }

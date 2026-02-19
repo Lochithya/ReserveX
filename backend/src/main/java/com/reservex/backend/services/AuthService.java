@@ -32,7 +32,7 @@ public class AuthService {
         var user = User.builder()
                 .email(request.getEmail())
                 // keep username in sync with email for now
-                .username(request.getEmail())
+                .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .businessName(request.getBusinessName())
 //                .contactPerson(request.getContactPerson())

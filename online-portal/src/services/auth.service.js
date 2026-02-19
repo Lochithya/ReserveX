@@ -1,48 +1,59 @@
 import api from "./api";
 
 // Simple mock-friendly auth helpers used by pages and AuthContext
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 export const loginUser = async (email, password) => {
-  if (USE_MOCK) {
-    // Return shape expected by LoginPage: { user, token }
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (email === "saman@example.com" && password === "123") {
-          resolve({
-            user: {
-              user_id: 101,
-              username: "saman_pub",
-              business_name: "Saman Publishers",
-              email: "saman@example.com",
-              roles: "vendor",
-              no_of_current_bookings: 0,
-            },
-            token: "mock-token-abc-123",
-          });
-        } else {
-          reject("Invalid email or password");
-        }
-      }, 700);
-    });
-  }
+  // if (USE_MOCK) {
+  //   // Return shape expected by LoginPage: { user, token }
+  //   return new Promise((resolve, reject) => {
+  //     setTimeout(() => {
+  //       if (email === "saman@example.com" && password === "123") {
+  //         resolve({
+  //           user: {
+  //             user_id: 101,
+  //             username: "saman_pub",
+  //             business_name: "Saman Publishers",
+  //             email: "saman@example.com",
+  //             roles: "vendor",
+  //             no_of_current_bookings: 0,
+  //           },
+  //           token: "mock-token-abc-123",
+  //         });
+  //       } else {
+  //         reject("Invalid email or password");
+  //       }
+  //     }, 700);
+  //   });
+  // }
 
   try {
     const res = await api.post("/auth/login", { email, password });
-    return res.data;
+    const { token, user } = res.data;
+    if (token) {
+      localStorage.setItem("jwt_token", token);
+      localStorage.setItem("user_data", JSON.stringify(user));
+    }
+    return {token,user};
   } catch (err) {
-    console.error("loginUser error:", err);
+    console.error("Auth Service error:", err);
     throw err?.response?.data?.message || "Login failed";
   }
 };
 
 export const registerUser = async (userData) => {
-  if (USE_MOCK) {
-    return new Promise((resolve) => setTimeout(() => resolve({ success: true }), 600));
-  }
+  // if (USE_MOCK) {
+  //   return new Promise((resolve) => setTimeout(() => resolve({ success: true }), 600));
+  // }
 
   try {
-    const res = await api.post("/auth/register", userData);
+    const res = await api.post("/auth/register", {
+      email: userData.email,
+      password: userData.password,
+      businessName: userData.business_name,  // map snake to camel
+      username: userData.username || userData.email
+    });
+    console.log("res", res);
     return res.data;
   } catch (err) {
     console.error("registerUser error:", err);
@@ -51,6 +62,7 @@ export const registerUser = async (userData) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("jwt_token");
+  localStorage.removeItem("user_data");
 };
     

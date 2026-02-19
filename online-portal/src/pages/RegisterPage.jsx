@@ -10,7 +10,7 @@ const RegisterPage = () => {
     username: "",
     email: "",
     password: "",
-    confirmPassword:""
+    confirmPassword: ""
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -26,10 +26,10 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
 
     if (formData.password !== formData.confirmPassword) {
-      toast.success("Password doesnt match");
+      toast.error("Password doesnt match");
       return;
     }
 
@@ -37,13 +37,13 @@ const RegisterPage = () => {
 
     try {
       const response = await registerUser(formData);
-      toast.success(response.message || "Account created! Please login.")
+      toast.success("Account created! Please login.")
       navigate("/login");
 
     } catch (error) {
       toast.error(error);
 
-    }finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -70,119 +70,119 @@ const RegisterPage = () => {
         </div>
 
         <div className="p-8">
-        <h2 className="text-xl font-semibold text-center">Sign Up</h2>
+          <h2 className="text-xl font-semibold text-center">Sign Up</h2>
           <p className="text-sm text-gray-500 text-center mb-6">
             Create your vendor account to start reserving stalls.
           </p>
-        <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-5">
 
-          <div className="relative">
-            <label className="block text-sm mb-2">Buissnes Name</label>
             <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <BuildingStorefrontIcon className="h-5 w-5" />
-            </span>
-            <input
-              type="text"
-              name="BuissnesName"
-              placeholder="Business Name (e.g. Sarasavi Publishers)"
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+              <label className="block text-sm mb-2">Buissnes Name</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <BuildingStorefrontIcon className="h-5 w-5" />
+                </span>
+                <input
+                  type="text"
+                  name="BuissnesName"
+                  placeholder="Business Name (e.g. Sarasavi Publishers)"
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="relative">
-            <label className="block text-sm mb-2">Username</label>
             <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <UserIcon className="h-5 w-5" />
-            </span>
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+              <label className="block text-sm mb-2">Username</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <UserIcon className="h-5 w-5" />
+                </span>
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="relative">
-            <label className="block text-sm mb-2">Email Address</label>
             <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <EnvelopeIcon className="h-5 w-5" />
-            </span>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+              <label className="block text-sm mb-2">Email Address</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <EnvelopeIcon className="h-5 w-5" />
+                </span>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email Address"
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="relative">
-            <label className="block text-sm mb-2">Password</label>
             <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <LockClosedIcon className="h-5 w-5" />
-            </span>
-            <input
-              type="password"
-              name="password"
-              placeholder="Create Password"
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+              <label className="block text-sm mb-2">Password</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <LockClosedIcon className="h-5 w-5" />
+                </span>
+                <input
+                  type="password"
+                  name="password"
+                  placeholder="Create Password"
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
             </div>
-          </div>
 
-          <div className="relative">
-            <label className="block text-sm mb-2">Confirm Password</label>
             <div className="relative">
-            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-              <LockClosedIcon className="h-5 w-5" />
-            </span>
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="Re-enter Your Password"
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
+              <label className="block text-sm mb-2">Confirm Password</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <LockClosedIcon className="h-5 w-5" />
+                </span>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Re-enter Your Password"
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-gray-300 rounded-lg px-10 py-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+              </div>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className={`w-full py-3 rounded-lg text-white font-semibold transition
+            <button
+              type="submit"
+              disabled={isLoading}
+              className={`w-full py-3 rounded-lg text-white font-semibold transition
               ${isLoading ? "bg-blue-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"}
             `}
-          >
-            {isLoading ? "Creating Account..." : "Sign Up"}
-          </button>
+            >
+              {isLoading ? "Creating Account..." : "Sign Up"}
+            </button>
 
-        </form>
-        
+          </form>
 
-        <p className="text-center text-gray-500 mt-8">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-500 hover:underline">
-            Login
-          </Link>
-        </p>
 
+          <p className="text-center text-gray-500 mt-8">
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-500 hover:underline">
+              Login
+            </Link>
+          </p>
+
+        </div>
       </div>
-    </div>
     </div>
 
   );
