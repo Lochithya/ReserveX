@@ -1,3 +1,7 @@
+// generate QR (token or image)
+// store path/token
+
+
 package com.reservex.backend.services;
 
 import com.google.zxing.BarcodeFormat;

@@ -1,8 +1,5 @@
-package com.reservex.backend.controllers;
+// Admin endpoints to view all stalls and reservations
 
-public class AdminController {
-
-=======
 package com.reservex.backend.controllers;
 
 import com.reservex.backend.dto.ReservationDto;

@@ -1,3 +1,8 @@
+// register user (hash password)
+// login (validate password)
+// issue JWT
+
+
 package com.reservex.backend.services;
 
 import com.reservex.backend.config.JwtUtil;

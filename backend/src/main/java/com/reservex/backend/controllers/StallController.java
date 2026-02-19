@@ -1,3 +1,7 @@
+// Fetch stalls for map (gridRow/gridCol)
+// Possibly admin stall CRUD endpoints if included
+
+
 package com.reservex.backend.controllers;
 
 import com.reservex.backend.dto.StallDto;

@@ -1,3 +1,6 @@
+// A “custom user object” Spring Security stores inside the session/security context
+// Lets you access principal.getId() and user details easily in controllers
+
 package com.reservex.backend.config;
 
 import com.reservex.backend.entity.User;

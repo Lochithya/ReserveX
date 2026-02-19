@@ -1,3 +1,7 @@
+// get stalls for UI
+// admin add/remove stalls
+
+
 package com.reservex.backend.services;
 
 import com.reservex.backend.dto.StallDto;

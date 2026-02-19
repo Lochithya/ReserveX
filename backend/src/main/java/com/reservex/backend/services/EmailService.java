@@ -43,12 +43,19 @@ public class EmailService {
     }
 
     private String buildConfirmationBody(User user, Reservation reservation) {
+        // Build stall list
+        StringBuilder stallList = new StringBuilder();
+        reservation.getStalls().forEach(s -> 
+            stallList.append("<li>").append(s.getName()).append(" (").append(s.getSize()).append(")</li>")
+        );
+        
         return """
             <h2>Stall Reservation Confirmed</h2>
             <p>Dear %s,</p>
             <p>Your stall reservation for the Colombo International Book Fair has been confirmed.</p>
             <p><strong>Business:</strong> %s</p>
-            <p><strong>Stall:</strong> %s (%s)</p>
+            <p><strong>Stalls Reserved:</strong></p>
+            <ul>%s</ul>
             <p><strong>Reservation ID:</strong> %s</p>
             <p>Please find your unique QR code attached. This QR code acts as your pass to enter the exhibition premises. Keep it safe and present it at the venue.</p>
             <p>Thank you for participating in the Colombo International Book Fair.</p>
@@ -56,8 +63,7 @@ public class EmailService {
             """.formatted(
                 user.getContactPerson() != null ? user.getContactPerson() : "Vendor",
                 user.getBusinessName(),
-                reservation.getStall().getName(),
-                reservation.getStall().getSize(),
+                stallList.toString(),
                 reservation.getQrCodeToken()
         );
     }

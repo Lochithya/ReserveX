@@ -15,7 +15,8 @@ public class ReservationDto {
 
     private Long id;
     private String qrCodeToken;
-    private Instant createdAt;
+    private Instant reservationDate;
+    private String status;
     private List<ReservationStallDto> stalls;
 
     public static ReservationDto fromEntity(Reservation r) {
@@ -26,7 +27,8 @@ public class ReservationDto {
         return ReservationDto.builder()
                 .id(r.getId())
                 .qrCodeToken(r.getQrCodeToken())
-                .createdAt(r.getCreatedAt())
+                .reservationDate(r.getReservationDate())
+                .status(r.getStatus().name())
                 .stalls(stallDtos)
                 .build();
     }

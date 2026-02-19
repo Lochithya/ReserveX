@@ -12,9 +12,6 @@ public class RegisterRequest {
     @Email
     private String email;
 
-    // Optional separate username; if not provided we fall back to the email.
-    private String username;
-
     @NotBlank(message = "Password is required")
     @Size(min = 6)
     private String password;
@@ -22,7 +19,4 @@ public class RegisterRequest {
     @NotBlank(message = "Business name is required")
     private String businessName;
 
-    private String contactPerson;
-    private String phone;
-    private String address;
 }

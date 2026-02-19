@@ -1,3 +1,7 @@
+// Reserve stall(s) endpoint
+// “My reservations” endpoint
+
+
 package com.reservex.backend.controllers;
 
 import com.reservex.backend.config.UserPrincipal;

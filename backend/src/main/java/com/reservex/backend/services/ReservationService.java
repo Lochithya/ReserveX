@@ -1,3 +1,8 @@
+// “max 3 stalls” rule
+// create reservation + link stalls
+//cancel reservation
+
+
 package com.reservex.backend.services;
 
 import com.reservex.backend.dto.ReservationDto;
@@ -94,7 +99,7 @@ public class ReservationService {
     public List<ReservationDto> getMyReservations(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        return reservationRepository.findByUserOrderByCreatedAtDesc(user).stream()
+        return reservationRepository.findByUserOrderByReservationDateDesc(user).stream()
                 .map(ReservationDto::fromEntity)
                 .collect(Collectors.toList());
     }

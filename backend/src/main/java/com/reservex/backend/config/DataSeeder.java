@@ -1,3 +1,6 @@
+// Inserts sample data at startup (e.g., admin user / sample stalls) if you coded it that way
+
+
 package com.reservex.backend.config;
 
 import com.reservex.backend.entity.Stall;

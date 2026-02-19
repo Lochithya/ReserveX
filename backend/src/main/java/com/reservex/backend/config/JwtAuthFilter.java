@@ -1,3 +1,9 @@
+// Intercepts every request
+// Reads Authorization: Bearer <token>
+// Validates token using JwtUtil
+// If valid, sets authenticated user into SecurityContext
+
+
 package com.reservex.backend.config;
 
 import jakarta.servlet.FilterChain;
@@ -5,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +24,7 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -33,8 +41,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 var auth = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                log.debug("JWT token validated for user: {}", email);
             }
+        } catch (Exception e) {
+            log.debug("Could not set user authentication in security context", e);
         } catch (Exception ignored) {
         }
         filterChain.doFilter(request, response);

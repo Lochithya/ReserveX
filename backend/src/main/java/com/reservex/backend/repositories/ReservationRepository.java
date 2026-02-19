@@ -9,11 +9,11 @@ import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
-    List<Reservation> findByUserOrderByCreatedAtDesc(User user);
+    List<Reservation> findByUserOrderByReservationDateDesc(User user);
 
     int countByUser(User user);
 
-    Optional<Reservation> findTopByUserOrderByCreatedAtDesc(User user);
+    Optional<Reservation> findTopByUserOrderByReservationDateDesc(User user);
 
     Optional<Reservation> findByQrCodeToken(String qrCodeToken);
 

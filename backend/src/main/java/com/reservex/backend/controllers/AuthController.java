@@ -1,3 +1,7 @@
+// Register/login endpoints
+// Returns JWT (token) after login
+
+
 package com.reservex.backend.controllers;
 
 import com.reservex.backend.dto.JwtResponse;

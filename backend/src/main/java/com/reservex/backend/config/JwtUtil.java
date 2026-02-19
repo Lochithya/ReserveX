@@ -1,3 +1,8 @@
+// Creates JWT tokens
+// Extracts email/username from token
+// Validates token
+
+
 package com.reservex.backend.config;
 
 import io.jsonwebtoken.*;

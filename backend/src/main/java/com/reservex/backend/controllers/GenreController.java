@@ -1,3 +1,6 @@
+// Add/remove genres for reservations
+
+
 package com.reservex.backend.controllers;
 
 import com.reservex.backend.config.UserPrincipal;
