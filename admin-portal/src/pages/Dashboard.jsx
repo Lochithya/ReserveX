@@ -1,36 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import StallsPieChart from "../components/StallsPieChart";
+import NavBar from "../components/NavBar";
 import "./AdminDashboard.css";
 
 export default function AdminDashboard() {
 
-  const [stats, setStats] = useState({
-    total: 0,
-    reserved: 0,
-    available: 0
+  const [stats, _setStats] = useState({
+    total: 120,
+    reserved: 75,
+    available: 45
   });
 
-  const [reservations, setReservations] = useState([]);
+  const [reservations, _setReservations] = useState([
+    { id: 1, business: "ABC Publishers", stall: "A12", size: "Large" },
+    { id: 2, business: "Book Hub", stall: "B04", size: "Medium" },
+    { id: 3, business: "Readers Point", stall: "C21", size: "Small" }
+  ]);
 
   // 🔹 Replace these with real API calls later
   useEffect(() => {
-    // Dummy data for UI testing
-    setStats({
-      total: 120,
-      reserved: 75,
-      available: 45
-    });
-
-    setReservations([
-      { id: 1, business: "ABC Publishers", stall: "A12", size: "Large" },
-      { id: 2, business: "Book Hub", stall: "B04", size: "Medium" },
-      { id: 3, business: "Readers Point", stall: "C21", size: "Small" }
-    ]);
+    // Future API calls will go here
+    // For now, dummy data is initialized in useState above
   }, []);
 
   return (
     <div className="dashboard-container">
+      <NavBar />
 
       <div className="dashboard-header">
         <h1 className="dashboard-title">Admin Dashboard</h1>

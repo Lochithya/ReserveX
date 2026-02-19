@@ -4,7 +4,6 @@ import { AuthProvider } from './contexts/AuthContext'; // Fixed this line
 import Login from './pages/login';
 import Dashboard from "./pages/Dashboard";
 import AdminProfile from "./pages/AdminProfile";
-import { useState } from 'react'
 import './App.css'
 import ViewStalls from './pages/ViewStalls.jsx'
 import ManageStalls from './pages/ManageStalls.jsx'
