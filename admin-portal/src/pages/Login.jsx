@@ -40,6 +40,7 @@ const Login = () => {
                 setError('Invalid username or password.');
             }
         } catch (err) {
+            console.error('Login error:', err);
             setError('Server error. Please try again later.');
         } finally {
             setLoading(false); // Re-enable button
