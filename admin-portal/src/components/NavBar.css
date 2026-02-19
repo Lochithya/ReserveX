@@ -1,5 +1,5 @@
 .admin-navbar {
-  background-color: #2c3e50;
+  background-color: #007bff;
   color: white;
   padding: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -36,6 +36,22 @@
   color: #ecf0f1;
 }
 
+.navbar-title-link {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ecf0f1;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+  cursor: pointer;
+}
+
+.navbar-title-link:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
 .navbar-right {
   display: flex;
   gap: 20px;
@@ -47,7 +63,7 @@
   gap: 8px;
   padding: 10px 15px;
   text-decoration: none;
-  color: #bdc3c7;
+  color: white;
   border-radius: 5px;
   transition: background-color 0.3s, color 0.3s;
 }
@@ -60,6 +76,15 @@
 .navbar-item.active {
   background-color: #3498db;
   color: white;
+}
+
+.navbar-item.back-button {
+  /* No background color - same as other navbar items */
+}
+
+.navbar-item.back-button:hover {
+  background-color: #34495e;
+  color: #ecf0f1;
 }
 
 .navbar-icon {
