@@ -57,8 +57,7 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-<<<<<<< Updated upstream
-=======
+
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.12.6</version>
@@ -86,7 +85,6 @@
 			<version>3.5.3</version>
 		</dependency>
 		<dependency>
->>>>>>> Stashed changes
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
@@ -115,6 +113,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+    		<groupId>com.fasterxml.jackson.core</groupId>
+    		<artifactId>jackson-databind</artifactId>
 		</dependency>
 	</dependencies>
 

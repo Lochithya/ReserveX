@@ -46,6 +46,7 @@ public class Reservation {
     @Column(name = "qr_code_path")
     private String qrCodePath;
 
+
     public enum Status {
         Pending,
         Approved,
