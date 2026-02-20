@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { Menu, X } from "lucide-react";
-import logo from "../assets/logo.jpeg";   
+import logo from "../assets/logo.jpeg";
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -18,20 +18,22 @@ const NavBar = () => {
   return (
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 shadow-sm">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
-          
-        
-<div className="flex-shrink-0 -ml-9">
-  <Link to="/" className="flex items-center">
-    <img
-      src={logo}
-      alt="ReserveX Logo"
-      className="h-16 w-auto object-contain rounded-lg"
-    />
-  </Link>
-</div>
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="flex items-center gap-2.5 group">
+            
+            <div className="flex items-center justify-center bg-white/20 backdrop-blur-md rounded-xl shadow-sm group-hover:bg-white/30 transition p-2">
+              <img
+                src={logo}
+                alt="ReserveX"
+                className="h-12 w-auto object-contain"
+              />
+            </div>
 
-         
+            <span className="text-white text-lg font-semibold tracking-wide group-hover:tracking-wider transition-all duration-200">
+              ReserveX
+            </span>
+          </Link>
+
           <div className="hidden md:flex md:items-center md:space-x-8">
             {!isAuthenticated ? (
               <>
@@ -50,7 +52,6 @@ const NavBar = () => {
               </>
             ) : (
               <>
-                
                 <Link to="/home" className="text-white">
                   Home
                 </Link>
@@ -62,7 +63,7 @@ const NavBar = () => {
                 </Link>
                 <Link
                   to="/stallMap"
-                  className="inline-block px-5 py-2 bg-white text-blue-600 rounded-full text-sm font-medium"
+                  className="px-5 py-2 bg-white text-blue-600 rounded-full text-sm font-semibold shadow hover:shadow-md hover:scale-105 transition"
                 >
                   Reserve a stall
                 </Link>
@@ -76,7 +77,6 @@ const NavBar = () => {
             )}
           </div>
 
-         
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -119,7 +119,6 @@ const NavBar = () => {
               </>
             ) : (
               <>
-                
                 <Link
                   to="/home"
                   onClick={() => setIsOpen(false)}
@@ -161,7 +160,6 @@ const NavBar = () => {
       )}
     </nav>
   );
-
 };
 
 export default NavBar;
