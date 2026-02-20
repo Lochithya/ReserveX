@@ -4,7 +4,7 @@ import { AuthContext } from '../contexts/AuthContext';
 
 const Login = () => {
     // State to hold user input
-    const [credentials, setCredentials] = useState({ username: '', password: '' });
+    const [credentials, setCredentials] = useState({ email: '', password: '' });
     
     // State to handle UI feedback (errors and loading spinner)
     const [error, setError] = useState('');
@@ -31,13 +31,13 @@ const Login = () => {
 
         try {
             // Call the login function from AuthContext
-            const success = await login(credentials.username, credentials.password);
+            const success = await login(credentials.email, credentials.password);
             
             if (success) {
                 // Redirect to the Dashboard on success
                 navigate('/dashboard');
             } else {
-                setError('Invalid username or password.');
+                setError('Invalid email or password.');
             }
         } catch (err) {
             console.error('Login error:', err);
@@ -58,15 +58,15 @@ const Login = () => {
 
                 <form onSubmit={handleSubmit} style={styles.form}>
                     <div style={styles.inputGroup}>
-                        <label style={styles.label}>Username</label>
+                        <label style={styles.label}>Email Address</label>
                         <input
-                            type="text"
-                            name="username"
-                            value={credentials.username}
+                            type="email"
+                            name="email"
+                            value={credentials.email}
                             onChange={handleChange}
                             style={styles.input}
                             required
-                            placeholder="Enter admin ID"
+                            placeholder="admin@example.com"
                         />
                     </div>
 
