@@ -13,17 +13,17 @@ public class StallDto {
     private String size;
     private int gridCol;
     private int gridRow;
-    private boolean reserved;
+    private boolean isConfirmed;
     private Double price;
 
-    public static StallDto fromEntity(Stall stall, boolean reserved) {
+    public static StallDto fromEntity(Stall stall) {
         return StallDto.builder()
                 .id(stall.getId())
                 .name(stall.getName())
                 .size(stall.getSize().name())
                 .gridCol(stall.getGridCol())
                 .gridRow(stall.getGridRow())
-                .reserved(reserved)
+                .isConfirmed(Boolean.TRUE.equals(stall.getIsConfirmed()))
                 .price(stall.getPrice())
                 .build();
     }

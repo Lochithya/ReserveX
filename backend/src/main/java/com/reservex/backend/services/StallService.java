@@ -24,14 +24,9 @@ public class StallService {
 
     @Transactional(readOnly = true)
     public List<StallDto> getAllStallsWithAvailability() {
-        List<Stall> stalls = stallRepository.findAllByOrderByNameAsc();
-        return stalls.stream()
-                .map(s -> StallDto.fromEntity(s, reservationRepository.existsByStalls_Id(s.getId())))
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public List<Stall> findAllByOrderByName() {
-        return stallRepository.findAllByOrderByNameAsc();
-    }
+    return stallRepository.findAllByOrderByNameAsc()
+            .stream()
+            .map(stall -> StallDto.fromEntity(stall))
+            .toList();
+}
 }
