@@ -19,19 +19,18 @@ const NavBar = () => {
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 shadow-sm">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2.5 group">
-            
-            <div className="flex items-center justify-center bg-white/20 backdrop-blur-md rounded-xl shadow-sm group-hover:bg-white/30 transition p-2">
-              <img
-                src={logo}
-                alt="ReserveX"
-                className="h-12 w-auto object-contain"
-              />
-            </div>
+          <Link to="/" className="flex items-center gap-3">
+          
+            <img
+              src={logo}
+              alt="ReserveX Logo"
+              className="h-11 w-auto object-contain"
+            />
 
-            <span className="text-white text-lg font-semibold tracking-wide group-hover:tracking-wider transition-all duration-200">
+          
+            <h1 className="text-white text-2xl font-bold tracking-wide">
               ReserveX
-            </span>
+            </h1>
           </Link>
 
           <div className="hidden md:flex md:items-center md:space-x-8">
