@@ -98,7 +98,7 @@ export default function ManageStalls() {
   );
 
   return (
-    <div className="manage-stalls">
+    <div className="manage-stalls-background">
       <NavBar />
 
       {successMessage && (

@@ -24,8 +24,10 @@ public class EmailService {
     @Async
     public void sendReservationConfirmation(User user, Reservation reservation) {
         if (fromEmail == null || fromEmail.isBlank()) {
+            System.out.println(">>> fromEmail value: [" + fromEmail + "]");
             return; // skip if mail not configured
         }
+
         try {
             byte[] qrBytes = qrCodeService.generateQrCodeForReservation(reservation.getQrCodePath());
             MimeMessage message = mailSender.createMimeMessage();

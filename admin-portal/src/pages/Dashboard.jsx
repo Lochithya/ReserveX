@@ -48,7 +48,7 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-background">
       <NavBar />
 
       <div className="dashboard-header">
@@ -136,7 +136,6 @@ export default function AdminDashboard() {
           </tbody>
         </table>
       </div>
-
     </div>
   );
 }

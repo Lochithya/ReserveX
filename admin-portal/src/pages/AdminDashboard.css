@@ -1,3 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-background {
+  margin:0; 
+  padding: 0 0 30px 0;
+  font-family: Arial, sans-serif;
+  background: #e6f2ff;
+  min-height: 100vh;
+}
+
 .dashboard-container {
   margin:0; 
   padding: 30px;
@@ -10,8 +23,13 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-bottom: 25px;
-  margin-top: 20px;
+  margin: 20px 30px 25px 30px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .header-left {
@@ -34,7 +52,7 @@
 .action-cards {
   display: flex;
   gap: 20px;
-  margin-bottom: 40px;
+  margin: 0 30px 40px 30px;
   flex-wrap: wrap;
 }
 
@@ -74,7 +92,7 @@
 }
 
 .stalls-overview-section {
-  margin-bottom: 40px;
+  margin: 0 30px 40px 30px;
 }
 
 .stalls-overview-heading {
@@ -128,6 +146,7 @@
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin: 0 30px;
 }
 
 .table-container table {

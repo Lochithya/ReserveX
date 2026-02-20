@@ -70,7 +70,7 @@ export default function ViewStalls() {
   const hasActiveFilter = sizeFilter || sortOrder !== "asc";
 
   return (
-    <div className="view-stalls-page">
+    <div className="view-stalls-background">
       <NavBar />
 
       <h3 className="view-stalls-title">View Stalls</h3>

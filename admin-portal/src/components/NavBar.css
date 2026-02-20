@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Playfair+Display:wght@700&display=swap');
+
 .admin-navbar {
   background-color: #005bb5;
   color: white;
@@ -26,7 +28,7 @@
 }
 
 .navbar-logo {
-  height: 40px;
+  height: 70px;
   width: auto;
 }
 
@@ -35,6 +37,13 @@
   font-weight: bold;
   margin: 0;
   color: #ecf0f1;
+}
+
+.reservex-title {
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 3px;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .navbar-title-link {
@@ -75,19 +84,16 @@
   color: #ecf0f1;
 }
 
-.navbar-item.active {
-  background-color: #3498db;
-  color: white;
-}
-
-.navbar-item.back-button {
-  /* No background color - same as other navbar items */
-}
-
-.navbar-item.back-button:hover {
+.navbar-item.active-page {
   background-color: #34495e;
   color: #ecf0f1;
 }
+
+.navbar-item.active-page:hover {
+  background-color: #34495e;
+  color: #ecf0f1;
+}
+
 
 .navbar-icon {
   font-size: 1.2rem;
@@ -107,6 +113,7 @@
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin-right: 10px;
 }
 
 .navbar-user-avatar {
