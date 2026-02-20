@@ -26,9 +26,9 @@ export const createReservation = async (selectedStalls) => {
 };
 
 export const getMyReservations = async () => {
-  if (USE_MOCK) {
-    return new Promise((resolve) => setTimeout(() => resolve([]), 300));
-  }
+  // if (USE_MOCK) {
+  //   return new Promise((resolve) => setTimeout(() => resolve([]), 300));
+  // }
 
   try {
     const res = await api.get("/reservations/my");

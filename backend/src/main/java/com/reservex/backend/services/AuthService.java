@@ -55,6 +55,7 @@ public class AuthService {
                 .email(principal.getEmail())
                 .businessName(principal.getBusinessName())
                 .role(principal.getRole())
+                .noOfCurrentBookings(principal.getNoOfCurrentBookings())
                 .build();
     }
 }

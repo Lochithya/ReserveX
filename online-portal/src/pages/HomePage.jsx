@@ -39,6 +39,7 @@ const HomePage = () => {
     try {
       const data = await getMyReservations();
       setReservations(data);
+      console.log(data)
     } catch (error) {
       console.log(error)
       toast.error(error || "Failed to load reservations");
@@ -154,7 +155,7 @@ const HomePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <StatCard
             title="Active Reservations"
-            value={user.no_of_current_bookings}
+            value={user.noOfCurrentBookings}
             icon={<TicketIcon className="w-6 h-6 text-blue-600" />}
             bg="bg-blue-50"
           />
@@ -213,10 +214,12 @@ const HomePage = () => {
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     {reservations.map((res) => (
-                      <tr key={res.reservation_id} className="hover:bg-slate-50 transition">
-                        <td className="px-6 py-4 font-mono text-slate-500">#{res.reservation_id}</td>
+                      <tr key={res.id} className="hover:bg-slate-50 transition">
+                        <td className="px-6 py-4 font-mono text-slate-500">#{res.id}</td>
 
-                        <td className="px-6 py-4 font-semibold text-slate-700">{res.stall_name}</td>
+                        <td className="px-6 py-4 font-semibold text-slate-700">
+                          {res.stalls?.map(s => s.name).join(", ")}
+                        </td>
 
                         <td className="px-6 py-4">
                           <span className="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-semibold border border-emerald-200">
@@ -224,17 +227,16 @@ const HomePage = () => {
                           </span>
                         </td>
 
-                        {/* GENRES COLUMN */}
                         <td className="px-6 py-4">
                           {res.genres && res.genres.length > 0 ? (
                             <div className="flex flex-wrap gap-1">
                               {res.genres.slice(0, 3).map(g => (
-                                <span key={g} className=" bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100">
+                                <span key={g} className="bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100">
                                   {g}
                                 </span>
                               ))}
                               {res.genres.length > 3 && (
-                                <span className=" text-slate-400 pl-1">+{res.genres.length - 3} more</span>
+                                <span className="text-slate-400 pl-1">+{res.genres.length - 3} more</span>
                               )}
                             </div>
                           ) : (
@@ -242,11 +244,10 @@ const HomePage = () => {
                           )}
                         </td>
 
-                        {/* ACTION BUTTON */}
                         <td className="px-6 py-4 text-right">
                           <button
                             onClick={() => handleEditClick(res)}
-                            className="text-blue-600 hover:text-blue-800  flex items-center justify-end gap-1 ml-auto"
+                            className="text-blue-600 hover:text-blue-800 flex items-center justify-end gap-1 ml-auto"
                           >
                             <PencilSquareIcon className="w-5 h-5" />
                             Select Genres
