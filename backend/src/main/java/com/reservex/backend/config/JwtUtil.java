@@ -30,14 +30,15 @@ public class JwtUtil {
 
     public String generateToken(Authentication authentication) {
         var principal = (com.reservex.backend.config.UserPrincipal) authentication.getPrincipal();
-        return generateToken(principal.getEmail(), principal.getId(), principal.getRole());
+        return generateToken(principal.getEmail(), principal.getId(), principal.getRole(), principal.getUsername());
     }
 
-    public String generateToken(String email, Integer userId, String role) {
+    public String generateToken(String email, Integer userId, String role, String username) {
         return Jwts.builder()
                 .subject(email)
                 .claim("userId", userId)
                 .claim("role", role)
+                .claim("username", username)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(getSigningKey())

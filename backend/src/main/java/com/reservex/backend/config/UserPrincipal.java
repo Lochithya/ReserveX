@@ -20,6 +20,7 @@ public class UserPrincipal implements UserDetails {
     private final String email;
     private final String password;
     private final String role;
+    private final String username;
     private final String businessName;
     private final Collection<? extends GrantedAuthority> authorities;
 
@@ -28,7 +29,7 @@ public class UserPrincipal implements UserDetails {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.role = user.getRole().name();
-        //get buisiness name
+        this.username = user.getUsername();
         this.businessName = user.getBusinessName();
         this.authorities = List.of(user.getRole().name()).stream()
                 .map(r -> new SimpleGrantedAuthority("ROLE_" + r))

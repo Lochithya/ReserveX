@@ -55,7 +55,8 @@
 
 .navbar-right {
   display: flex;
-  gap: 20px;
+  gap: 16px;
+  align-items: center;
 }
 
 .navbar-item {
@@ -97,6 +98,48 @@
   font-weight: bold;
 }
 
+.navbar-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ffb347, #ffcc33);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #1b2838;
+  font-size: 1rem;
+}
+
+.navbar-user-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.navbar-user-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.8;
+}
+
+.navbar-user-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .navbar-container {
     margin-top: 0;
@@ -122,5 +165,9 @@
 
   .navbar-text {
     display: none;
+  }
+
+  .navbar-user-pill {
+    margin-top: 8px;
   }
 }

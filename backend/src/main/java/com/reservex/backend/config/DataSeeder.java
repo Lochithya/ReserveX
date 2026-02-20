@@ -18,15 +18,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DataSeeder implements CommandLineRunner {
 
-    private final StallRepository stallRepository;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) {
-        if (stallRepository.count() == 0) {
-            seedStalls();
-        }
         if (!userRepository.existsByEmail("admin@bookfair.lk")) {
             seedAdminUser();
         }
