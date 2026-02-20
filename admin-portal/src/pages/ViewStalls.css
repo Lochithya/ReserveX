@@ -17,6 +17,7 @@ body {
 
 .view-stalls-title {
   margin-bottom: 20px;
+  margin-left: 30px;
   /* Match Manage Stalls heading size */
   font-size: 36px;
   font-weight: 600;

@@ -10,6 +10,12 @@ const SIZE_OPTIONS = [
   { value: "large", label: "Large" },
 ];
 
+const STATUS_OPTIONS = [
+  { value: "", label: "All statuses" },
+  { value: "available", label: "Available" },
+  { value: "reserved", label: "Reserved" },
+];
+
 const HARDCODED_STALLS = [
   { stall_id: 1, stall_name: "Alpha", size: "small", price: 100, is_Confirmed: true },
   { stall_id: 2, stall_name: "Beta", size: "medium", price: 150, is_Confirmed: false },
@@ -24,8 +30,10 @@ const HARDCODED_STALLS = [
 export default function ViewStalls() {
   const [stalls, setStalls] = useState(HARDCODED_STALLS);
   const [sizeFilter, setSizeFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [sizeDropdown, setSizeDropdown] = useState("");
+  const [statusDropdown, setStatusDropdown] = useState("");
   const [orderDropdown, setOrderDropdown] = useState("asc");
 
   useEffect(() => {
@@ -45,6 +53,17 @@ export default function ViewStalls() {
       );
     }
 
+    if (statusFilter) {
+      result = result.filter((stall) => {
+        if (statusFilter === "available") {
+          return !stall.is_Confirmed;
+        } else if (statusFilter === "reserved") {
+          return stall.is_Confirmed;
+        }
+        return true;
+      });
+    }
+
     result.sort((a, b) => {
       const aName = (a.stall_name || "").toLowerCase();
       const bName = (b.stall_name || "").toLowerCase();
@@ -53,21 +72,24 @@ export default function ViewStalls() {
     });
 
     return result;
-  }, [stalls, sizeFilter, sortOrder]);
+  }, [stalls, sizeFilter, statusFilter, sortOrder]);
 
   const applyFilter = () => {
     setSizeFilter(sizeDropdown);
+    setStatusFilter(statusDropdown);
     setSortOrder(orderDropdown);
   };
 
   const clearFilter = () => {
     setSizeDropdown("");
+    setStatusDropdown("");
     setOrderDropdown("asc");
     setSizeFilter("");
+    setStatusFilter("");
     setSortOrder("asc");
   };
 
-  const hasActiveFilter = sizeFilter || sortOrder !== "asc";
+  const hasActiveFilter = sizeFilter || statusFilter || sortOrder !== "asc";
 
   return (
     <div className="view-stalls-background">
@@ -84,6 +106,20 @@ export default function ViewStalls() {
             onChange={(e) => setSizeDropdown(e.target.value)}
           >
             {SIZE_OPTIONS.map((opt) => (
+              <option key={opt.value || "all"} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="control-group">
+          <label className="control-label">Status</label>
+          <select
+            className="control-select"
+            value={statusDropdown}
+            onChange={(e) => setStatusDropdown(e.target.value)}
+          >
+            {STATUS_OPTIONS.map((opt) => (
               <option key={opt.value || "all"} value={opt.value}>
                 {opt.label}
               </option>
