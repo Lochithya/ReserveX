@@ -61,7 +61,7 @@ const HomePage = () => {
 
       //Optimistic Update (Update UI immediately without reloading)
       const updatedList = reservations.map((res) =>
-        res.reservation_id === reservationId
+        res.id === reservationId
           ? { ...res, genres: newGenres } // Update just this row
           : res
       );

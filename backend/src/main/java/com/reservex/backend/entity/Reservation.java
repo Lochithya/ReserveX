@@ -61,4 +61,8 @@ public class Reservation {
         if (qrCodePath == null) qrCodePath = UUID.randomUUID().toString();
         if (status == null) status = Status.Pending;
     }
+
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private Set<ReservationGenre> genres = new HashSet<>();
 }
