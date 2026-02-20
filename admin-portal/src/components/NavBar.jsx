@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './NavBar.css';
+import { AuthContext } from '../contexts/AuthContext';
 
 const NavBar = () => {
   const location = useLocation();
+  const { user } = useContext(AuthContext);
   const isManageStalls = location.pathname === '/manage-stalls';
   const isViewStalls = location.pathname === '/view-stalls';
   const isManageOrViewStalls = isManageStalls || isViewStalls;
@@ -97,6 +99,19 @@ const NavBar = () => {
               </Link>
             </>
           )}
+          <div className="navbar-user-pill">
+            <div className="navbar-user-avatar">
+              {(user?.username || user?.sub || user?.email || 'A')
+                .charAt(0)
+                .toUpperCase()}
+            </div>
+            <div className="navbar-user-meta">
+              <span className="navbar-user-label">Signed in as</span>
+              <span className="navbar-user-name">
+                {user?.username || user?.sub || user?.email || 'Admin'}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

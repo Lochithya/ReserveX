@@ -1,5 +1,6 @@
 package com.reservex.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -7,7 +8,8 @@ import lombok.Data;
 public class LoginRequest {
 
     @NotBlank
-    private String username; // email for vendors
+    @JsonAlias("username") // backward compatibility with older clients
+    private String email;
 
     @NotBlank
     private String password;

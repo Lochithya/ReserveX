@@ -35,10 +35,10 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
-    const login = async (username, password) => {
+    const login = async (email, password) => {
         try {
             // Adjust this URL if your backend login endpoint is different
-            const response = await api.post('/auth/login', { username, password });
+            const response = await api.post('/auth/login', { email, password });
             
             // Assuming your backend returns { "token": "..." }
             const { token } = response.data; 

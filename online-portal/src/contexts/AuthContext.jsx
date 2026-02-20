@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    
+
 
     // {
     //   "user_id": 101,                  
@@ -16,11 +16,17 @@ export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(() => {          //This runs ONCE when the app loads prevent relaod
         const savedUser = localStorage.getItem("user");
-        return savedUser ? JSON.parse(savedUser) : null;
-    });    
-    const [isAuthenticated,setIsAuthenticated] = useState(() => {
+        if (!savedUser) return null;
+        try {
+            return JSON.parse(savedUser);
+        } catch (error) {
+            localStorage.removeItem("user");
+            return null;
+        }
+    });
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
         // If we have a token we are authenticated
-        return !!localStorage.getItem("token"); 
+        return !!localStorage.getItem("token");
     })
     const [loading, setLoading] = useState(true);   //TODO: prevent Login Page Flash when refresh
 

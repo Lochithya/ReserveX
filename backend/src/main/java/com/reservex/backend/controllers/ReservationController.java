@@ -28,10 +28,12 @@ public class ReservationController {
             @AuthenticationPrincipal UserPrincipal principal,
             @RequestBody Map<String, Object> body) {
         try {
-            if (body.get("stallIds") != null) {
+            if (body.get("stallIds") != null || body.get("stall_ids") != null) {
                 @SuppressWarnings("unchecked")
-                List<Integer> list = (List<Integer>) body.get("stallIds");
-                List<Long> stallIds = list.stream().map(Long::valueOf).toList();
+                List<?> rawList = (List<?>) (body.get("stall_ids") != null ? body.get("stall_ids") : body.get("stallIds"));
+                List<Integer> stallIds = rawList.stream()
+                        .map(id -> id instanceof Number n ? n.intValue() : Integer.parseInt(id.toString()))
+                        .toList();
                 List<ReservationDto> dtos = reservationService.createReservations(principal.getId(), stallIds);
                 return ResponseEntity.status(HttpStatus.CREATED).body(dtos);
             }
@@ -39,7 +41,7 @@ public class ReservationController {
             if (stallIdObj == null) {
                 return ResponseEntity.badRequest().body(Map.of("message", "stallId or stallIds is required"));
             }
-            Long stallId = stallIdObj instanceof Number n ? n.longValue() : Long.parseLong(stallIdObj.toString());
+            Integer stallId = stallIdObj instanceof Number n ? n.intValue() : Integer.parseInt(stallIdObj.toString());
             ReservationDto dto = reservationService.createReservation(principal.getId(), stallId);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (IllegalArgumentException e) {

@@ -36,7 +36,7 @@ public class ReservationService {
      * Convenience method for reserving a single stall.
      */
     @Transactional
-    public ReservationDto createReservation(Long userId, Long stallId) {
+    public ReservationDto createReservation(Integer userId, Integer stallId) {
         List<ReservationDto> reservations = createReservations(userId, List.of(stallId));
         return reservations.isEmpty() ? null : reservations.get(0);
     }
@@ -48,7 +48,7 @@ public class ReservationService {
      * field on {@link User}.
      */
     @Transactional
-    public List<ReservationDto> createReservations(Long userId, List<Long> stallIds) {
+    public List<ReservationDto> createReservations(Integer userId, List<Integer> stallIds) {
         if (stallIds == null || stallIds.isEmpty()) {
             throw new IllegalArgumentException("At least one stall is required");
         }
@@ -58,7 +58,7 @@ public class ReservationService {
 
         // Filter and load stalls that are not already reserved
         var stallsToBook = new HashSet<Stall>();
-        for (Long stallId : stallIds) {
+        for (Integer stallId : stallIds) {
             if (stallId == null) continue;
             if (reservationRepository.existsByStalls_Id(stallId)) {
                 continue; // already reserved, skip
@@ -82,6 +82,16 @@ public class ReservationService {
                 .build();
         reservation.getStalls().addAll(stallsToBook);
 
+        // 2. NEW LOGIC: Tell the Stalls about the Reservation!
+        // This forces Hibernate to write the link to the database,
+        // no matter who the "Boss" is.
+        for (Stall stall : stallsToBook) {
+            // Make sure your Stall entity has a getReservations() list!
+            if (stall.getReservations() != null) {
+                stall.getReservations().add(reservation);
+            }
+        }
+
         reservation = reservationRepository.save(reservation);
 
         // Update cached count on user
@@ -96,7 +106,7 @@ public class ReservationService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReservationDto> getMyReservations(Long userId) {
+    public List<ReservationDto> getMyReservations(Integer userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return reservationRepository.findByUserOrderByReservationDateDesc(user).stream()

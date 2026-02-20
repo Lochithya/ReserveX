@@ -2,7 +2,7 @@
 import axios from "axios";// for sending HTTP requests
 
 const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
 
 const api = axios.create({
   baseURL: BASE_URL,// custom instance of axios with a base URL

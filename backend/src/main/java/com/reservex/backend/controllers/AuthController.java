@@ -36,13 +36,13 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         try {
-            JwtResponse response = authService.login(request.getUsername(), request.getPassword());
+            JwtResponse response = authService.login(request.getEmail(), request.getPassword());
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorMessage("Invalid credentials"));
         }
     }
 
-    public record RegisterResponse(Long id, String email, String businessName) {}
+    public record RegisterResponse(Integer id, String email, String businessName) {}
     public record ErrorMessage(String message) {}
 }

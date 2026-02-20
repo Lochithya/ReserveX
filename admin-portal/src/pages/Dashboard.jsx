@@ -3,27 +3,48 @@ import { Link } from "react-router-dom";
 import StallsPieChart from "../components/StallsPieChart";
 import NavBar from "../components/NavBar";
 import { AuthContext } from "../contexts/AuthContext";
+import api from "../services/api";
 import "./AdminDashboard.css";
 
 export default function AdminDashboard() {
   const { user } = useContext(AuthContext);
 
-  const [stats, _setStats] = useState({
-    total: 120,
-    reserved: 75,
-    available: 45
+  const [stats, setStats] = useState({
+    total: 0,
+    reserved: 0,
+    available: 0,
   });
 
-  const [reservations, _setReservations] = useState([
-    { id: 1, business: "ABC Publishers", stall: "A12", size: "Large" },
-    { id: 2, business: "Book Hub", stall: "B04", size: "Medium" },
-    { id: 3, business: "Readers Point", stall: "C21", size: "Small" }
-  ]);
+  const [reservations, setReservations] = useState([]);
 
-  // 🔹 Replace these with real API calls later
   useEffect(() => {
-    // Future API calls will go here
-    // For now, dummy data is initialized in useState above
+    const fetchData = async () => {
+      try {
+        const [stallsRes, reservationsRes] = await Promise.all([
+          api.get("/admin/stalls"),
+          api.get("/admin/reservations"),
+        ]);
+
+        const stalls = stallsRes.data || [];
+        const total = stalls.length;
+        const reserved = stalls.filter((s) => s.reserved).length;
+        const available = total - reserved;
+
+        setStats({ total, reserved, available });
+
+        const allReservations = reservationsRes.data || [];
+        const sorted = [...allReservations].sort(
+          (a, b) =>
+            new Date(b.reservationDate).getTime() -
+            new Date(a.reservationDate).getTime()
+        );
+        setReservations(sorted.slice(0, 3));
+      } catch (err) {
+        console.error("Failed to load admin dashboard data:", err);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -32,8 +53,9 @@ export default function AdminDashboard() {
 
       <div className="dashboard-header">
         <div className="header-left">
-          <p className="greeting">Hi {user?.username || "Admin"}!</p>
-          <h1 className="dashboard-title">Admin Dashboard</h1>
+          <p className="greeting">
+          </p>
+          
         </div>
       </div>
 
@@ -87,17 +109,27 @@ export default function AdminDashboard() {
         <table>
           <thead>
             <tr>
-              <th>Business</th>
-              <th>Stall</th>
-              <th>Size</th>
+              <th>Reservation ID</th>
+              <th>Reservation Date</th>
+              <th>Status</th>
+              <th>Stalls</th>
             </tr>
           </thead>
           <tbody>
             {reservations.map((r) => (
               <tr key={r.id}>
-                <td>{r.business}</td>
-                <td>{r.stall}</td>
-                <td>{r.size}</td>
+                <td>{r.id}</td>
+                <td>
+                  {r.reservationDate
+                    ? new Date(r.reservationDate).toLocaleString()
+                    : "-"}
+                </td>
+                <td>{r.status}</td>
+                <td>
+                  {r.stalls && r.stalls.length > 0
+                    ? r.stalls.map((s) => s.name).join(", ")
+                    : "—"}
+                </td>
               </tr>
             ))}
           </tbody>

@@ -16,10 +16,12 @@ import java.util.stream.Collectors;
 @Getter
 public class UserPrincipal implements UserDetails {
 
-    private final Long id;
+    private final Integer id;
     private final String email;
     private final String password;
     private final String role;
+    private final String username;
+    private final String businessName;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(User user) {
@@ -27,6 +29,8 @@ public class UserPrincipal implements UserDetails {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.role = user.getRole().name();
+        this.username = user.getUsername();
+        this.businessName = user.getBusinessName();
         this.authorities = List.of(user.getRole().name()).stream()
                 .map(r -> new SimpleGrantedAuthority("ROLE_" + r))
                 .collect(Collectors.toList());
