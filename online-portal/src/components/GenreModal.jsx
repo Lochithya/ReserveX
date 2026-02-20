@@ -21,6 +21,7 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
     setIsLoadingGenres(true);
     try {
       const genres = await getAllGenres();
+      console.log("Available genres:", genres);
       setAvailableGenres(genres);
     } catch (error) {
       toast.error(error || "Could not load genre list");
@@ -54,7 +55,7 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
           <div>
             <h3 className="font-bold text-slate-800">Manage Genres</h3>
             <p className="text-xs text-slate-500">
-              For Stall: <span className="font-semibold text-blue-600">{reservation.stall_name}</span>
+              For Stall: <span className="font-semibold text-blue-600">{reservation.stalls?.map(s => s.name).join(", ")}</span>
             </p>
           </div>
           <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
@@ -104,7 +105,7 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
             Cancel
           </button>
           <button
-            onClick={() => onSave(reservation.reservation_id, selected)}
+            onClick={() => onSave(reservation.id, selected)}
             disabled={isSaving}
             className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-2 rounded-lg shadow-sm disabled:opacity-70 flex items-center gap-2"
           >

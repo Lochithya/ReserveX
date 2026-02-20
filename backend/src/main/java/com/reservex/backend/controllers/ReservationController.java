@@ -6,6 +6,7 @@ package com.reservex.backend.controllers;
 
 import com.reservex.backend.config.UserPrincipal;
 import com.reservex.backend.dto.ReservationDto;
+import com.reservex.backend.services.ReservationGenreService;
 import com.reservex.backend.services.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ import java.util.Map;
 public class ReservationController {
 
     private final ReservationService reservationService;
-
+    private final ReservationGenreService genreService;
     @PostMapping
     public ResponseEntity<?> createReservation(
             @AuthenticationPrincipal UserPrincipal principal,
@@ -52,5 +53,14 @@ public class ReservationController {
     @GetMapping("/my")
     public ResponseEntity<List<ReservationDto>> getMyReservations(@AuthenticationPrincipal UserPrincipal principal) {
         return ResponseEntity.ok(reservationService.getMyReservations(principal.getId()));
+    }
+
+    @PutMapping("/{id}/genres")
+    public ResponseEntity<?> setGenres(
+            @PathVariable Integer id,
+            @AuthenticationPrincipal UserPrincipal principal,
+            @RequestBody List<String> genreNames) {
+        genreService.setGenresByReservationId(id, principal.getId(), genreNames);
+        return ResponseEntity.ok(Map.of("message", "Genres updated"));
     }
 }

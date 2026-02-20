@@ -54,11 +54,44 @@ public class ReservationGenreService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         Reservation reservation = getLatestReservationForUser(user);
-        genreRepository.deleteByReservation(reservation);
+
+        // Use native SQL delete to bypass Hibernate cache
+        genreRepository.deleteAllByReservationId(reservation.getId());
+        genreRepository.flush();
+
         if (genreNames != null) {
             for (String name : genreNames) {
                 if (name != null && !name.isBlank()) {
-                    genreRepository.save(new ReservationGenre(reservation, name.trim()));
+                    ReservationGenre genre = new ReservationGenre(reservation, name.trim());
+                    genreRepository.saveAndFlush(genre);
+                }
+            }
+        }
+    }
+
+    @Transactional
+    public void setGenresByReservationId(Integer reservationId, Integer userId, List<String> genreNames) {
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+        if (!reservation.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException("Not your reservation");
+        }
+
+        // Delete existing genres first and flush immediately
+        genreRepository.deleteAllByReservationId(reservationId);
+        genreRepository.flush(); // ← forces delete to complete before insert
+
+
+        // Clear reservation's genre collection from cache
+        reservation.getGenres().clear();
+        reservationRepository.saveAndFlush(reservation);
+
+        // Now insert new genres
+        if (genreNames != null) {
+            for (String name : genreNames) {
+                if (name != null && !name.isBlank()) {
+                    ReservationGenre genre = new ReservationGenre(reservation, name.trim());
+                    genreRepository.saveAndFlush(genre); // saveAndFlush instead of save
                 }
             }
         }

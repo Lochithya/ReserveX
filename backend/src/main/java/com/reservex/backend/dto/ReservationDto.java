@@ -1,6 +1,7 @@
 package com.reservex.backend.dto;
 
 import com.reservex.backend.entity.Reservation;
+import com.reservex.backend.entity.ReservationGenre;
 import com.reservex.backend.entity.Stall;
 import lombok.Builder;
 import lombok.Data;
@@ -18,10 +19,15 @@ public class ReservationDto {
     private Instant reservationDate;
     private String status;
     private List<ReservationStallDto> stalls;
+    private List<String> genres;
 
     public static ReservationDto fromEntity(Reservation r) {
         List<ReservationStallDto> stallDtos = r.getStalls().stream()
                 .map(ReservationDto::toStallDto)
+                .collect(Collectors.toList());
+
+        List<String> genreNames = r.getGenres().stream()
+                .map(ReservationGenre::getGenreName)
                 .collect(Collectors.toList());
 
         return ReservationDto.builder()
@@ -30,6 +36,7 @@ public class ReservationDto {
                 .reservationDate(r.getReservationDate())
                 .status(r.getStatus().name())
                 .stalls(stallDtos)
+                .genres(genreNames)
                 .build();
     }
 

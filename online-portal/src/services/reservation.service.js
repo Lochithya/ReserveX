@@ -40,6 +40,6 @@ export const getMyReservations = async () => {
 };
 
 export const updateReservationGenres = async (reservationId, newGenres) => {
-  const { data } = await api.put(`/reservations/${reservationId}/genres`, newGenres);
+  const { data } = await api.put(`/genres`, newGenres);
   return data;
 };
