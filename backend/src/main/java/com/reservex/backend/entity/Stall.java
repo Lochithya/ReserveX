@@ -41,8 +41,8 @@ public class Stall {
 
 
     public enum StallSize {
-        SMALL,
-        MEDIUM,
-        LARGE
+        small,
+        medium,
+        large
     }
 }

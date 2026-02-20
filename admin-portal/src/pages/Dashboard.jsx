@@ -27,7 +27,7 @@ export default function AdminDashboard() {
 
         const stalls = stallsRes.data || [];
         const total = stalls.length;
-        const reserved = stalls.filter((s) => s.reserved).length;
+        const reserved = stalls.filter((s) => s.isConfirmed).length;
         const available = total - reserved;
 
         setStats({ total, reserved, available });
@@ -54,6 +54,7 @@ export default function AdminDashboard() {
       <div className="dashboard-header">
         <div className="header-left">
           <p className="greeting">
+            
           </p>
           
         </div>
