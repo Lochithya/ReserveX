@@ -10,17 +10,24 @@ export default function AdminProfile() {
   const [profilePicture, setProfilePicture] = useState(null);
   const [password, setPassword] = useState({ current: "", new: "", confirm: "" });
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("");
 
   const handlePictureChange = (e) => {
     const file = e.target.files?.[0];
     if (file && file.type.startsWith("image/")) {
       setProfilePicture(URL.createObjectURL(file));
+      setMessage("Profile Picture Updated Successfully");
+      setMessageType("success");
+      setTimeout(() => { setMessage(""); setMessageType(""); }, 3000);
     }
   };
 
   const handleRemovePicture = () => {
     if (profilePicture) URL.revokeObjectURL(profilePicture);
     setProfilePicture(null);
+    setMessage("The Profile Picture Removed Successfully");
+    setMessageType("success");
+    setTimeout(() => { setMessage(""); setMessageType(""); }, 3000);
   };
 
   const handleProfileChange = (e) => {
@@ -36,6 +43,7 @@ export default function AdminProfile() {
   const handleProfileSubmit = (e) => {
     e.preventDefault();
     setMessage("Profile updated successfully.");
+    setMessageType("success");
     setTimeout(() => setMessage(""), 3000);
   };
 
@@ -43,11 +51,13 @@ export default function AdminProfile() {
     e.preventDefault();
     if (password.new !== password.confirm) {
       setMessage("New passwords do not match.");
+      setMessageType("error");
       return;
     }
     setMessage("Password updated successfully.");
+    setMessageType("success");
     setPassword({ current: "", new: "", confirm: "" });
-    setTimeout(() => setMessage(""), 3000);
+    setTimeout(() => { setMessage(""); setMessageType(""); }, 3000);
   };
 
   return (
@@ -58,7 +68,7 @@ export default function AdminProfile() {
       </div>
 
       {message && (
-        <div className={`profile-message ${message.includes("success") ? "success" : "error"}`}>
+        <div className={`profile-message ${messageType === "success" ? "success" : messageType === "error" ? "error" : ""}`}>
           {message}
         </div>
       )}
