@@ -1,3 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.manage-stalls-background {
+  padding: 0 0 30px 0;
+  background-color: #e6f2ff;
+  min-height: 100vh;
+}
+
 .manage-stalls {
   padding: 30px;
   background-color: #e6f2ff;
