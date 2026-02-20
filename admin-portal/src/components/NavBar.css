@@ -2,6 +2,7 @@
 
 .admin-navbar {
   background-color: #005bb5;
+  font-family: Arial, sans-serif;
   color: white;
   padding: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -44,6 +45,11 @@
   letter-spacing: 3px;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure any special title inside the navbar uses the navbar font */
+.admin-navbar .reservex-title {
+  font-family: Arial, sans-serif;
 }
 
 .navbar-title-link {
