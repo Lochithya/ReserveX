@@ -2,6 +2,7 @@
 
 .admin-navbar {
   background-color: #005bb5;
+  font-family: Arial, sans-serif;
   color: white;
   padding: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -25,6 +26,8 @@
   display: flex;
   align-items: center;
   gap: 15px;
+  /* small extra spacing to separate the site title from nav links */
+  margin-right: 32px;
 }
 
 .navbar-logo {
@@ -46,6 +49,11 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Ensure any special title inside the navbar uses the navbar font */
+.admin-navbar .reservex-title {
+  font-family: Arial, sans-serif;
+}
+
 .navbar-title-link {
   font-size: 1.5rem;
   font-weight: bold;
@@ -63,6 +71,13 @@
 }
 
 .navbar-right {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Group of nav links so spacing between buttons is consistent */
+.navbar-links {
   display: flex;
   gap: 16px;
   align-items: center;
