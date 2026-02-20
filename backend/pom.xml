@@ -58,10 +58,6 @@
 		</dependency>
 
 		<dependency>
-<<<<<<< HEAD
-=======
-
->>>>>>> 72b72cb9ae323bb2f4643c66c6a6a419b32eccf6
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.12.6</version>
