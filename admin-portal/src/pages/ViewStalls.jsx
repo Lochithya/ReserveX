@@ -11,7 +11,7 @@ const SIZE_OPTIONS = [
 ];
 
 const STATUS_OPTIONS = [
-  { value: "", label: "All statuses" },
+  { value: "", label: "All" },
   { value: "available", label: "Available" },
   { value: "reserved", label: "Reserved" },
 ];
