@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Builder
 public class ReservationDto {
 
-    private Long id;
+    private Integer id;
     private String qrCodeToken;
     private Instant reservationDate;
     private String status;

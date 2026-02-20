@@ -43,6 +43,6 @@ public class AuthController {
         }
     }
 
-    public record RegisterResponse(Long id, String email, String businessName) {}
+    public record RegisterResponse(Integer id, String email, String businessName) {}
     public record ErrorMessage(String message) {}
 }
