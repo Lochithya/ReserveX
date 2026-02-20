@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class ReservationStallDto {
 
-    private Long id;
+    private Integer id;
     private String name;
     private String size;
 }

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface ReservationRepository extends JpaRepository<Reservation, Long> {
+public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 
     List<Reservation> findByUserOrderByReservationDateDesc(User user);
 
@@ -20,5 +20,5 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     /**
      * Used to check whether a given stall is already attached to any reservation.
      */
-    boolean existsByStalls_Id(Long stallId);
+    boolean existsByStalls_Id(Integer stallId);
 }

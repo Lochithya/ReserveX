@@ -20,7 +20,7 @@ public class ReservationGenre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     // Many genres can belong to one reservation
     @ManyToOne(fetch = FetchType.LAZY)
