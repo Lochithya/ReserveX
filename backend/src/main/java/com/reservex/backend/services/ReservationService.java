@@ -82,6 +82,16 @@ public class ReservationService {
                 .build();
         reservation.getStalls().addAll(stallsToBook);
 
+        // 2. NEW LOGIC: Tell the Stalls about the Reservation!
+        // This forces Hibernate to write the link to the database,
+        // no matter who the "Boss" is.
+        for (Stall stall : stallsToBook) {
+            // Make sure your Stall entity has a getReservations() list!
+            if (stall.getReservations() != null) {
+                stall.getReservations().add(reservation);
+            }
+        }
+
         reservation = reservationRepository.save(reservation);
 
         // Update cached count on user

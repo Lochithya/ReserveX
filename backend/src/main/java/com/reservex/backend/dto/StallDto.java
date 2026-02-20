@@ -14,6 +14,7 @@ public class StallDto {
     private int gridCol;
     private int gridRow;
     private boolean reserved;
+    private Double price;
 
     public static StallDto fromEntity(Stall stall, boolean reserved) {
         return StallDto.builder()
@@ -23,6 +24,7 @@ public class StallDto {
                 .gridCol(stall.getGridCol())
                 .gridRow(stall.getGridRow())
                 .reserved(reserved)
+                .price(stall.getPrice())
                 .build();
     }
 }

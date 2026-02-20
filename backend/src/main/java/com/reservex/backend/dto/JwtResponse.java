@@ -16,4 +16,5 @@ public class JwtResponse {
     private Integer id;
     private String email;
     private String role;
+    private String businessName;
 }
