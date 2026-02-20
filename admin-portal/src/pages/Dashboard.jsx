@@ -54,7 +54,6 @@ export default function AdminDashboard() {
       <div className="dashboard-header">
         <div className="header-left">
           <p className="greeting">
-            <h2>Hi {user?.username || user?.sub || user?.email || "Admin"}!</h2>
           </p>
           
         </div>
