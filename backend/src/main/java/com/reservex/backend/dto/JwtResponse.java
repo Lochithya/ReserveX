@@ -17,4 +17,5 @@ public class JwtResponse {
     private String email;
     private String role;
     private String businessName;
+    private Integer noOfCurrentBookings;
 }

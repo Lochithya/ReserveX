@@ -22,6 +22,7 @@ public class UserPrincipal implements UserDetails {
     private final String role;
     private final String username;
     private final String businessName;
+    private final Integer noOfCurrentBookings;
     private final Collection<? extends GrantedAuthority> authorities;
 
     public UserPrincipal(User user) {
@@ -31,6 +32,7 @@ public class UserPrincipal implements UserDetails {
         this.role = user.getRole().name();
         this.username = user.getUsername();
         this.businessName = user.getBusinessName();
+        this.noOfCurrentBookings = user.getNoOfCurrentBookings();
         this.authorities = List.of(user.getRole().name()).stream()
                 .map(r -> new SimpleGrantedAuthority("ROLE_" + r))
                 .collect(Collectors.toList());
