@@ -17,7 +17,8 @@ body {
 
 .view-stalls-title {
   margin-bottom: 20px;
-  font-size: 24px;
+  /* Match Manage Stalls heading size */
+  font-size: 36px;
   font-weight: 600;
   color: #2c3e50;
 }
@@ -28,6 +29,18 @@ body {
   align-items: center;
   gap: 24px;
   margin-bottom: 20px;
+  /* align controls to the left (match table margin) */
+  justify-content: flex-start;
+  margin-left: 30px;
+  transform: none;
+}
+
+@media (max-width: 768px) {
+  .view-stalls-controls {
+    transform: none;
+    justify-content: center;
+    margin-left: 0;
+  }
 }
 
 .control-group {
@@ -95,6 +108,15 @@ body {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Container to align table with Manage Stalls table */
+.view-stalls-table-container {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin: 0 30px;
 }
 
 .view-stalls-table thead {

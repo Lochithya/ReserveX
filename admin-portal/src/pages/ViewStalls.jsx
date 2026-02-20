@@ -111,7 +111,8 @@ export default function ViewStalls() {
         )}
       </div>
 
-      <table className="view-stalls-table">
+      <div className="view-stalls-table-container">
+        <table className="view-stalls-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -150,7 +151,8 @@ export default function ViewStalls() {
             ))
           )}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   );
 }
