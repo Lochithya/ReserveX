@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { Menu, X } from "lucide-react";
+import logo from "../assets/logo.jpeg";   
 
 const NavBar = () => {
   const { isAuthenticated, logout } = useContext(AuthContext);
@@ -18,18 +19,23 @@ const NavBar = () => {
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 shadow-sm">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link to="/" className="text-2xl font-bold text-white">
-              ReserveX
-            </Link>
-          </div>
+          
+        
+<div className="flex-shrink-0 -ml-9">
+  <Link to="/" className="flex items-center">
+    <img
+      src={logo}
+      alt="ReserveX Logo"
+      className="h-16 w-auto object-contain rounded-lg"
+    />
+  </Link>
+</div>
 
-          {/* Desktop links */}
+         
           <div className="hidden md:flex md:items-center md:space-x-8">
             {!isAuthenticated ? (
               <>
-                <Link to="/" className="text-white ">
+                <Link to="/" className="text-white">
                   About Us
                 </Link>
                 <Link to="/contact" className="text-white">
@@ -51,7 +57,7 @@ const NavBar = () => {
                 <Link to="/" className="text-white">
                   About Us
                 </Link>
-                <Link to="/contact" className="text-white ">
+                <Link to="/contact" className="text-white">
                   Contact Us
                 </Link>
                 <Link
@@ -70,7 +76,7 @@ const NavBar = () => {
             )}
           </div>
 
-          {/* Mobile menu button */}
+         
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -143,9 +149,7 @@ const NavBar = () => {
                   Reserve a stall
                 </Link>
                 <button
-                  onClick={() => {
-                    handleLogout();
-                  }}
+                  onClick={handleLogout}
                   className="block w-full text-left px-3 py-2 text-white rounded-md"
                 >
                   Log out
