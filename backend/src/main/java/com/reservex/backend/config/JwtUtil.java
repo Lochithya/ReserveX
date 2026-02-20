@@ -33,7 +33,7 @@ public class JwtUtil {
         return generateToken(principal.getEmail(), principal.getId(), principal.getRole());
     }
 
-    public String generateToken(String email, Long userId, String role) {
+    public String generateToken(String email, Integer userId, String role) {
         return Jwts.builder()
                 .subject(email)
                 .claim("userId", userId)
@@ -53,15 +53,15 @@ public class JwtUtil {
                 .getSubject();
     }
 
-    public Long getUserIdFromToken(String token) {
+    public Integer getUserIdFromToken(String token) {
         var claims = Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
         Object userId = claims.get("userId");
-        if (userId instanceof Integer) return ((Integer) userId).longValue();
-        if (userId instanceof Long) return (Long) userId;
+        if (userId instanceof Integer) return (Integer) userId;
+        if (userId instanceof Long) return ((Long) userId).intValue();
         return null;
     }
 

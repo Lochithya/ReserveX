@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class StallDto {
 
-    private Long id;
+    private Integer id;
     private String name;
     private String size;
     private int gridCol;

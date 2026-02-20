@@ -31,7 +31,7 @@ public class ReservationGenreService {
     }
 
     @Transactional
-    public ReservationGenre addGenre(Long userId, String genreName) {
+    public ReservationGenre addGenre(Integer userId, String genreName) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         Reservation reservation = getLatestReservationForUser(user);
@@ -40,7 +40,7 @@ public class ReservationGenreService {
     }
 
     @Transactional(readOnly = true)
-    public List<String> getGenresByUser(Long userId) {
+    public List<String> getGenresByUser(Integer userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         Reservation reservation = getLatestReservationForUser(user);
@@ -50,7 +50,7 @@ public class ReservationGenreService {
     }
 
     @Transactional
-    public void setGenres(Long userId, List<String> genreNames) {
+    public void setGenres(Integer userId, List<String> genreNames) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         Reservation reservation = getLatestReservationForUser(user);

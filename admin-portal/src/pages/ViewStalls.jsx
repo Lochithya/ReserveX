@@ -73,7 +73,7 @@ export default function ViewStalls() {
     <div className="view-stalls-page">
       <NavBar />
 
-      <h2 className="view-stalls-title">View Stalls</h2>
+      <h3 className="view-stalls-title">View Stalls</h3>
 
       <div className="view-stalls-controls">
         <div className="control-group">
