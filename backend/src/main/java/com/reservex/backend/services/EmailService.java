@@ -44,6 +44,47 @@ public class EmailService {
         }
     }
 
+    public void sendStallDeletionNotification(User user, String stallName, int currentBookings, boolean reservationCancelled) {
+        if (fromEmail == null || fromEmail.isBlank()) return;
+
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setFrom(fromEmail);
+            helper.setTo(user.getEmail());
+            helper.setSubject("Colombo International Book Fair - Stall Deleted from Your Reservation");
+            String body = buildStallDeletionBody(user, stallName, currentBookings, reservationCancelled);
+            helper.setText(body, true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send stall deletion email", e);
+        }
+    }
+
+    private String buildStallDeletionBody(User user, String stallName, int currentBookings, boolean reservationCancelled) {
+        String reason = "The stall \"" + stallName + "\" has been removed from the exhibition by the administrator.";
+        String statusMsg;
+        if (reservationCancelled) {
+            statusMsg = "Your reservation has been called off because this was the only stall in your reservation.";
+        } else {
+            statusMsg = "Your current number of reserved stalls is now " + currentBookings + ".";
+        }
+        return """
+            <h2>Stall Deletion Notice</h2>
+            <p>Dear %s,</p>
+            <p>%s</p>
+            <p><strong>Reason:</strong> %s</p>
+            <p>%s</p>
+            <p>Please log in to the Publisher Portal to view your updated reservations.</p>
+            <p>— Sri Lanka Book Publishers' Association</p>
+            """.formatted(
+                user.getBusinessName() != null ? user.getBusinessName() : "Vendor",
+                "We regret to inform you that a stall from your reservation has been deleted.",
+                reason,
+                statusMsg
+        );
+    }
+
     private String buildConfirmationBody(User user, Reservation reservation) {
         // Build stall list
         StringBuilder stallList = new StringBuilder();

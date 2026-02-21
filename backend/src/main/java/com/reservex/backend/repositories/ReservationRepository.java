@@ -21,4 +21,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
      * Used to check whether a given stall is already attached to any reservation.
      */
     boolean existsByStalls_Id(Integer stallId);
+
+    /**
+     * Find all reservations that contain the given stall.
+     */
+    List<Reservation> findByStalls_Id(Integer stallId);
 }

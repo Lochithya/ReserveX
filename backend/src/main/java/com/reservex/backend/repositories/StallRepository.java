@@ -8,4 +8,8 @@ import java.util.List;
 public interface StallRepository extends JpaRepository<Stall, Integer> {
 
     List<Stall> findAllByOrderByNameAsc();
+
+    boolean existsByNameIgnoreCase(String name);
+
+    boolean existsByNameIgnoreCaseAndIdNot(String name, Integer excludeId);
 }
