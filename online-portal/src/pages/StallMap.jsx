@@ -1,5 +1,9 @@
 import React, { useEffect, useState, useMemo, useContext } from "react";
-import { mockStalls, mockStalls2, mockStallE } from "../common/mockData";
+import {
+  MapPinIcon,
+  CheckBadgeIcon,
+  BookOpenIcon
+} from "@heroicons/react/24/outline";
 import BookingSummary from "../components/BookingSummary";
 import StallTooltip from "../components/StallToolTip";
 import StallGrid from "../components/StallGrid";
@@ -55,7 +59,7 @@ const StallMap = () => {
       //increment it manually in the frontend context to be fast
       const updatedUser = {
         ...user,
-        no_of_current_bookings: user.no_of_current_bookings + selectedStalls.length
+        noOfCurrentBookings: (user.noOfCurrentBookings || 0) + selectedStalls.length
       };
       login(updatedUser, localStorage.getItem("token"));
       navigate("/home")
@@ -148,27 +152,40 @@ const StallMap = () => {
     <div className="flex flex-col item-center min-h-screen bg-gray-10 p-10 lg:py-5">
 
 
-      {/* title */}
-      <div className="w-full mx-auto px-4 mb-6 flex flex-col md:flex-row md:justify-between items-center gap-4">
+      {/* --- COMPACT, LIGHT HEADER --- */}
+      <div className="w-full max-w-5xl mx-auto mb-4 bg-white rounded-xl shadow-sm border border-slate-200 p-4 md:p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
 
+        {/* Title & Subtitle */}
+        <div>
+          <h2 className="text-xl md:text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <MapPinIcon className="w-6 h-6 text-blue-600" />
+            Stall Reservation Map
+          </h2>
+          <p className="text-sm text-slate-500 mt-1">
+            Tap up to 3 green stalls to secure your spots for the book fair.
+          </p>
+        </div>
 
-        <h3 className="text-blue-900 text-2xl font-bold text-center md:text-left">
-          Stall Reservation Map
-        </h3>
+        {/* Compact Stats Badges */}
+        <div className="flex gap-2 md:gap-3 w-full md:w-auto">
 
-        <div className="flex flex-wrap justify-center gap-3 text-sm font-medium">
-          <span className="bg-white px-3 py-1 rounded-full shadow-sm border border-slate-200 text-slate-600 whitespace-nowrap">
-            Total: <strong>{stats.total}</strong>
-          </span>
-          <span className="bg-emerald-50 px-3 py-1 rounded-full shadow-sm border border-emerald-200 text-emerald-700 whitespace-nowrap">
-            Available: <strong>{stats.available}</strong>
-          </span>
-          <span className="bg-slate-100 px-3 py-1 rounded-full shadow-sm border border-slate-200 text-slate-500 whitespace-nowrap">
-            Reserved: <strong>{stats.reserved}</strong>
-          </span>
+          <div className="flex-1 md:flex-none flex flex-col items-center px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg">
+            <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Total</span>
+            <span className="font-bold text-slate-700 leading-none mt-1">{stats.total}</span>
+          </div>
+
+          <div className="flex-1 md:flex-none flex flex-col items-center px-3 py-1.5 bg-emerald-50 border border-emerald-200 rounded-lg shadow-sm">
+            <span className="text-[10px] uppercase font-semibold text-emerald-600 tracking-wider">Available</span>
+            <span className="font-bold text-emerald-700 leading-none mt-1">{stats.available}</span>
+          </div>
+
+          <div className="flex-1 md:flex-none flex flex-col items-center px-3 py-1.5 bg-slate-100 border border-slate-200 rounded-lg">
+            <span className="text-[10px] uppercase font-semibold text-slate-500 tracking-wider">Reserved</span>
+            <span className="font-bold text-slate-500 leading-none mt-1">{stats.reserved}</span>
+          </div>
+
         </div>
       </div>
-
 
       {/* map */}
 
@@ -215,19 +232,56 @@ const StallMap = () => {
 
 
       {/*Instructions*/}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-2 md:gap-8 mb-6 text-sm text-slate-500">
-        <p className="flex items-center gap-2">
-          <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs">1</span>
-          Tap <span className="font-bold text-emerald-600">Green Stalls</span> to select
-        </p>
-        <p className="flex items-center gap-2">
-          <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs">2</span>
-          Select up to <span className="font-bold text-slate-700">3 Stalls</span>
-        </p>
-        <p className="flex items-center gap-2">
-          <span className="w-5 h-5 rounded-full bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-xs">3</span>
-          Hover for price & details
-        </p>
+
+      <div className="max-w-5xl mx-auto w-full mb-8 bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-slate-200 relative overflow-hidden">
+
+        {/* Background decoration */}
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-blue-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+
+        <h4 className="text-slate-800 font-extrabold text-lg text-center mb-8 relative z-10">
+          How to Setup Your Book Fair Presence
+        </h4>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+
+          {/* Step 1 */}
+          <div className="flex flex-col items-center text-center relative group">
+            <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300 shadow-sm">
+              <MapPinIcon className="w-7 h-7" />
+            </div>
+            <h5 className="font-bold text-slate-800 mb-2">1. Pick Your Spots</h5>
+            <p className="text-sm text-slate-500 leading-relaxed px-4">
+              Tap the <span className="text-emerald-600 font-semibold">green available stalls</span> on the map. You can select up to a maximum of 3 stalls for your business.
+            </p>
+            {/* Desktop connecting line */}
+            <div className="hidden md:block absolute top-7 left-[60%] w-[80%] h-[2px] border-t-2 border-dashed border-slate-200"></div>
+          </div>
+
+          {/* Step 2 */}
+          <div className="flex flex-col items-center text-center relative group">
+            <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">
+              <CheckBadgeIcon className="w-7 h-7" />
+            </div>
+            <h5 className="font-bold text-slate-800 mb-2">2. Secure Reservation</h5>
+            <p className="text-sm text-slate-500 leading-relaxed px-4">
+              Review your total cost and click reserve. You will receive an official QR code receipt via email.
+            </p>
+            {/* Desktop connecting line */}
+            <div className="hidden md:block absolute top-7 left-[60%] w-[80%] h-[2px] border-t-2 border-dashed border-slate-200"></div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="flex flex-col items-center text-center group">
+            <div className="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 shadow-sm">
+              <BookOpenIcon className="w-7 h-7" />
+            </div>
+            <h5 className="font-bold text-slate-800 mb-2">3. Assign Genres</h5>
+            <p className="text-sm text-slate-500 leading-relaxed px-4">
+              Head over to your <span className="text-blue-600 font-semibold">Vendor Dashboard</span> to assign specific book genres (like Sci-Fi or Romance) to each individual stall!
+            </p>
+          </div>
+
+        </div>
       </div>
 
       {/* summery */}

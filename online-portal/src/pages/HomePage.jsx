@@ -157,7 +157,7 @@ const HomePage = () => {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <StatCard
-            title="Active Reservations"
+            title="Current Reservations"
             value={user.noOfCurrentBookings}
             icon={<TicketIcon className="w-6 h-6 text-blue-600" />}
             bg="bg-blue-50"
@@ -169,8 +169,8 @@ const HomePage = () => {
             bg="bg-emerald-50"
           />
           <StatCard
-            title="Selected Genres"
-            value={selectedGenres.length}
+            title="Active Reservations"
+            value={reservations.filter(res => res.status?.toUpperCase() === "APPROVED").length}
             icon={<BookOpenIcon className="w-6 h-6 text-purple-600" />}
             bg="bg-purple-50"
           />
