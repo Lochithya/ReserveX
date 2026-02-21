@@ -27,7 +27,7 @@ export default function AdminDashboard() {
 
         const stalls = stallsRes.data || [];
         const total = stalls.length;
-        const reserved = stalls.filter((s) => s.confirmed).length;                 // Since the json response contains this variable
+        const reserved = stalls.filter((s) => s.Confirmed).length;                 // Since the json response contains this variable
         const available = total - reserved;
 
         setStats({ total, reserved, available });

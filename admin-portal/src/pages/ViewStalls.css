@@ -111,6 +111,17 @@ body {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+.view-stalls-loading,
+.view-stalls-error {
+  padding: 24px;
+  text-align: center;
+  color: #555;
+}
+
+.view-stalls-error {
+  color: #c62828;
+}
+
 /* Container to align table with Manage Stalls table */
 .view-stalls-table-container {
   background: white;
