@@ -20,7 +20,7 @@ const NavBar = () => {
   const handleConfirmLogout = () => {
     logout();
     setShowLogoutModal(false);
-    navigate('/login');
+    navigate('/');
   };
 
   const handleCancelLogout = () => {
