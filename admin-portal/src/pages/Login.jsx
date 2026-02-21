@@ -50,8 +50,17 @@ const Login = () => {
     return (
         <div style={styles.container}>
             <div style={styles.card}>
-                <h2 style={styles.title}>Admin Portal</h2>
-                <p style={styles.subtitle}>Colombo International Bookfair</p>
+                <div style={styles.headerContainer}>
+                    <img 
+                        src="/logo.jpeg" 
+                        alt="Logo" 
+                        style={styles.logo}
+                    />
+                    <div>
+                        <h2 style={styles.title}>Admin Portal</h2>
+                        <p style={styles.subtitle}>Colombo International Bookfair</p>
+                    </div>
+                </div>
                 
                 {/* Error Message Display */}
                 {error && <div style={styles.error}>{error}</div>}
@@ -114,6 +123,18 @@ const styles = {
         borderRadius: '8px',
         boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         textAlign: 'center',
+    },
+    headerContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        gap: '15px',
+        marginBottom: '25px',
+    },
+    logo: {
+        height: '50px',
+        width: 'auto',
+        objectFit: 'contain',
     },
     title: {
         margin: '0 0 5px 0',
