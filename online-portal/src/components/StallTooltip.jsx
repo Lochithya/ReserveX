@@ -12,13 +12,13 @@ const StallTooltip = ({ stall, position }) => {
         top: position.y,
       }}
     >
-      
+
       <div className="
         fixed top-24 left-4 right-4 md:static md:w-64
         bg-slate-900 text-white p-4 rounded-xl shadow-2xl border border-slate-600
         flex flex-col gap-2
       ">
-        
+
         {/* Header Section */}
         <div className="flex justify-between items-start border-b border-slate-600 pb-2">
           <div>

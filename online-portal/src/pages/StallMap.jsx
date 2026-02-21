@@ -23,7 +23,7 @@ const StallMap = () => {
   const navigate = useNavigate()
   // console.log(selectedStalls)
 
-  const existingBookings = user?.no_of_current_bookings || 0;
+  const existingBookings = user?.noOfCurrentBookings || 0;
   const REMAINING_QUOTA = 3 - existingBookings;
 
   const fetchStalls = async () => {
@@ -88,7 +88,7 @@ const StallMap = () => {
 
   const stats = useMemo(() => {
     const total = stalls.length
-    const reserved = stalls.filter(s => s.reserved === true).length;
+    const reserved = stalls.filter(s => s.Confirmed === true).length;
     const available = total - reserved;
     return { total, available, reserved };
   }, [stalls]);
@@ -98,7 +98,7 @@ const StallMap = () => {
   //SELECTION LOGIC
   const handleStallClick = (stall) => {
 
-    if (stall.reserved === true) return;
+    if (stall.Confirmed === true) return;
 
     const isSelected = selectedStalls.some((s) => s.id === stall.id);
 

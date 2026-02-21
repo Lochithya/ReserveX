@@ -55,12 +55,4 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getMyReservations(principal.getId()));
     }
 
-    @PutMapping("/{id}/genres")
-    public ResponseEntity<?> setGenres(
-            @PathVariable Integer id,
-            @AuthenticationPrincipal UserPrincipal principal,
-            @RequestBody List<String> genreNames) {
-        genreService.setGenresByReservationId(id, principal.getId(), genreNames);
-        return ResponseEntity.ok(Map.of("message", "Genres updated"));
-    }
 }

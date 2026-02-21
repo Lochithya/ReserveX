@@ -46,6 +46,8 @@ public class Reservation {
     @Column(name = "qr_code_path")
     private String qrCodePath;
 
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ReservationGenre> reservationGenres = new HashSet<>();
 
     public enum Status {
         Pending,
@@ -62,7 +64,4 @@ public class Reservation {
         if (status == null) status = Status.Pending;
     }
 
-    @OneToMany(mappedBy = "reservation", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default
-    private Set<ReservationGenre> genres = new HashSet<>();
 }

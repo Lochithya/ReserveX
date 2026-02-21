@@ -68,7 +68,7 @@ const StallGrid = ({
 
       {/* STALL CARDS */}
       {stalls.map((stall) => {
-        const isReserved = stall?.reserved === true;
+        const isReserved = stall?.Confirmed === true;
         const isSelected = selectedStalls.some((s) => s.id === stall.id);
 
         return (

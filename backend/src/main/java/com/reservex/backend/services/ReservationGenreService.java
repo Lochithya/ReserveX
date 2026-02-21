@@ -1,5 +1,6 @@
 package com.reservex.backend.services;
 
+import com.reservex.backend.dto.StallGenreRequest;
 import com.reservex.backend.entity.Reservation;
 import com.reservex.backend.entity.ReservationGenre;
 import com.reservex.backend.entity.User;
@@ -30,14 +31,14 @@ public class ReservationGenreService {
                 .orElseThrow(() -> new IllegalStateException("No reservations found for user"));
     }
 
-    @Transactional
-    public ReservationGenre addGenre(Integer userId, String genreName) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        Reservation reservation = getLatestReservationForUser(user);
-        ReservationGenre genre = new ReservationGenre(reservation, genreName.trim());
-        return genreRepository.save(genre);
-    }
+//    @Transactional
+//    public ReservationGenre addGenre(Integer userId, String genreName) {
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+//        Reservation reservation = getLatestReservationForUser(user);
+//        ReservationGenre genre = new ReservationGenre(reservation, genreName.trim());
+//        return genreRepository.save(genre);
+//    }
 
     @Transactional(readOnly = true)
     public List<String> getGenresByUser(Integer userId) {
@@ -46,54 +47,42 @@ public class ReservationGenreService {
         Reservation reservation = getLatestReservationForUser(user);
         return genreRepository.findByReservation(reservation).stream()
                 .map(ReservationGenre::getGenreName)
+                .distinct()
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public void setGenres(Integer userId, List<String> genreNames) {
+    public void setGenresPerStall(Integer userId, List<StallGenreRequest> requests) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
         Reservation reservation = getLatestReservationForUser(user);
 
-        // Use native SQL delete to bypass Hibernate cache
-        genreRepository.deleteAllByReservationId(reservation.getId());
+        // 1. Clear old genres for this reservation
+        genreRepository.deleteAllByReservation_Id(reservation.getId());
         genreRepository.flush();
 
-        if (genreNames != null) {
-            for (String name : genreNames) {
-                if (name != null && !name.isBlank()) {
-                    ReservationGenre genre = new ReservationGenre(reservation, name.trim());
-                    genreRepository.saveAndFlush(genre);
+        // 2. Save the new genres attached to their specific stalls
+        if (requests != null) {
+            for (StallGenreRequest req : requests) {
+                if (req.getGenres() != null) {
+                    for (String genreName : req.getGenres()) {
+                        if (genreName != null && !genreName.isBlank()) {
+
+                            // Uses the 3-part constructor from your @IdClass entity
+                            ReservationGenre genre = new ReservationGenre(
+                                    reservation,
+                                    req.getStallId(),
+                                    genreName.trim()
+                            );
+                            genreRepository.save(genre);
+                        }
+                    }
                 }
             }
+            genreRepository.flush(); // Commit to database
         }
     }
 
-    @Transactional
-    public void setGenresByReservationId(Integer reservationId, Integer userId, List<String> genreNames) {
-        Reservation reservation = reservationRepository.findById(reservationId)
-                .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
-        if (!reservation.getUser().getId().equals(userId)) {
-            throw new IllegalArgumentException("Not your reservation");
-        }
 
-        // Delete existing genres first and flush immediately
-        genreRepository.deleteAllByReservationId(reservationId);
-        genreRepository.flush(); // ← forces delete to complete before insert
-
-
-        // Clear reservation's genre collection from cache
-        reservation.getGenres().clear();
-        reservationRepository.saveAndFlush(reservation);
-
-        // Now insert new genres
-        if (genreNames != null) {
-            for (String name : genreNames) {
-                if (name != null && !name.isBlank()) {
-                    ReservationGenre genre = new ReservationGenre(reservation, name.trim());
-                    genreRepository.saveAndFlush(genre); // saveAndFlush instead of save
-                }
-            }
-        }
-    }
 }

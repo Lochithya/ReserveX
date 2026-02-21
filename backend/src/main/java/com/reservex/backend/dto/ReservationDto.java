@@ -26,9 +26,10 @@ public class ReservationDto {
                 .map(ReservationDto::toStallDto)
                 .collect(Collectors.toList());
 
-        List<String> genreNames = r.getGenres().stream()
+        List<String> genreNames = r.getReservationGenres() != null ? r.getReservationGenres().stream()
                 .map(ReservationGenre::getGenreName)
-                .collect(Collectors.toList());
+                .distinct() // Prevents duplicates if multiple stalls share the same genre
+                .collect(Collectors.toList()) : List.of();
 
         return ReservationDto.builder()
                 .id(r.getId())

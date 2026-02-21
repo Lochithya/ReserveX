@@ -39,7 +39,11 @@ export const getMyReservations = async () => {
   }
 };
 
-export const updateReservationGenres = async (reservationId, newGenres) => {
-  const { data } = await api.put(`/genres`, newGenres);
-  return data;
+export const updateReservationGenres = async (genrePayload) => {
+  try {
+    const { data } = await api.put(`/genres`, genrePayload);
+    return data;
+  } catch (err) {
+    throw err?.response?.data?.message || "Failed to update genres";
+  }
 };

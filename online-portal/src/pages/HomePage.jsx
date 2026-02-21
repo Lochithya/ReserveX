@@ -53,22 +53,25 @@ const HomePage = () => {
     setModalOpen(true);
   };
 
-  const handleSaveGenres = async (reservationId, newGenres) => {
+  const handleSaveGenres = async (reservationId, payloadArray) => {
     setSaving(true);
     try {
+      // Send the structured array to the backend
+      const response = await updateReservationGenres(payloadArray);
 
-      const response = await updateReservationGenres(reservationId, newGenres);
+      // Extract a flat, unique list of genres to display in your React table
+      const flatGenres = [...new Set(payloadArray.flatMap(p => p.genres))];
 
-      //Optimistic Update (Update UI immediately without reloading)
+      // Optimistic Update
       const updatedList = reservations.map((res) =>
         res.id === reservationId
-          ? { ...res, genres: newGenres } // Update just this row
+          ? { ...res, genres: flatGenres }
           : res
       );
 
       setReservations(updatedList);
       toast.success(response.message || "Genres updated successfully!");
-      setModalOpen(false); // Close Modal
+      setModalOpen(false);
 
     } catch (error) {
       console.error(error);

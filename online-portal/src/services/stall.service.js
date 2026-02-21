@@ -24,5 +24,6 @@ export const getAllStalls = async () => {
     console.error("getAllStalls error:", err);
     throw err?.response?.data?.message || "Failed to fetch stalls";
   }
+
 };
 //Get All Stalls
