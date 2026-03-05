@@ -2,7 +2,6 @@
 // create reservation + link stalls
 //cancel reservation
 
-
 package com.reservex.backend.services;
 
 import com.reservex.backend.dto.ReservationDto;
@@ -59,7 +58,8 @@ public class ReservationService {
         // Filter and load stalls that are not already reserved
         var stallsToBook = new HashSet<Stall>();
         for (Integer stallId : stallIds) {
-            if (stallId == null) continue;
+            if (stallId == null)
+                continue;
             if (reservationRepository.existsByStalls_Id(stallId)) {
                 continue; // already reserved, skip
             }
@@ -82,9 +82,8 @@ public class ReservationService {
                 .build();
         reservation.getStalls().addAll(stallsToBook);
 
-        // 2. NEW LOGIC: Tell the Stalls about the Reservation!
+        // Tell the Stalls about the Reservation
         // This forces Hibernate to write the link to the database,
-        // no matter who the "Boss" is.
         for (Stall stall : stallsToBook) {
             // Make sure your Stall entity has a getReservations() list!
             if (stall.getReservations() != null) {
@@ -97,6 +96,12 @@ public class ReservationService {
         // Update cached count on user
         user.setNoOfCurrentBookings(currentBookings + newBookings);
         userRepository.save(user);
+
+        // Mark stalls as confirmed
+        for (Stall stall : stallsToBook) {
+            stall.setIsConfirmed(true);
+            stallRepository.save(stall);
+        }
 
         emailService.sendReservationConfirmation(user, reservation);
 

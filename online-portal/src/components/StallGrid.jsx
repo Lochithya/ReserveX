@@ -9,7 +9,8 @@ const StallGrid = ({
   handleMouseEnter,
   handleMouseMove,
   handleMouseLeave,
-  setHoveredStall
+  setHoveredStall,
+  activeFilter
 }) => {
 
   //LOADING STATE
@@ -71,6 +72,12 @@ const StallGrid = ({
         const isReserved = stall?.Confirmed === true;
         const isSelected = selectedStalls.some((s) => s.id === stall.id);
 
+        let isDimmed = false;
+        if (activeFilter === "AVAILABLE" && isReserved) isDimmed = true;
+        if (activeFilter === "SMALL" && stall.size?.toUpperCase() !== "SMALL") isDimmed = true;
+        if (activeFilter === "MEDIUM" && stall.size?.toUpperCase() !== "MEDIUM") isDimmed = true;
+        if (activeFilter === "LARGE" && stall.size?.toUpperCase() !== "LARGE") isDimmed = true;
+
         return (
           <div
             key={stall.id}
@@ -91,8 +98,9 @@ const StallGrid = ({
                   ? "bg-blue-600 text-white border-blue-700 shadow-lg scale-105 z-10"
                   : "bg-green-100 text-green-800 border border-green-400 hover:bg-green-500 hover:text-white cursor-pointer hover:shadow-md hover:scale-105"
               }
+              ${isDimmed && !isSelected ? "opacity-20 grayscale pointer-events-none" : "opacity-100"}
               w-full h-full rounded-lg
-              flex flex-col items-center justify-center text-xs font-bold transition-all shadow-sm`
+              flex flex-col items-center justify-center text-xs font-bold transition-all shadow-sm duration-300`
             }
           >
             <span className="font-bold text-sm md:text-base leading-none mb-1">{stall.name}</span>

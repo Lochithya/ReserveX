@@ -62,7 +62,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/stalls/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/genres").permitAll()
-                        
+                        .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
                         // Admin endpoints - only EMPLOYEE role
                         .requestMatchers("/api/admin/**").hasRole("EMPLOYEE")
                         .requestMatchers(HttpMethod.POST, "/api/stalls/**").hasRole("EMPLOYEE")

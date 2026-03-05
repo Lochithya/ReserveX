@@ -5,7 +5,7 @@ import {
   BookOpenIcon
 } from "@heroicons/react/24/outline";
 import BookingSummary from "../components/BookingSummary";
-import StallTooltip from "../components/StallToolTip";
+import StallTooltip from "../components/StallTooltip";
 import StallGrid from "../components/StallGrid";
 import { getAllStalls } from "../services/stall.service";
 import toast from "react-hot-toast";
@@ -24,8 +24,8 @@ const StallMap = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReserving, setIsReserving] = useState(false);
+  const [activeFilter, setActiveFilter] = useState("ALL"); // "ALL", "AVAILABLE", "SMALL", "MEDIUM", "LARGE"
   const navigate = useNavigate()
-  // console.log(selectedStalls)
 
   const existingBookings = user?.noOfCurrentBookings || 0;
   const REMAINING_QUOTA = 3 - existingBookings;
@@ -112,12 +112,16 @@ const StallMap = () => {
     } else {
       // Check stall limits (3 per one user)
       if (selectedStalls.length >= 3) {
-        toast.error("You have already reached the limit of 3 reserved stalls.");
+        toast.error("You can only select up to 3 stalls per reservation.");
         return;
       }
 
       if (selectedStalls.length >= REMAINING_QUOTA) {
-        toast.error(`You have ${existingBookings} active reservations. You can only select ${REMAINING_QUOTA} more.`);
+        if (REMAINING_QUOTA <= 0) {
+          toast.error("You have reached the maximum limit of 3 active reservations.");
+        } else {
+          toast.error(`You have ${existingBookings} active reservations. You can only select ${REMAINING_QUOTA} more stalls.`);
+        }
         return;
       }
       setSelectedStalls([...selectedStalls, stall]);
@@ -192,6 +196,16 @@ const StallMap = () => {
       <div className="lg:flex lg:flex-col lg:justify-center items-center h-full">
         <div className="overflow-auto mb-6 p-5 max-w-5xl w-full max-h-[70vh] h-full border border-slate-200 rounded-lg bg-white">
 
+          {/* --- QUICK FILTERS --- */}
+          <div className="flex flex-wrap gap-2 mb-4 p-2 bg-slate-50 border border-slate-100 rounded-lg">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center px-2">Filter</span>
+            <button onClick={() => setActiveFilter("ALL")} className={`px-3 py-1.5 text-xs font-bold rounded-md transition ${activeFilter === "ALL" ? "bg-slate-800 text-white" : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-100"}`}>All</button>
+            <button onClick={() => setActiveFilter("AVAILABLE")} className={`px-3 py-1.5 text-xs font-bold rounded-md transition ${activeFilter === "AVAILABLE" ? "bg-emerald-600 text-white shadow-sm shadow-emerald-200" : "bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50"}`}>Available</button>
+            <button onClick={() => setActiveFilter("SMALL")} className={`px-3 py-1.5 text-xs font-bold rounded-md transition ${activeFilter === "SMALL" ? "bg-blue-600 text-white shadow-sm shadow-blue-200" : "bg-white text-blue-700 border border-blue-200 hover:bg-blue-50"}`}>Small</button>
+            <button onClick={() => setActiveFilter("MEDIUM")} className={`px-3 py-1.5 text-xs font-bold rounded-md transition ${activeFilter === "MEDIUM" ? "bg-purple-600 text-white shadow-sm shadow-purple-200" : "bg-white text-purple-700 border border-purple-200 hover:bg-purple-50"}`}>Medium</button>
+            <button onClick={() => setActiveFilter("LARGE")} className={`px-3 py-1.5 text-xs font-bold rounded-md transition ${activeFilter === "LARGE" ? "bg-orange-600 text-white shadow-sm shadow-orange-200" : "bg-white text-orange-700 border border-orange-200 hover:bg-orange-50"}`}>Large</button>
+          </div>
+
           {/* --- NEW COMPONENT: STALL GRID --- */}
           <StallGrid
             stalls={stalls}
@@ -203,6 +217,7 @@ const StallMap = () => {
             handleMouseMove={handleMouseMove}
             handleMouseLeave={handleMouseLeave}
             setHoveredStall={setHoveredStall}
+            activeFilter={activeFilter}
           />
 
         </div>

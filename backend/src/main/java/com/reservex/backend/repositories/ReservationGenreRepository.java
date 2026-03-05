@@ -16,11 +16,8 @@ public interface ReservationGenreRepository extends JpaRepository<ReservationGen
 
     void deleteByReservation(Reservation reservation);
 
-//    @Modifying
-//    @Query("DELETE FROM ReservationGenre rg WHERE rg.reservation.id = :reservationId")
-//    void deleteAllByReservationId(@Param("reservationId") Integer reservationId);
-
-    // The underscore tells Spring to look for the "id" inside the "reservation" object
-    void deleteAllByReservation_Id(Integer reservationId);
+    @Modifying
+    @Query("DELETE FROM ReservationGenre rg WHERE rg.reservation.id = :reservationId")
+    void deleteAllByReservation_Id(@Param("reservationId") Integer reservationId);
 
 }

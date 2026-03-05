@@ -13,8 +13,10 @@ public class StallDto {
     private String size;
     private int gridCol;
     private int gridRow;
-    private boolean Confirmed;                       // Since Jackson removes "is" prefix for boolean fields, we can name it "Confirmed" to have the getter as "isConfirmed()"
+    private boolean Confirmed; // Since Jackson removes "is" prefix for boolean fields, we can name it
+                               // "Confirmed" to have the getter as "isConfirmed()"
     private Double price;
+    private String description;
 
     public static StallDto fromEntity(Stall stall) {
         return StallDto.builder()
@@ -25,6 +27,7 @@ public class StallDto {
                 .gridRow(stall.getGridRow())
                 .Confirmed(Boolean.TRUE.equals(stall.getIsConfirmed()))
                 .price(stall.getPrice())
+                .description(stall.getDescription())
                 .build();
     }
 }

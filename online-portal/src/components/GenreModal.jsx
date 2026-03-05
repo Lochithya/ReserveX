@@ -14,7 +14,7 @@ const GenreModal = ({ isOpen, onClose, onSave, reservation, isSaving }) => {
       loadGenres();
       const initialState = {};
       reservation.stalls?.forEach(stall => {
-        initialState[stall.id] = [];
+        initialState[stall.id] = stall.genres || [];
       });
       setStallGenres(initialState);
     }

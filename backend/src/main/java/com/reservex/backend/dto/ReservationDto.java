@@ -14,38 +14,41 @@ import java.util.stream.Collectors;
 @Builder
 public class ReservationDto {
 
-    private Integer id;
-    private String qrCodeToken;
-    private Instant reservationDate;
-    private String status;
-    private List<ReservationStallDto> stalls;
-    private List<String> genres;
+        private Integer id;
+        private String qrCodeToken;
+        private Instant reservationDate;
+        private String status;
+        private List<ReservationStallDto> stalls;
 
-    public static ReservationDto fromEntity(Reservation r) {
-        List<ReservationStallDto> stallDtos = r.getStalls().stream()
-                .map(ReservationDto::toStallDto)
-                .collect(Collectors.toList());
+        public static ReservationDto fromEntity(Reservation r) {
+                List<ReservationGenre> reservationGenres = r.getReservationGenres() != null
+                                ? new java.util.ArrayList<>(r.getReservationGenres())
+                                : List.of();
 
-        List<String> genreNames = r.getReservationGenres() != null ? r.getReservationGenres().stream()
-                .map(ReservationGenre::getGenreName)
-                .distinct() // Prevents duplicates if multiple stalls share the same genre
-                .collect(Collectors.toList()) : List.of();
+                List<ReservationStallDto> stallDtos = r.getStalls().stream()
+                                .map(s -> toStallDto(s, reservationGenres))
+                                .collect(Collectors.toList());
 
-        return ReservationDto.builder()
-                .id(r.getId())
-                .qrCodeToken(r.getQrCodePath())
-                .reservationDate(r.getReservationDate())
-                .status(r.getStatus().name())
-                .stalls(stallDtos)
-                .genres(genreNames)
-                .build();
-    }
+                return ReservationDto.builder()
+                                .id(r.getId())
+                                .qrCodeToken(r.getQrCodePath())
+                                .reservationDate(r.getReservationDate())
+                                .status(r.getStatus().name())
+                                .stalls(stallDtos)
+                                .build();
+        }
 
-    private static ReservationStallDto toStallDto(Stall s) {
-        return ReservationStallDto.builder()
-                .id(s.getId())
-                .name(s.getName())
-                .size(s.getSize().name())
-                .build();
-    }
+        private static ReservationStallDto toStallDto(Stall s, List<ReservationGenre> genres) {
+                List<String> stallGenres = genres.stream()
+                                .filter(g -> g.getStallId() != null && g.getStallId().equals(s.getId()))
+                                .map(ReservationGenre::getGenreName)
+                                .collect(Collectors.toList());
+
+                return ReservationStallDto.builder()
+                                .id(s.getId())
+                                .name(s.getName())
+                                .size(s.getSize().name())
+                                .genres(stallGenres)
+                                .build();
+        }
 }

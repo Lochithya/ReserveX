@@ -48,32 +48,29 @@ const ReservationModal = ({ isOpen, onClose, onConfirm, selectedStalls, isLoadin
           </div>
 
           {/* Stall List Container */}
-          <div className="bg-slate-50 rounded-xl border border-slate-100 p-5 mb-6">
+          <div className="bg-slate-50/50 rounded-2xl border border-slate-100 p-6 mb-8">
 
-            <div className="flex justify-between text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">
+            <div className="flex justify-between text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4 px-1">
               <span>Stall Details</span>
               <span>Amount</span>
             </div>
 
-            <div className="space-y-3 mb-4">
+            <div className="space-y-3 mb-5">
               {selectedStalls.map((stall) => (
-                <div key={stall.id} className="flex justify-between items-center bg-white p-3 rounded-lg border border-slate-200 shadow-sm">
-                  <div className="flex items-center gap-3">
+                <div key={stall.id} className="flex justify-between items-start bg-white p-4 rounded-xl border border-slate-200/60 shadow-[0_2px_8px_rgb(0,0,0,0.04)]">
+                  <div className="flex items-start gap-4">
                     {/* ID Badge */}
-                    <div className="w-8 h-8 rounded bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm p-3">
+                    <div className="w-10 h-10 rounded-lg bg-blue-50/80 text-blue-700 font-extrabold flex items-center justify-center text-sm shrink-0 border border-blue-100/50">
                       {stall?.name}
                     </div>
                     <div>
-                      <p className="font-semibold text-slate-700 text-sm">{stall.name}</p>
-                      <p className="text-xs text-slate-400">{stall?.description}</p>
+                      <p className="font-bold text-slate-800 text-sm leading-none mb-1.5">{stall.name} <span className="font-normal text-slate-400">({stall.size})</span></p>
+                      <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed max-w-[200px]">{stall?.description || "Standard exhibition space."}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded border border-slate-200 uppercase font-medium">
-                      {stall.size}
-                    </span>
-                    <span className="font-semibold text-slate-700 text-sm">
+                  <div className="flex flex-col items-end gap-1.5 mt-0.5">
+                    <span className="font-bold text-slate-800 text-sm">
                       Rs. {stall.price.toLocaleString()}
                     </span>
                   </div>

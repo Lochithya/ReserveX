@@ -30,30 +30,30 @@ const BookingSummary = ({ selectedStalls, onReserve, quota }) => {
             </div>
 
 
-            <div className="flex gap-4 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide">
+            <div className="flex gap-4 overflow-x-auto pb-4 lg:pb-0 scrollbar-hide py-2">
               {selectedStalls?.map((stall) => (
                 <div
                   key={stall.id}
-                  className="shrink-0 w-70 md:w-[320px] bg-slate-50 border border-slate-200 rounded-xl p-3 flex gap-3 shadow-sm"
+                  className="shrink-0 w-70 md:w-[320px] bg-white border border-slate-200/60 rounded-xl p-3 flex gap-3 shadow-[0_2px_10px_rgb(0,0,0,0.04)] hover:shadow-md hover:border-blue-200 transition-all group"
                 >
                   {/* ID Box */}
-                  <div className="flex flex-col items-center justify-center bg-white border border-slate-200 rounded-lg w-12 h-12 shrink-0">
+                  <div className="flex flex-col items-center justify-center bg-blue-50/50 group-hover:bg-blue-100/50 border border-blue-100 rounded-lg w-12 h-12 shrink-0 transition-colors">
                     <span className="text-blue-600 font-bold text-lg">{stall?.name}</span>
                   </div>
 
                   {/*Details */}
-                  <div className="flex flex-col justify-center overflow-hidden">
+                  <div className="flex flex-col justify-center overflow-hidden w-full">
                     <div className="flex justify-between items-center gap-2">
                       <span className="font-semibold text-slate-800 text-sm truncate">
-                        {stall?.size} Stall
+                        {stall?.size}
                       </span>
-                      <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                      <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
                         Rs. {stall?.price.toLocaleString()}
                       </span>
                     </div>
 
-                    <p className="text-xs text-slate-500 truncate mt-1" title={stall?.description}>
-                      {stall?.description || "No description available."}
+                    <p className="text-[11px] text-slate-500 line-clamp-2 mt-1.5 pr-2 leading-relaxed" title={stall?.description}>
+                      {stall?.description || "Standard exhibition space."}
                     </p>
                   </div>
                 </div>

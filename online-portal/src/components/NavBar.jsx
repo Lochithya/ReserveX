@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
-import { Menu, X } from "lucide-react";
+import { Menu, X, UserCircle } from "lucide-react";
 import logo from "../assets/logo.jpeg";
 
 const NavBar = () => {
@@ -20,14 +20,14 @@ const NavBar = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-3">
-          
+
             <img
               src={logo}
               alt="ReserveX Logo"
               className="h-11 w-auto object-contain"
             />
 
-          
+
             <h1 className="text-white text-2xl font-bold tracking-wide">
               ReserveX
             </h1>
@@ -66,9 +66,16 @@ const NavBar = () => {
                 >
                   Reserve a stall
                 </Link>
+                <Link
+                  to="/profile"
+                  className="text-white hover:text-blue-200 transition p-2 rounded-full hover:bg-white/10"
+                  aria-label="User Profile"
+                >
+                  <UserCircle size={26} strokeWidth={1.5} />
+                </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-white px-3 py-2 rounded-md text-sm"
+                  className="text-white border border-white/30 hover:bg-red-500/80 hover:border-red-500/80 transition-colors px-4 py-2 rounded-full text-sm font-medium ml-2"
                 >
                   Sign Out
                 </button>
@@ -142,15 +149,22 @@ const NavBar = () => {
                 <Link
                   to="/stallMap"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full text-center px-3 py-2 bg-white text-blue-600 rounded-full"
+                  className="block w-full text-center px-3 py-2 bg-white text-blue-600 font-semibold rounded-full mb-2"
                 >
                   Reserve a stall
                 </Link>
+                <Link
+                  to="/profile"
+                  onClick={() => setIsOpen(false)}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-white/10 flex items-center gap-2"
+                >
+                  <UserCircle size={20} /> My Profile
+                </Link>
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left px-3 py-2 text-white rounded-md"
+                  className="block w-full text-left px-3 py-2 mt-2 text-white font-medium rounded-md border border-white/20 hover:bg-red-500/80 transition-colors"
                 >
-                  Log out
+                  Sign Out
                 </button>
               </>
             )}

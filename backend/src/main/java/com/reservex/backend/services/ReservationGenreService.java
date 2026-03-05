@@ -24,21 +24,22 @@ public class ReservationGenreService {
 
     /**
      * All genre operations are associated with the latest reservation of the user.
-     * This matches the {@code reservation_id} foreign key in the reservation_genres table.
+     * This matches the {@code reservation_id} foreign key in the reservation_genres
+     * table.
      */
     private Reservation getLatestReservationForUser(User user) {
         return reservationRepository.findTopByUserOrderByReservationDateDesc(user)
                 .orElseThrow(() -> new IllegalStateException("No reservations found for user"));
     }
 
-//    @Transactional
-//    public ReservationGenre addGenre(Integer userId, String genreName) {
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-//        Reservation reservation = getLatestReservationForUser(user);
-//        ReservationGenre genre = new ReservationGenre(reservation, genreName.trim());
-//        return genreRepository.save(genre);
-//    }
+    // @Transactional
+    // public ReservationGenre addGenre(Integer userId, String genreName) {
+    // User user = userRepository.findById(userId)
+    // .orElseThrow(() -> new IllegalArgumentException("User not found"));
+    // Reservation reservation = getLatestReservationForUser(user);
+    // ReservationGenre genre = new ReservationGenre(reservation, genreName.trim());
+    // return genreRepository.save(genre);
+    // }
 
     @Transactional(readOnly = true)
     public List<String> getGenresByUser(Integer userId) {
@@ -58,31 +59,28 @@ public class ReservationGenreService {
 
         Reservation reservation = getLatestReservationForUser(user);
 
-        // 1. Clear old genres for this reservation
-        genreRepository.deleteAllByReservation_Id(reservation.getId());
-        genreRepository.flush();
+        // Clear old genres
+        // orphanRemoval
+        reservation.getReservationGenres().clear();
+        reservationRepository.saveAndFlush(reservation);
 
-        // 2. Save the new genres attached to their specific stalls
+        // Save the new genres attached to stalls
         if (requests != null) {
             for (StallGenreRequest req : requests) {
                 if (req.getGenres() != null) {
                     for (String genreName : req.getGenres()) {
                         if (genreName != null && !genreName.isBlank()) {
-
-                            // Uses the 3-part constructor from your @IdClass entity
                             ReservationGenre genre = new ReservationGenre(
                                     reservation,
                                     req.getStallId(),
-                                    genreName.trim()
-                            );
-                            genreRepository.save(genre);
+                                    genreName.trim());
+                            reservation.getReservationGenres().add(genre);
                         }
                     }
                 }
             }
-            genreRepository.flush(); // Commit to database
+            reservationRepository.saveAndFlush(reservation); // Save parent again to cascade new children
         }
     }
-
 
 }

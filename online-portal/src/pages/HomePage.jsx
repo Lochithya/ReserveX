@@ -6,8 +6,6 @@ import {
   BookOpenIcon,
   CalendarDaysIcon,
   PlusIcon,
-  ClockIcon,
-  DocumentArrowDownIcon,
   UserIcon,
   PencilSquareIcon
 } from "@heroicons/react/24/outline";
@@ -48,8 +46,8 @@ const HomePage = () => {
     }
   };
 
-  const handleEditClick = (reservation) => {
-    setEditingRes(reservation); // Store the whole object (id, current genres, stall name)
+  const handleEditClick = (reservation, stall) => {
+    setEditingRes({ ...reservation, currentStall: stall });
     setModalOpen(true);
   };
 
@@ -59,17 +57,21 @@ const HomePage = () => {
       // Send the structured array to the backend
       const response = await updateReservationGenres(payloadArray);
 
-      // Extract a flat, unique list of genres to display in your React table
+
       const flatGenres = [...new Set(payloadArray.flatMap(p => p.genres))];
 
-      // Optimistic Update
-      const updatedList = reservations.map((res) =>
+      setReservations(prev => prev.map(res =>
         res.id === reservationId
-          ? { ...res, genres: flatGenres }
+          ? {
+            ...res,
+            stalls: res.stalls.map(s => ({
+              ...s,
+              genres: payloadArray.find(p => p.stallId === s.id)?.genres || []
+            }))
+          }
           : res
-      );
+      ));
 
-      setReservations(updatedList);
       toast.success(response.message || "Genres updated successfully!");
       setModalOpen(false);
 
@@ -156,12 +158,32 @@ const HomePage = () => {
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <StatCard
-            title="Current Reservations"
-            value={user.noOfCurrentBookings}
-            icon={<TicketIcon className="w-6 h-6 text-blue-600" />}
-            bg="bg-blue-50"
-          />
+          <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+            <div className="flex justify-between items-start mb-4">
+              <div>
+                <p className="text-sm font-medium text-slate-500 mb-1">Stalls Booked</p>
+                <h3 className="text-3xl font-bold text-slate-800">
+                  {user.noOfCurrentBookings} <span className="text-lg text-slate-400 font-medium">/ 3</span>
+                </h3>
+              </div>
+              <div className="p-3 rounded-lg bg-blue-50">
+                <TicketIcon className="w-6 h-6 text-blue-600" />
+              </div>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="w-full bg-slate-100 rounded-full h-2.5 mt-2 overflow-hidden border border-slate-200/50">
+              <div
+                className={`h-2.5 rounded-full transition-all duration-700 ${user.noOfCurrentBookings >= 3 ? 'bg-amber-500' : 'bg-blue-600'}`}
+                style={{ width: `${Math.min((user.noOfCurrentBookings / 3) * 100, 100)}%` }}
+              ></div>
+            </div>
+            <p className="text-xs text-slate-400 mt-2 font-medium">
+              {user.noOfCurrentBookings >= 3
+                ? <span className="text-amber-600">Maximum quota reached</span>
+                : `${3 - user.noOfCurrentBookings} more slots available`}
+            </p>
+          </div>
           <StatCard
             title="Total Stalls (Lifetime)"
             value="3"
@@ -169,7 +191,7 @@ const HomePage = () => {
             bg="bg-emerald-50"
           />
           <StatCard
-            title="Active Reservations"
+            title="Approved Reservations"
             value={reservations.filter(res => res.status?.toUpperCase() === "APPROVED").length}
             icon={<BookOpenIcon className="w-6 h-6 text-purple-600" />}
             bg="bg-purple-50"
@@ -181,9 +203,9 @@ const HomePage = () => {
         <div className="max-w-7xl mx-auto px-6 py-8 -mt-8 relative z-20">
 
           {/* Reservation Table Card */}
-          <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
-            <div className="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-              <h3 className="font-semibold text-slate-800">Your Reservations & Genres</h3>
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden mt-6">
+            <div className="px-8 py-5 border-b border-slate-100 bg-slate-50/50">
+              <h3 className="font-semibold text-slate-800 text-lg">Your Reservations & Genres</h3>
             </div>
 
             {reservations.length === 0 && !loadingData ? (
@@ -206,58 +228,70 @@ const HomePage = () => {
               </div>)
               : (<div className="overflow-x-auto">
                 <table className="w-full text-left text-sm text-slate-600">
-                  <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider text-xs">
+                  <thead className="bg-slate-50/80 text-slate-500 uppercase tracking-wider text-xs border-b border-slate-200">
                     <tr>
-                      <th className="px-6 py-3 font-semibold">Res ID</th>
-                      <th className="px-6 py-3 font-semibold">Stall</th>
-                      <th className="px-6 py-3 font-semibold">Status</th>
-                      <th className="px-6 py-3 font-semibold">Genres Displayed</th>
-                      <th className="px-6 py-3 font-semibold text-right">Actions</th>
+                      <th className="px-8 py-4 font-semibold text-slate-600">Res ID</th>
+                      <th className="px-8 py-4 font-semibold text-slate-600">Stall</th>
+                      <th className="px-8 py-4 font-semibold text-slate-600">Status</th>
+                      <th className="px-8 py-4 font-semibold text-slate-600">Genres Displayed</th>
+                      <th className="px-8 py-4 font-semibold text-slate-600 text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
-                    {reservations.map((res) => (
-                      <tr key={res.id} className="hover:bg-slate-50 transition">
-                        <td className="px-6 py-4 font-mono text-slate-500">#{res.id}</td>
+                    {reservations.flatMap((res) =>
+                      res.stalls?.map((stall) => (
+                        <tr key={`${res.id}-${stall.id}`} className="hover:bg-blue-50/30 transition-colors group">
+                          <td className="px-8 py-6 font-mono text-slate-900 font-bold text-base">#{res.id}</td>
 
-                        <td className="px-6 py-4 font-semibold text-slate-700">
-                          {res.stalls?.map(s => s.name).join(", ")}
-                        </td>
+                          <td className="px-8 py-6">
+                            <span className="font-semibold text-slate-800 text-base">{stall.name}</span>
+                            <span className="text-sm text-slate-400 ml-2 font-medium">({stall.size})</span>
+                          </td>
 
-                        <td className="px-6 py-4">
-                          <span className="bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-semibold border border-emerald-200">
-                            {res.status}
-                          </span>
-                        </td>
+                          <td className="px-8 py-6">
+                            <span className={`px-2 py-1 rounded-full font-bold text-[11px] uppercase tracking-wider border ${res.status?.toUpperCase() === 'APPROVED'
+                              ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                              : res.status?.toUpperCase() === 'REJECTED'
+                                ? 'bg-red-50 text-red-700 border-red-200'
+                                : 'bg-amber-50 text-amber-700 border-amber-200'
+                              }`}>
+                              {res.status}
+                            </span>
+                          </td>
 
-                        <td className="px-6 py-4">
-                          {res.genres && res.genres.length > 0 ? (
-                            <div className="flex flex-wrap gap-1">
-                              {res.genres.slice(0, 3).map(g => (
-                                <span key={g} className="bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100">
-                                  {g}
-                                </span>
-                              ))}
-                              {res.genres.length > 3 && (
-                                <span className="text-slate-400 pl-1">+{res.genres.length - 3} more</span>
-                              )}
+                          <td className="px-8 py-6">
+                            <div className="flex flex-wrap gap-2">
+                              {(() => {
+                                const allGenres = [...new Set((stall.genres || []))];
+                                return allGenres.length > 0 ? (
+                                  <>
+                                    {allGenres.slice(0, 3).map(g => (
+                                      <span key={g} className="px-2 py-1 bg-blue-50 text-blue-700 text-xs font-medium rounded border border-blue-100 shadow-sm">
+                                        {g}
+                                      </span>
+                                    ))}
+                                    {allGenres.length > 3 && (
+                                      <span className="text-slate-400 pl-1">+{allGenres.length - 3} more</span>
+                                    )}
+                                  </>
+                                ) : (
+                                  <span className="text-slate-400 italic text-sm">No genres added</span>
+                                );
+                              })()}
                             </div>
-                          ) : (
-                            <span className="text-slate-400 italic">No genres added</span>
-                          )}
-                        </td>
-
-                        <td className="px-6 py-4 text-right">
-                          <button
-                            onClick={() => handleEditClick(res)}
-                            className="text-blue-600 hover:text-blue-800 flex items-center justify-end gap-1 ml-auto"
-                          >
-                            <PencilSquareIcon className="w-5 h-5" />
-                            Select Genres
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                          </td>
+                          <td className="px-8 py-6 text-right">
+                            <button
+                              onClick={() => handleEditClick(res, stall)}
+                              className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-600 text-sm font-semibold rounded-lg shadow-sm hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200 transition-all ml-auto focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+                            >
+                              <PencilSquareIcon className="w-4 h-4" />
+                              Select Genres
+                            </button>
+                          </td>
+                        </tr>
+                      ))
+                    )}
                   </tbody>
                 </table>
               </div>)}
