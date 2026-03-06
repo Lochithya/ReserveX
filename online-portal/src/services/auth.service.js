@@ -65,4 +65,13 @@ export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
 };
-    
+
+export const getCurrentUser = async () => {
+  try {
+    const res = await api.get("/users/me");
+    return res.data;
+  } catch (err) {
+    console.error("getCurrentUser error:", err);
+    throw err?.response?.data?.message || "Failed to fetch user data";
+  }
+};

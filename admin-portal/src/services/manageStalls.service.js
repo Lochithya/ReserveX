@@ -59,3 +59,12 @@ export const updateStall = async (id, payload) => {
 export const deleteStall = async (id) => {
   await api.delete(`/stalls/${id}`);
 };
+
+/**
+ * Unreserve a stall (change from Reserved to Available).
+ * Backend handles reservation cleanup and vendor notifications.
+ * @param {number} id - Stall ID
+ */
+export const unreserveStall = async (id) => {
+  await api.put(`/stalls/${id}/unreserve`);
+};

@@ -61,7 +61,7 @@ public class Reservation {
         // You can store a token OR a file path in qr_code_path.
         // If you're storing a token, generate it here:
         if (qrCodePath == null) qrCodePath = UUID.randomUUID().toString();
-        if (status == null) status = Status.Pending;
+        if (status == null) status = Status.Approved;
     }
 
 }

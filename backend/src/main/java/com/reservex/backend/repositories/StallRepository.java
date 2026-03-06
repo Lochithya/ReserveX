@@ -12,4 +12,8 @@ public interface StallRepository extends JpaRepository<Stall, Integer> {
     boolean existsByNameIgnoreCase(String name);
 
     boolean existsByNameIgnoreCaseAndIdNot(String name, Integer excludeId);
+
+    boolean existsByGridRowAndGridCol(int gridRow, int gridCol);
+
+    boolean existsByGridRowAndGridColAndIdNot(int gridRow, int gridCol, Integer excludeId);
 }

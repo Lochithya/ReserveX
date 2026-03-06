@@ -3,6 +3,7 @@ package com.reservex.backend.dto;
 import com.reservex.backend.entity.Reservation;
 import com.reservex.backend.entity.ReservationGenre;
 import com.reservex.backend.entity.Stall;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -19,6 +20,8 @@ public class ReservationDto {
         private Instant reservationDate;
         private String status;
         private List<ReservationStallDto> stalls;
+        @JsonProperty("businessName")
+        private String businessName;
 
         public static ReservationDto fromEntity(Reservation r) {
                 List<ReservationGenre> reservationGenres = r.getReservationGenres() != null
@@ -34,6 +37,7 @@ public class ReservationDto {
                                 .qrCodeToken(r.getQrCodePath())
                                 .reservationDate(r.getReservationDate())
                                 .status(r.getStatus().name())
+                                .businessName(r.getUser() != null ? r.getUser().getBusinessName() : null)
                                 .stalls(stallDtos)
                                 .build();
         }

@@ -43,6 +43,9 @@ public class User {
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
+    @Column(name = "last_updated_at", nullable = false)
+    private Instant lastUpdatedAt;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
@@ -55,5 +58,12 @@ public class User {
     protected void onCreate() {
         if (createdAt == null)
             createdAt = Instant.now();
-    } 
+        if (lastUpdatedAt == null)
+            lastUpdatedAt = createdAt; // if never updated, keep same as createdAt
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdatedAt = Instant.now();
+    }
 }

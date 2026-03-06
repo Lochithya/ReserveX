@@ -131,7 +131,7 @@ export default function ViewStalls() {
                 <th>ID</th>
                 <th>Stall Name</th>
                 <th>Size</th>
-                <th>Price</th>
+                <th>Price (LKR)</th>
                 <th>Status</th>
               </tr>
             </thead>

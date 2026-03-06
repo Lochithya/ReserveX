@@ -32,6 +32,15 @@ public class QrCodeService {
     }
 
     public byte[] generateQrCodeForReservation(String qrCodeToken) {
+        // Generate QR code with the token/UUID
+        // This can be scanned at the venue to verify the reservation
         return generateQrCodeBytes(qrCodeToken);
+    }
+    
+    public byte[] generateQrCodeForReservationWithDetails(Integer reservationId, String qrCodeToken, String businessName) {
+        // Create a more detailed QR code content
+        String qrContent = String.format("RESERVATION_ID:%d|TOKEN:%s|BUSINESS:%s", 
+            reservationId, qrCodeToken, businessName);
+        return generateQrCodeBytes(qrContent);
     }
 }

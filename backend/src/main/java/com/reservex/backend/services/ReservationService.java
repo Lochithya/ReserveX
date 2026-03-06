@@ -79,6 +79,7 @@ public class ReservationService {
 
         Reservation reservation = Reservation.builder()
                 .user(user)
+                .status(Reservation.Status.Approved)
                 .build();
         reservation.getStalls().addAll(stallsToBook);
 
@@ -103,6 +104,11 @@ public class ReservationService {
             stallRepository.save(stall);
         }
 
+        // Flush to ensure all data is persisted before sending email
+        reservationRepository.flush();
+        stallRepository.flush();
+        
+        // Send email with reservation details
         emailService.sendReservationConfirmation(user, reservation);
 
         List<ReservationDto> result = new ArrayList<>();
@@ -114,14 +120,14 @@ public class ReservationService {
     public List<ReservationDto> getMyReservations(Integer userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        return reservationRepository.findByUserOrderByReservationDateDesc(user).stream()
+        return reservationRepository.findByUserWithDetailsOrderByReservationDateDesc(user).stream()
                 .map(ReservationDto::fromEntity)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<ReservationDto> getAllReservations() {
-        return reservationRepository.findAll().stream()
+        return reservationRepository.findAllWithDetails().stream()
                 .map(ReservationDto::fromEntity)
                 .collect(Collectors.toList());
     }

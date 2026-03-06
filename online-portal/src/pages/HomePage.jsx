@@ -17,7 +17,7 @@ import GenreModal from "../components/GenreModal";
 const HomePage = () => {
   const navigate = useNavigate();
 
-  const { user } = useContext(AuthContext);
+  const { user, refreshUser } = useContext(AuthContext);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [reservations, setReservations] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
@@ -35,6 +35,9 @@ const HomePage = () => {
 
   const loadDashboard = async () => {
     try {
+      // Refresh user data to get latest booking count
+      await refreshUser();
+      
       const data = await getMyReservations();
       setReservations(data);
       console.log(data)
@@ -163,7 +166,7 @@ const HomePage = () => {
               <div>
                 <p className="text-sm font-medium text-slate-500 mb-1">Stalls Booked</p>
                 <h3 className="text-3xl font-bold text-slate-800">
-                  {user.noOfCurrentBookings} <span className="text-lg text-slate-400 font-medium">/ 3</span>
+                  {user?.noOfCurrentBookings ?? 0} <span className="text-lg text-slate-400 font-medium">/ 3</span>
                 </h3>
               </div>
               <div className="p-3 rounded-lg bg-blue-50">
@@ -174,14 +177,14 @@ const HomePage = () => {
             {/* Progress Bar */}
             <div className="w-full bg-slate-100 rounded-full h-2.5 mt-2 overflow-hidden border border-slate-200/50">
               <div
-                className={`h-2.5 rounded-full transition-all duration-700 ${user.noOfCurrentBookings >= 3 ? 'bg-amber-500' : 'bg-blue-600'}`}
-                style={{ width: `${Math.min((user.noOfCurrentBookings / 3) * 100, 100)}%` }}
+                className={`h-2.5 rounded-full transition-all duration-700 ${(user?.noOfCurrentBookings ?? 0) >= 3 ? 'bg-amber-500' : 'bg-blue-600'}`}
+                style={{ width: `${Math.min(((user?.noOfCurrentBookings ?? 0) / 3) * 100, 100)}%` }}
               ></div>
             </div>
             <p className="text-xs text-slate-400 mt-2 font-medium">
-              {user.noOfCurrentBookings >= 3
+              {(user?.noOfCurrentBookings ?? 0) >= 3
                 ? <span className="text-amber-600">Maximum quota reached</span>
-                : `${3 - user.noOfCurrentBookings} more slots available`}
+                : `${3 - (user?.noOfCurrentBookings ?? 0)} more slots available`}
             </p>
           </div>
           <StatCard

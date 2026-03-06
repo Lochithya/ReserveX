@@ -70,4 +70,19 @@ public class StallController {
             return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
         }
     }
+
+    @PreAuthorize("hasRole('EMPLOYEE')")
+    @PutMapping("/{id}/unreserve")
+    public ResponseEntity<?> unreserveStall(@PathVariable Integer id) {
+        try {
+            stallService.unreserveStall(id);
+            return ResponseEntity.ok(Map.of("message", "Stall unreserved successfully"));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("message", "An unexpected error occurred: " + e.getMessage()));
+        }
+    }
 }

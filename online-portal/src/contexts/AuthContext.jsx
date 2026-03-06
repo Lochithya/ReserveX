@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { getCurrentUser } from "../services/auth.service";
 
 export const AuthContext = createContext();
 
@@ -44,8 +45,26 @@ export const AuthProvider = ({ children }) => {
         setUser(null)
     };
 
+    const refreshUser = async () => {
+        try {
+            const userData = await getCurrentUser();
+            // Ensure noOfCurrentBookings has a default value
+            const updatedUser = {
+                ...userData,
+                noOfCurrentBookings: userData.noOfCurrentBookings ?? 0
+            };
+            localStorage.setItem("user", JSON.stringify(updatedUser));
+            setUser(updatedUser);
+            return updatedUser;
+        } catch (error) {
+            console.error("Failed to refresh user data:", error);
+            // If refresh fails, keep existing user data
+            return user;
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, user, login, logout, refreshUser }}>
             {children}
         </AuthContext.Provider>
     );
