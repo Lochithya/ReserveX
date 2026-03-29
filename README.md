@@ -25,15 +25,6 @@
 - **Frontend**: React, Vite, Axios, React Router
 - **Other**: JWT, SMTP email integration
 
-## Core Features
-
-- User registration and login with JWT
-- Role-based authorization (`VENDOR`, `EMPLOYEE`)
-- Stall listing and reservation workflows
-- Reservation history retrieval
-- Genre management for reserved stalls
-- Admin dashboard access to stalls and reservations
-- Contact form submission via backend email service
 
 ## Getting Started
 
