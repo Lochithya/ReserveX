@@ -1,9 +1,17 @@
-# ReserveX
+# 📚 ReserveX - Book Fair Stall Booking System
 
-ReserveX is a full-stack reservation management platform built for a book fair use case, with separate portals for vendors and administrators.
+**ReserveX** is a modern, full-stack web application designed to manage stall reservations for the Colombo International Book Fair. It provides a seamless, interactive experience for book vendors to select, reserve, and manage their stalls, while offering administrators a powerful dashboard to oversee the entire event.
 
-This repository is a **group project** and part of the **SENG 22212 - Software Architecture and Design** university group assignment.
+> **Academic Context:** This project was developed as the group assignment for the **SENG 22212 – Software Architecture and Design** module at the University of Kelaniya.
 
+## ✨ Key Features
+
+* **Interactive Floor Plan:** A dynamic, grid-based live map allowing vendors to visually select available stalls.
+* **Dual-Portal Architecture:** * **Online Portal:** For vendors to browse the map, book up to 3 stalls, and assign specific literary genres to their spaces.
+    * **Admin Portal:** For event organizers to manage stall availability, view booking statistics via a live dashboard, and oversee vendor accounts.
+* **Secure Authentication:** Role-based access control (Vendor vs. Admin/Employee) secured by JSON Web Tokens (JWT).
+* **Automated Email Notifications:** Vendors receive instant confirmation emails with a QR code receipt upon successful reservation.
+* **Real-time Analytics:** Visual dashboards utilizing pie charts and dynamic stats calculations.
 ## Project Modules
 
 - `backend`: Spring Boot REST API with JWT authentication, role-based access, MySQL persistence, and email support.
