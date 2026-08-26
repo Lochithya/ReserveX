@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +22,9 @@ public class EmailService {
 
   @Value("${spring.mail.username:}")
   private String fromEmail;
+
+  @Value("${app.contact-recipient:}")
+  private String contactRecipient;
 
   public void sendReservationConfirmation(User user, Reservation reservation) {
     if (fromEmail == null || fromEmail.isBlank()) {
@@ -95,7 +98,7 @@ public class EmailService {
       String body = buildStallDeletionBody(user, stallName, currentBookings, reservationCancelled);
       helper.setText(body, true);
       mailSender.send(message);
-    } catch (MessagingException e) {
+    } catch (MessagingException | MailException e) {
       // Log the error but don't throw to avoid transaction rollback
       System.err.println("Failed to send stall deletion email to " + user.getEmail() + ": " + e.getMessage());
     }
@@ -115,7 +118,7 @@ public class EmailService {
       String body = buildStallUnreserveBody(user, stallName, currentBookings, reservationCancelled);
       helper.setText(body, true);
       mailSender.send(message);
-    } catch (MessagingException e) {
+    } catch (MessagingException | MailException e) {
       // Log the error but don't throw to avoid transaction rollback
       System.err.println("Failed to send stall unreserve email to " + user.getEmail() + ": " + e.getMessage());
     }
@@ -331,23 +334,26 @@ public class EmailService {
             reservation.getQrCodePath());
   }
 
-  @Async
   public void sendContactUsEmail(ContactRequest request) {
-    SimpleMailMessage mailMessage = new SimpleMailMessage();
-
-    if (fromEmail == null || fromEmail.isBlank()) {
-      return;
+    if (fromEmail == null || fromEmail.isBlank()
+        || contactRecipient == null || contactRecipient.isBlank()) {
+      throw new IllegalStateException("Email sender and contact recipient must be configured");
     }
 
-    mailMessage.setTo(fromEmail);
-
-    mailMessage.setSubject("New Contact Form Submission from: " + request.getName());
-    mailMessage.setText(
-        "You have a new message from the ReserveX Contact Page.\n\n" +
-            "Name: " + request.getName() + "\n" +
-            "Email: " + request.getEmail() + "\n\n" +
-            "Message:\n" + request.getMessage());
-
-    mailSender.send(mailMessage);
+    try {
+      SimpleMailMessage mailMessage = new SimpleMailMessage();
+      mailMessage.setFrom(fromEmail);
+      mailMessage.setTo(contactRecipient);
+      mailMessage.setReplyTo(request.getEmail());
+      mailMessage.setSubject("New Contact Form Submission from: " + request.getName());
+      mailMessage.setText(
+          "You have a new message from the ReserveX Contact Page.\n\n" +
+              "Name: " + request.getName() + "\n" +
+              "Email: " + request.getEmail() + "\n\n" +
+              "Message:\n" + request.getMessage());
+      mailSender.send(mailMessage);
+    } catch (MailException e) {
+      throw new IllegalStateException("Unable to send contact email", e);
+    }
   }
 }

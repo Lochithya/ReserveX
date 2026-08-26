@@ -61,8 +61,8 @@ const ContactPage = () => {
                 <div>
                   <h3 className="font-semibold text-xl mb-1 text-white">Chat to us</h3>
                   <p className="text-blue-200/80 text-sm">Our friendly team is here to help.</p>
-                  <a href="mailto:resevexprojects@gmail.com" className="text-blue-50 hover:text-white hover:underline mt-1.5 font-medium block transition-colors">
-                    resevexprojects@gmail.com
+                  <a href="mailto:reservexprojects@gmail.com" className="text-blue-50 hover:text-white hover:underline mt-1.5 font-medium block transition-colors">
+                    reservexprojects@gmail.com
                   </a>
                 </div>
               </div>
