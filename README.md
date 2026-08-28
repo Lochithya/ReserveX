@@ -62,6 +62,7 @@ npm run dev
 ## Environment Notes
 
 - Backend configuration is in `backend/src/main/resources/application.properties`.
+- Backend secrets are loaded from `backend/.env`. In IntelliJ, set the BackendApplication working directory to the repository root (`ReserveX`) so this file is found automatically.
 - Online portal API base URL can be configured using:
   - `VITE_API_BASE_URL` (defaults to `http://localhost:8080/api`)
 
